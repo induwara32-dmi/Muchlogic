@@ -1,0 +1,34 @@
+---
+import Icon from '../ui/Icon.astro';
+import type { Service } from '../../data/services';
+
+interface Props {
+  service: Service;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { service, headingLevel: Heading = 'h3' } = Astro.props;
+---
+
+<article
+  class="group relative flex h-full flex-col rounded-card border border-line bg-surface p-7 transition-[box-shadow,border-color] duration-200 hover:border-primary/30 hover:shadow-card sm:p-8"
+>
+  <span
+    class="inline-flex size-12 items-center justify-center rounded-[10px] bg-primary-soft text-primary"
+  >
+    <Icon name={service.icon} size={22} />
+  </span>
+  <Heading class="mt-6 text-xl">{service.title}</Heading>
+  <p class="mt-2.5 flex-1">{service.summary}</p>
+  <a
+    href={`/services#${service.slug}`}
+    class="mt-6 inline-flex items-center gap-1 self-start font-semibold text-primary after:absolute after:inset-0 after:rounded-card after:content-[''] hover:text-primary-hover"
+  >
+    Explore<span class="sr-only"> {service.title}</span>
+    <Icon
+      name="chevron-right"
+      size={18}
+      class="transition-transform duration-200 group-hover:translate-x-0.5"
+    />
+  </a>
+</article>

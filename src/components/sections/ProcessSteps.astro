@@ -1,0 +1,30 @@
+---
+import { processSteps } from '../../data/process';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<ol class:list={['grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6', className]}>
+  {
+    processSteps.map((step, i) => (
+      <li
+        data-reveal
+        style={`--reveal-delay:${i * 80}ms`}
+        class="relative overflow-hidden rounded-card border border-line bg-surface p-6 lg:p-7"
+      >
+        <span
+          class="pointer-events-none absolute right-4 top-3 text-5xl font-extrabold leading-none tracking-tighter text-primary/15 select-none"
+          aria-hidden="true"
+        >
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        <h3 class="relative pr-14 text-lg lg:text-xl">{step.title}</h3>
+        <p class="relative mt-3">{step.description}</p>
+      </li>
+    ))
+  }
+</ol>

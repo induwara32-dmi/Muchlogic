@@ -21,3 +21,18 @@ export interface Testimonial {
  * },
  */
 export const testimonials: Testimonial[] = [];
+
+export interface Rating {
+  /** e.g. '4.8' */
+  value: string;
+  count: number;
+  sourceUrl?: string;
+}
+
+/**
+ * TODO: only set this from a real, public source (e.g. your Google Business Profile).
+ * The rating card is hidden while this is null.
+ *
+ * Example: { value: '4.8', count: 12, sourceUrl: 'https://g.page/r/...' }
+ */
+export const rating: Rating | null = null;

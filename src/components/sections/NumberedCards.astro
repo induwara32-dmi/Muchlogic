@@ -1,0 +1,33 @@
+---
+import type { Feature } from '../../data/home';
+
+interface Props {
+  items: Feature[];
+  class?: string;
+}
+
+const { items, class: className } = Astro.props;
+---
+
+<ol class:list={['space-y-4', className]}>
+  {
+    items.map((item, i) => (
+      <li
+        data-reveal
+        style={`--reveal-delay:${i * 80}ms`}
+        class="flex gap-5 rounded-card border border-line bg-surface p-6 sm:p-7"
+      >
+        <span
+          class="inline-flex size-12 shrink-0 items-center justify-center rounded-[10px] bg-primary-soft text-lg font-bold text-primary"
+          aria-hidden="true"
+        >
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        <div>
+          <h3 class="text-lg">{item.title}</h3>
+          <p class="mt-1.5">{item.description}</p>
+        </div>
+      </li>
+    ))
+  }
+</ol>

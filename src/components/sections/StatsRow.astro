@@ -1,0 +1,27 @@
+---
+// Renders nothing until src/data/stats.ts has real data.
+import { stats } from '../../data/stats';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+{
+  stats.length > 0 && (
+    <dl class:list={['grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4', className]}>
+      {stats.map((stat, i) => (
+        <div
+          data-reveal
+          style={`--reveal-delay:${i * 60}ms`}
+          class="flex flex-col-reverse items-center rounded-card border border-line bg-surface-alt px-4 py-7 text-center"
+        >
+          <dt class="mt-1 text-sm font-semibold text-ink sm:text-base">{stat.label}</dt>
+          <dd class="text-4xl font-medium tracking-tight text-primary md:text-5xl">{stat.value}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}

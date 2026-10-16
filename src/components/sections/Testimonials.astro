@@ -1,0 +1,59 @@
+---
+// Renders nothing until src/data/testimonials.ts has real testimonials.
+import Section, { type SectionTone } from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { testimonials, rating } from '../../data/testimonials';
+
+interface Props {
+  tone?: SectionTone;
+}
+
+const { tone = 'white' } = Astro.props;
+---
+
+{
+  testimonials.length > 0 && (
+    <Section tone={tone} aria-labelledby="testimonials-title">
+      <SectionHeading id="testimonials-title" eyebrow="Testimonials" align="center">
+        What our clients say
+      </SectionHeading>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {rating && (
+          <div class="flex flex-col items-center justify-center rounded-card border border-line bg-surface-alt p-8 text-center">
+            <p class="text-5xl font-bold tracking-tight text-ink">
+              {rating.value}
+              <span class="text-2xl text-body">/5</span>
+            </p>
+            <p class="mt-3">
+              Average rating from {rating.count} reviews
+            </p>
+            {rating.sourceUrl && (
+              <a href={rating.sourceUrl} class="mt-4 font-semibold text-primary hover:text-primary-hover">
+                Read the reviews
+              </a>
+            )}
+          </div>
+        )}
+
+        {testimonials.map((t, i) => (
+          <figure
+            data-reveal
+            style={`--reveal-delay:${i * 80}ms`}
+            class="flex flex-col rounded-card border border-line bg-surface p-8"
+          >
+            <blockquote class="flex-1 text-lg text-ink">
+              <p>“{t.quote}”</p>
+            </blockquote>
+            <figcaption class="mt-6">
+              <span class="block font-semibold text-ink">{t.name}</span>
+              <span class="text-sm">
+                {t.role}, {t.company}
+              </span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </Section>
+  )
+}

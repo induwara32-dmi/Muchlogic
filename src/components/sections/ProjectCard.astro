@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import Badge from '../ui/Badge.astro';
+import type { Project } from '../../data/projects';
+import { getProjectImage } from '../../lib/images';
+
+interface Props {
+  project: Project;
+  showTech?: boolean;
+  headingLevel?: 'h2' | 'h3';
+  /** Eager-load when the card is above the fold */
+  priority?: boolean;
+}
+
+const { project, showTech = false, headingLevel: Heading = 'h3', priority = false } = Astro.props;
+const image = getProjectImage(project.image);
+---
+
+<article
+  class="group relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-[box-shadow,border-color] duration-200 hover:border-primary/30 hover:shadow-card"
+>
+  <div class="aspect-[16/10] overflow-hidden border-b border-line bg-surface-alt">
+    <Image
+      src={image.src}
+      alt={image.isPlaceholder ? '' : project.imageAlt}
+      width={800}
+      height={500}
+      {...!image.isPlaceholder && {
+        widths: [400, 800, 1200],
+        sizes: '(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw',
+      }}
+      loading={priority ? 'eager' : 'lazy'}
+      class="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+    />
+  </div>
+
+  <div class="flex flex-1 flex-col p-6 sm:p-7">
+    <div class="flex flex-wrap gap-2">
+      <Badge>{project.category}</Badge>
+      {project.prototype && <Badge tone="outline">Prototype</Badge>}
+    </div>
+    <Heading class="mt-4 text-xl">{project.title}</Heading>
+    <p class="mt-2 flex-1">{project.summary}</p>
+
+    {
+      showTech && project.tech.length > 0 && (
+        <ul class="mt-5 flex flex-wrap gap-2" aria-label="Tech stack">
+          {project.tech.map((t) => (
+            <li class="rounded-pill bg-surface-alt px-2.5 py-1 text-sm text-body">{t}</li>
+          ))}
+        </ul>
+      )
+    }
+
+    <a
+      href={`/work/${project.slug}`}
+      class="mt-6 inline-flex items-center gap-1.5 self-start font-semibold text-ink after:absolute after:inset-0 after:rounded-card after:content-[''] hover:text-primary"
+    >
+      View project<span class="sr-only">: {project.title}</span>
+      <Icon
+        name="arrow-right"
+        size={18}
+        class="transition-transform duration-200 group-hover:translate-x-0.5"
+      />
+    </a>
+  </div>
+</article>

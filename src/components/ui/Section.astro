@@ -1,0 +1,30 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Container from './Container.astro';
+
+export type SectionTone = 'white' | 'alt';
+
+type Props = {
+  tone?: SectionTone;
+  /** Use 'tight' when the section sits directly under another of the same tone */
+  spacing?: 'default' | 'tight';
+  class?: string;
+  containerClass?: string;
+} & Omit<HTMLAttributes<'section'>, 'class'>;
+
+const { tone = 'white', spacing = 'default', class: className, containerClass, ...rest } =
+  Astro.props;
+---
+
+<section
+  class:list={[
+    tone === 'alt' ? 'bg-surface-alt' : 'bg-surface',
+    spacing === 'tight' ? 'py-10 md:py-16' : 'py-14 md:py-24',
+    className,
+  ]}
+  {...rest}
+>
+  <Container class={containerClass}>
+    <slot />
+  </Container>
+</section>

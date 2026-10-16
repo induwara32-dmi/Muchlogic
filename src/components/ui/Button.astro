@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from 'astro/types';
 import Icon, { type IconName } from './Icon.astro';
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'on-dark';
+type Variant = 'primary' | 'secondary' | 'ghost' | 'light' | 'on-dark';
 type Size = 'md' | 'lg';
 
 type Props = {
@@ -31,6 +31,7 @@ const variants: Record<Variant, string> = {
   primary: 'bg-primary text-white hover:bg-primary-hover',
   secondary: 'border border-line bg-surface text-ink hover:border-ink',
   ghost: 'text-ink hover:text-primary',
+  light: 'bg-white text-ink hover:bg-primary-soft',
   'on-dark': 'border border-dark-line text-white hover:border-white',
 };
 

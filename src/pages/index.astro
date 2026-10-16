@@ -1,22 +1,179 @@
 ---
-// Phase 1 placeholder — the full Home page is built in Phase 2.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/ui/Container.astro';
+import Section, { type SectionTone } from '../components/ui/Section.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
 import Button from '../components/ui/Button.astro';
+import Icon from '../components/ui/Icon.astro';
+import StatsRow from '../components/sections/StatsRow.astro';
+import ClientLogos from '../components/sections/ClientLogos.astro';
+import NumberedCards from '../components/sections/NumberedCards.astro';
+import ServiceCard from '../components/sections/ServiceCard.astro';
+import CTABand from '../components/sections/CTABand.astro';
+import ProjectCard from '../components/sections/ProjectCard.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import ProcessSteps from '../components/sections/ProcessSteps.astro';
+import FinalCTA from '../components/sections/FinalCTA.astro';
 import { site } from '../data/site';
+import { services } from '../data/services';
+import { featuredProjects } from '../data/projects';
+import { testimonials } from '../data/testimonials';
+import { whyMuchLogic } from '../data/home';
+
+// Alternate section backgrounds over the sections that actually render,
+// so hidden (empty) sections never leave two greys or two whites side by side.
+const sectionOrder = [
+  'why',
+  'services',
+  'work',
+  ...(testimonials.length > 0 ? ['testimonials'] : []),
+  'process',
+  'final',
+];
+const tone = (key: string): SectionTone =>
+  sectionOrder.indexOf(key) % 2 === 0 ? 'alt' : 'white';
 ---
 
-<BaseLayout title={site.name} description={site.description}>
-  <section class="bg-surface-alt py-14 md:py-24">
-    <Container class="text-center">
-      <h1 class="text-4xl md:text-6xl">
-        We build <span class="text-primary">smart software and AI</span> that grows your business
-      </h1>
-      <p class="mx-auto mt-6 max-w-2xl text-lg">Home page coming in Phase 2.</p>
-      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-        <Button href="/contact" size="lg" block>Start a project</Button>
-        <Button href="/work" size="lg" variant="secondary" block>See our work</Button>
+<BaseLayout
+  title={site.name}
+  description="MuchLogic builds smart software and AI for growing businesses: MuchLogic POS, custom software, websites, mobile apps and automation. Built in Sri Lanka."
+>
+  <!-- Hero -->
+  <section class="bg-surface pb-14 pt-12 md:pb-24 md:pt-20" aria-labelledby="hero-title">
+    <Container>
+      <div class="mx-auto max-w-6xl text-center">
+        <p
+          class="inline-flex items-center gap-2 rounded-pill border border-line bg-surface-alt px-4 py-1.5 text-sm font-medium text-body"
+        >
+          <span class="size-2 rounded-pill bg-primary" aria-hidden="true"></span>
+          Built in Sri Lanka
+        </p>
+        <h1
+          id="hero-title"
+          class="mt-6 text-[2.5rem] font-extrabold leading-[1.05] tracking-tighter sm:text-6xl lg:text-[4rem] xl:text-7xl"
+        >
+          <!-- On large screens the highlighted phrase always stays together on line one -->
+          <span class="lg:block">We build <span class="text-primary">smart software and AI</span></span>{' '}
+          that grows your business
+        </h1>
+        <p class="mx-auto mt-6 max-w-2xl text-lg md:text-xl">
+          From retail POS systems to custom web apps and AI tools, we design, build and support
+          software that helps businesses work faster and grow.
+        </p>
+        <div
+          class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8"
+        >
+          <Button href="/contact" size="lg" block>Start a project</Button>
+          <a
+            href="/work"
+            class="group inline-flex min-h-12 items-center gap-1.5 font-semibold text-ink hover:text-primary"
+          >
+            See our work
+            <Icon
+              name="chevron-right"
+              size={18}
+              class="transition-transform duration-200 group-hover:translate-x-0.5"
+            />
+          </a>
+        </div>
       </div>
+
+      <StatsRow class="mt-16 md:mt-24" />
+      <ClientLogos class="mt-16 md:mt-20" />
     </Container>
   </section>
+
+  <!-- Why MuchLogic -->
+  <Section tone={tone('why')} aria-labelledby="why-title">
+    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+      <div data-reveal>
+        <Eyebrow>Why MuchLogic</Eyebrow>
+        <h2
+          id="why-title"
+          class="mt-3 text-[2rem] leading-[1.15] tracking-tighter md:text-[2.625rem] lg:text-5xl"
+        >
+          Software that works as hard as you do
+        </h2>
+        <p class="mt-5 max-w-lg text-lg">
+          We help growing businesses plan, build and improve the software they depend on. Clear
+          thinking, solid engineering and real support after launch, all from one team.
+        </p>
+        <a
+          href="/about"
+          class="group mt-8 inline-flex min-h-11 items-center gap-1.5 font-semibold text-primary hover:text-primary-hover"
+        >
+          More about us
+          <Icon
+            name="arrow-right"
+            size={18}
+            class="transition-transform duration-200 group-hover:translate-x-0.5"
+          />
+        </a>
+      </div>
+      <NumberedCards items={whyMuchLogic} />
+    </div>
+  </Section>
+
+  <!-- Services + idea CTA -->
+  <Section tone={tone('services')} aria-labelledby="services-title">
+    <SectionHeading
+      id="services-title"
+      eyebrow="Our services"
+      align="center"
+      description="Everything you need to run, sell and grow, built and supported by one team."
+    >
+      Solutions that move you forward
+    </SectionHeading>
+
+    <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-6">
+      {
+        services.map((service, i) => (
+          <li data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+            <ServiceCard service={service} />
+          </li>
+        ))
+      }
+    </ul>
+
+    <CTABand
+      class="mt-14 md:mt-24"
+      title="Have an idea?"
+      subtitle="Let’s build it together."
+    />
+  </Section>
+
+  <!-- Featured projects -->
+  <Section tone={tone('work')} aria-labelledby="work-title">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <SectionHeading id="work-title" eyebrow="Our work" class="max-w-2xl">
+        Recent projects we’re proud of
+      </SectionHeading>
+      <Button href="/work" variant="secondary" icon="arrow-right" class="self-start sm:self-auto">
+        More projects
+      </Button>
+    </div>
+
+    <ul class="mt-10 grid gap-5 md:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-6">
+      {
+        featuredProjects.slice(0, 3).map((project, i) => (
+          <li data-reveal style={`--reveal-delay:${i * 80}ms`}>
+            <ProjectCard project={project} />
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Testimonials tone={tone('testimonials')} />
+
+  <!-- Process -->
+  <Section tone={tone('process')} aria-labelledby="process-title">
+    <SectionHeading id="process-title" eyebrow="Our process" align="center">
+      How we bring ideas to life
+    </SectionHeading>
+    <ProcessSteps class="mt-12 lg:mt-16" />
+  </Section>
+
+  <FinalCTA tone={tone('final')} />
 </BaseLayout>

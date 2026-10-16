@@ -1,0 +1,18 @@
+---
+interface Props {
+  class?: string;
+  onDark?: boolean;
+}
+
+const { class: className, onDark = false } = Astro.props;
+---
+
+<p
+  class:list={[
+    'text-sm font-bold uppercase tracking-widest',
+    onDark ? 'text-primary-on-dark' : 'text-primary',
+    className,
+  ]}
+>
+  <slot />
+</p>
