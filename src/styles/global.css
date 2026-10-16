@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter";
 @import "@fontsource-variable/plus-jakarta-sans";
 
 /* `js:` variant — applies only once BaseLayout has added the .js class (JS is running) */
@@ -19,25 +20,25 @@
   /* Brand accent (burnt orange). #C2410C on white = 5.2:1 (WCAG AA) */
   --color-primary: #c2410c;
   --color-primary-hover: #9a3412;
-  --color-primary-soft: #fff1ea;
-  /* Orange for text on dark backgrounds (#FB923C on #0F0F10 = 8.7:1) */
+  --color-primary-soft: #fdf1ea;
+  /* Orange for text on dark backgrounds (#FB923C on navy = 7.4:1) */
   --color-primary-on-dark: #fb923c;
 
-  /* Text */
-  --color-ink: #111827;
-  --color-body: #4b5563;
-  --color-muted: #6b7280; /* lightest allowed text on light backgrounds */
+  /* Text — navy ink and slate body for a calm, corporate feel */
+  --color-ink: #0b1b2e;
+  --color-body: #445063;
+  --color-muted: #66717f; /* lightest allowed text on light backgrounds */
 
   /* Surfaces & lines */
   --color-surface: #ffffff;
-  --color-surface-alt: #f7f7f8;
-  --color-line: #e5e7eb;
+  --color-surface-alt: #f4f6f9;
+  --color-line: #dbe1e8;
 
-  /* Dark bands & footer */
-  --color-dark: #0f0f10;
-  --color-dark-soft: #1c1c1f;
-  --color-dark-line: #2e2e33;
-  --color-dark-muted: #a1a1aa; /* 7.9:1 on --color-dark */
+  /* Dark bands & footer (deep navy) */
+  --color-dark: #0b1b2e;
+  --color-dark-soft: #12263d;
+  --color-dark-line: #26394f;
+  --color-dark-muted: #a9b7c8; /* 8.3:1 on --color-dark */
 
   /* Feedback */
   --color-danger: #b91c1c;
@@ -45,18 +46,26 @@
   --color-success: #15803d;
   --color-success-soft: #f0fdf4;
 
-  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Page titles (h1) keep the original Plus Jakarta Sans look */
+  --font-display: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* Letter-spacing: large display headings / smaller headings */
   --tracking-display: -0.02em;
-  --tracking-heading: -0.01em;
+  --tracking-heading: -0.015em;
 
+  /* Corners: cards/images vs. soft, rounder buttons, inputs and chips */
   --radius-card: 12px;
-  --radius-pill: 9999px;
+  --radius-control: 10px;
+  --radius-pill: 9999px; /* only for true circles (dots, number badges) */
 
   --container-site: 1200px;
 
-  --shadow-card: 0 12px 32px -12px rgb(17 24 39 / 0.18);
+  /* Soft, macOS-style raised controls */
+  --shadow-button: 0 1px 2px rgb(11 27 46 / 0.08), 0 0 0 0.5px rgb(11 27 46 / 0.04);
+  --shadow-button-primary: inset 0 1px 0 rgb(255 255 255 / 0.22), 0 1px 2px rgb(154 52 18 / 0.35);
+
+  --shadow-card: 0 1px 2px rgb(11 27 46 / 0.06), 0 4px 12px -4px rgb(11 27 46 / 0.08);
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -68,15 +77,19 @@
   }
 
   body {
-    @apply bg-surface font-sans text-base leading-relaxed text-body antialiased;
+    @apply bg-surface font-sans text-base leading-[1.65] text-body antialiased;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    @apply font-bold tracking-heading text-ink;
+    @apply font-semibold tracking-heading text-ink;
     text-wrap: balance;
+  }
+
+  h1 {
+    font-family: var(--font-display);
   }
 
   p {
@@ -100,20 +113,85 @@
   }
 }
 
-/* Scroll-reveal: only hidden once JS has marked the page, so no-JS users see everything. */
+/* Scroll-reveal (simple fade): only hidden once JS has marked the page, so no-JS users see everything. */
 @layer components {
+  /* Dark hero / CTA band: navy with soft orange + indigo glows and a fine grid */
+  .hero-bg {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(60% 55% at 88% -5%, rgb(251 146 60 / 0.22), transparent 70%),
+      radial-gradient(55% 60% at 5% 105%, rgb(79 70 229 / 0.3), transparent 70%),
+      var(--color-dark);
+  }
+  /* Fine grid pattern */
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-position: center top;
+    /* Faint behind the text (centre), clearer toward the sides, fading out at the edges */
+    mask-image: radial-gradient(
+      ellipse 70% 85% at 50% 50%,
+      rgb(0 0 0 / 0.12) 0%,
+      rgb(0 0 0 / 0.12) 38%,
+      #000 72%,
+      rgb(0 0 0 / 0.3) 100%
+    );
+  }
+  /* Highlighted grid revealed under the mouse pointer (position set by a tiny script in BaseLayout) */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    background-image:
+      linear-gradient(to right, rgb(251 146 60 / 0.28) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(251 146 60 / 0.28) 1px, transparent 1px),
+      radial-gradient(200px circle at var(--mx, 50%) var(--my, 50%), rgb(251 146 60 / 0.05), transparent 100%);
+    background-size: 64px 64px, 64px 64px, 100% 100%;
+    background-position: center top, center top, 0 0;
+    /* Pointer-sized spotlight, intersected with a fade that keeps it faint over the text */
+    mask-image:
+      radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), #000 5%, transparent 100%),
+      radial-gradient(
+        ellipse 70% 85% at 50% 50%,
+        rgb(0 0 0 / 0.12) 0%,
+        rgb(0 0 0 / 0.12) 38%,
+        #000 72%,
+        rgb(0 0 0 / 0.3) 100%
+      );
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+  }
+  .hero-bg[data-active]::after {
+    opacity: 1;
+  }
+
+  /* Light hero for inner pages: soft warm + cool glows */
+  .soft-bg {
+    background:
+      radial-gradient(55% 90% at 100% 0%, rgb(251 146 60 / 0.14), transparent 70%),
+      radial-gradient(45% 80% at 0% 100%, rgb(79 70 229 / 0.07), transparent 70%),
+      var(--color-surface-alt);
+  }
+
   .js [data-reveal] {
     opacity: 0;
-    transform: translateY(16px);
-    transition:
-      opacity 0.6s var(--ease-out-soft),
-      transform 0.6s var(--ease-out-soft);
+    transition: opacity 0.45s var(--ease-out-soft);
     transition-delay: var(--reveal-delay, 0ms);
   }
 
   .js [data-reveal].is-visible {
     opacity: 1;
-    transform: none;
   }
 }
 
@@ -133,6 +211,5 @@
 
   .js [data-reveal] {
     opacity: 1;
-    transform: none;
   }
 }

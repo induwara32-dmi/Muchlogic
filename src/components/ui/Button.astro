@@ -28,20 +28,20 @@ const {
 } = Astro.props;
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-primary text-white hover:bg-primary-hover',
-  secondary: 'border border-line bg-surface text-ink hover:border-ink',
+  primary: 'bg-primary text-white shadow-button-primary hover:bg-primary-hover active:scale-[0.98]',
+  secondary: 'border border-ink/15 bg-surface text-ink shadow-button hover:bg-surface-alt active:scale-[0.98]',
   ghost: 'text-ink hover:text-primary',
-  light: 'bg-white text-ink hover:bg-primary-soft',
-  'on-dark': 'border border-dark-line text-white hover:border-white',
+  light: 'bg-white text-ink shadow-button hover:bg-surface-alt active:scale-[0.98]',
+  'on-dark': 'border border-white/20 bg-white/10 text-white hover:bg-white/15 active:scale-[0.98]',
 };
 
 const sizes: Record<Size, string> = {
   md: 'min-h-11 px-5 text-sm',
-  lg: 'min-h-12 px-6 text-base',
+  lg: 'min-h-12 px-7 text-[0.9375rem]',
 };
 
 const classes = [
-  'group inline-flex items-center justify-center gap-2 rounded-pill font-semibold transition-colors duration-200',
+  'group inline-flex items-center justify-center gap-2 rounded-control font-medium transition-[background-color,transform,box-shadow] duration-150',
   'disabled:cursor-not-allowed disabled:opacity-60',
   variants[variant],
   variant === 'ghost' ? 'px-0' : sizes[size],

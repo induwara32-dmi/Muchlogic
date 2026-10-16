@@ -44,7 +44,7 @@ const ogImage = image.isPlaceholder
   ? undefined
   : (await getImage({ src: image.src, width: 1200, height: 630, format: 'jpg', fit: 'cover' })).src;
 
-const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before:rounded-pill before:bg-primary before:content-[""]';
+const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before:bg-primary before:content-[""]';
 ---
 
 <BaseLayout
@@ -69,13 +69,13 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
         <div class="mt-10 max-w-3xl md:mt-14">
           <div class="flex flex-wrap items-center gap-3">
             <Badge>{project.category}</Badge>{' '}
-            <span class="text-sm font-semibold uppercase tracking-widest text-body">Case study {number}</span>{' '}
+            <span class="text-xs font-semibold uppercase tracking-[0.12em] text-body">Case study {number}</span>{' '}
             {project.prototype && <Badge tone="outline">Prototype</Badge>}
           </div>
           <h1 class="mt-5 text-[2.5rem] font-extrabold leading-[1.05] tracking-display sm:text-6xl">
             {project.title}
           </h1>
-          <p class="mt-6 text-lg md:text-xl">{project.description}</p>
+          <p class="mt-5 text-[1.0625rem] md:text-lg">{project.description}</p>
         </div>
 
         <div class="mt-10 overflow-hidden rounded-card border border-line bg-surface-alt md:mt-14">
@@ -105,8 +105,8 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
               style={`--cols:${info.length}`}
             >
               {info.map((row) => (
-                <div class="rounded-card bg-surface-alt px-6 py-5">
-                  <dt class="text-sm font-semibold uppercase tracking-widest text-body">{row.label}</dt>
+                <div class="rounded-card border border-line bg-surface-alt px-6 py-5">
+                  <dt class="text-xs font-semibold uppercase tracking-[0.12em] text-body">{row.label}</dt>
                   <dd class="mt-1.5 text-lg font-semibold text-ink">{row.value}</dd>
                 </div>
               ))}
@@ -138,7 +138,7 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
                     {details.tech.map((name) => {
                       const logo = techIcon(name);
                       return (
-                        <li class="inline-flex min-h-11 items-center gap-2.5 rounded-pill border border-line px-4 font-semibold text-ink">
+                        <li class="inline-flex min-h-11 items-center gap-2.5 rounded-control border border-line px-4 font-semibold text-ink">
                           {logo && (
                             <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style={`fill:#${logo.hex}`}>
                               <path d={logo.path} />
@@ -182,21 +182,21 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
       <a
         href={`/work/${previous.slug}`}
         rel="prev"
-        class="group flex items-center gap-4 rounded-card border border-line bg-surface p-6 transition-[border-color,box-shadow] duration-200 hover:border-primary/30 hover:shadow-card"
+        class="group flex items-center gap-4 rounded-card border border-line bg-surface p-6 transition-colors duration-150 hover:border-ink/40"
       >
         <Icon name="arrow-left" size={20} class="text-primary transition-transform duration-200 group-hover:-translate-x-0.5" />
         <span>
-          <span class="block text-sm font-semibold uppercase tracking-widest text-body">Previous project<span class="sr-only">:</span></span>{' '}
+          <span class="block text-xs font-semibold uppercase tracking-[0.12em] text-body">Previous project<span class="sr-only">:</span></span>{' '}
           <span class="mt-1 block text-lg font-bold text-ink">{previous.title}</span>
         </span>
       </a>
       <a
         href={`/work/${next.slug}`}
         rel="next"
-        class="group flex items-center justify-end gap-4 rounded-card border border-line bg-surface p-6 text-right transition-[border-color,box-shadow] duration-200 hover:border-primary/30 hover:shadow-card"
+        class="group flex items-center justify-end gap-4 rounded-card border border-line bg-surface p-6 text-right transition-colors duration-150 hover:border-ink/40"
       >
         <span>
-          <span class="block text-sm font-semibold uppercase tracking-widest text-body">Next project<span class="sr-only">:</span></span>{' '}
+          <span class="block text-xs font-semibold uppercase tracking-[0.12em] text-body">Next project<span class="sr-only">:</span></span>{' '}
           <span class="mt-1 block text-lg font-bold text-ink">{next.title}</span>
         </span>
         <Icon name="arrow-right" size={20} class="text-primary transition-transform duration-200 group-hover:translate-x-0.5" />

@@ -24,7 +24,7 @@ const titleId = `${service.slug}-title`;
   id={service.slug}
   aria-labelledby={titleId}
   class:list={[
-    'scroll-mt-32 py-14 md:py-24 lg:scroll-mt-36',
+    'scroll-mt-32 py-14 md:py-20 lg:scroll-mt-36',
     reversed ? 'bg-surface-alt' : 'bg-surface',
   ]}
 >
@@ -41,26 +41,24 @@ const titleId = `${service.slug}-title`;
     </div>
 
     <div data-reveal style="--reveal-delay:80ms">
-      <p class="flex items-center gap-3 text-sm font-semibold">
+      <p class="flex items-center gap-3 text-[0.8125rem] font-semibold uppercase tracking-[0.12em]">
         <span class="text-primary">Service {number}</span>{' '}
         <span class="h-px w-8 bg-line" aria-hidden="true"></span>{' '}
         <span class="text-body">{service.title}</span>
       </p>
       <h2
         id={titleId}
-        class="mt-4 text-[2rem] leading-[1.15] tracking-display md:text-[2.625rem] lg:text-5xl"
+        class="mt-4 text-[1.75rem] leading-[1.2] tracking-heading md:text-[2.125rem] lg:text-[2.375rem]"
       >
         {service.headline}
       </h2>
-      <p class="mt-5 text-lg">{service.description}</p>
+      <p class="mt-5 text-[1.0625rem]">{service.description}</p>
 
       <ul class="mt-7 space-y-3.5">
         {
           service.bullets.map((bullet) => (
             <li class="flex items-start gap-3 text-ink">
-              <span class="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-pill bg-primary text-white">
-                <Icon name="check" size={12} strokeWidth={3} />
-              </span>
+              <Icon name="check" size={20} strokeWidth={2.5} class="mt-0.5 shrink-0 text-primary" />
               {bullet}
             </li>
           ))

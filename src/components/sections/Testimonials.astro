@@ -14,14 +14,14 @@ const { tone = 'white' } = Astro.props;
 {
   testimonials.length > 0 && (
     <Section tone={tone} aria-labelledby="testimonials-title">
-      <SectionHeading id="testimonials-title" eyebrow="Testimonials" align="center">
+      <SectionHeading id="testimonials-title" eyebrow="Testimonials">
         What our clients say
       </SectionHeading>
 
       <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {rating && (
-          <div class="flex flex-col items-center justify-center rounded-card border border-line bg-surface-alt p-8 text-center">
-            <p class="text-5xl font-bold tracking-display text-ink">
+          <div class="flex flex-col justify-center rounded-card border border-line bg-surface p-8">
+            <p class="text-5xl font-semibold tracking-display text-ink">
               {rating.value}
               <span class="text-2xl text-body">/5</span>
             </p>
@@ -42,7 +42,7 @@ const { tone = 'white' } = Astro.props;
             style={`--reveal-delay:${i * 80}ms`}
             class="flex flex-col rounded-card border border-line bg-surface p-8"
           >
-            <blockquote class="flex-1 text-lg text-ink">
+            <blockquote class="flex-1 text-[1.0625rem] text-ink">
               <p>“{t.quote}”</p>
             </blockquote>
             <figcaption class="mt-6">

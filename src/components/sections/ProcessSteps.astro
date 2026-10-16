@@ -1,11 +1,8 @@
 ---
 /**
- * Step timeline.
- * layout="responsive" (default):
- * - Mobile: vertical timeline, badges in a left column joined by a vertical line
- * - Tablet: 2×2 grid, no connector
- * - Desktop: one row, horizontal line through the badge centres (first → last)
- * layout="vertical": the vertical timeline at every size (for narrow columns, e.g. Contact)
+ * Numbered steps with a rule above each one.
+ * layout="responsive" (default): stacked on mobile, 2 columns on tablet, one row on desktop.
+ * layout="vertical": a single column at every size (for narrow columns, e.g. Contact).
  * Defaults to the shared process from process.ts; pass `items` for other step lists.
  */
 import { processSteps, type ProcessStep } from '../../data/process';
@@ -26,53 +23,28 @@ const {
 } = Astro.props;
 
 const vertical = layout === 'vertical';
-const count = items.length;
-const gap = '2rem'; // desktop column gap — keep in sync with lg:gap-x-8
-const badge = '2.75rem'; // 44px
 ---
 
 <ol
   class:list={[
-    'relative',
-    !vertical &&
-      'md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10 lg:grid-cols-[repeat(var(--steps),minmax(0,1fr))]',
+    vertical
+      ? 'divide-y divide-line border-y border-line'
+      : 'grid gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-[repeat(var(--steps),minmax(0,1fr))]',
     className,
   ]}
-  style={`--steps:${count}`}
+  style={`--steps:${items.length}`}
 >
-  {
-    !vertical && (
-      // Desktop connector: from the centre of the first badge to the centre of the last
-      <span
-        aria-hidden="true"
-        class="pointer-events-none absolute hidden h-px bg-line lg:block"
-        style={`top:calc(${badge} / 2); left:calc(${badge} / 2); right:calc((100% - ${count - 1} * ${gap}) / ${count} - ${badge} / 2)`}
-      />
-    )
-  }
-
   {
     items.map((step, i) => (
       <li
         data-reveal
-        style={`--reveal-delay:${i * 100}ms`}
-        class:list={[
-          'group relative grid grid-cols-[2.75rem_minmax(0,1fr)] gap-x-4 pb-8 last:pb-0',
-          !vertical && 'md:block md:pb-0',
-          // Vertical connector: badge bottom → next badge top
-          i < count - 1 &&
-            "before:absolute before:bottom-0 before:left-[calc(1.375rem-1px)] before:top-11 before:w-0.5 before:bg-line before:content-['']",
-          i < count - 1 && !vertical && 'md:before:hidden',
-        ]}
+        class:list={[vertical ? 'grid grid-cols-[3.25rem_minmax(0,1fr)] gap-x-0 py-5' : 'border-t-2 border-line pt-5']}
       >
-        <span
-          aria-hidden="true"
-          class="relative z-10 inline-flex size-11 items-center justify-center rounded-pill bg-primary-soft font-semibold tabular-nums text-primary transition-colors duration-200 group-focus-within:bg-primary group-focus-within:text-white group-hover:bg-primary group-hover:text-white"
-        >
+        <span class="inline-flex size-9 items-center justify-center rounded-xl bg-primary-soft text-sm font-semibold tabular-nums text-primary" aria-hidden="true">
           {String(i + 1).padStart(2, '0')}
         </span>
-        <div class:list={['pt-2', !vertical && 'md:mt-5 md:pt-0']}>
-          <Heading class="text-lg lg:text-xl">{step.title}</Heading>
+        <div class:list={[!vertical && 'mt-3']}>
+          <Heading class="text-lg">{step.title}</Heading>
           <p class="mt-2">{step.description}</p>
         </div>
       </li>

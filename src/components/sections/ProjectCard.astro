@@ -28,14 +28,14 @@ const plain = variant === 'plain';
     'group relative flex h-full flex-col',
     plain
       ? ''
-      : 'overflow-hidden rounded-card border border-line bg-surface transition-[box-shadow,border-color] duration-200 hover:border-primary/30 hover:shadow-card',
+      : 'overflow-hidden rounded-card border border-line bg-surface shadow-card transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_-16px_rgb(11_27_46/0.25)]',
   ]}
 >
   <div
     class:list={[
       'relative aspect-[16/10] overflow-hidden bg-surface-alt',
       plain
-        ? 'rounded-card border border-line transition-shadow duration-200 group-hover:shadow-card'
+        ? 'rounded-card border border-line'
         : 'border-b border-line',
     ]}
   >
@@ -49,7 +49,7 @@ const plain = variant === 'plain';
         sizes: '(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw',
       }}
       loading={priority ? 'eager' : 'lazy'}
-      class="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+      class="size-full object-cover"
     />
     {plain && project.prototype && <Badge tone="outline" class="absolute left-4 top-4 z-10">Prototype</Badge>}
   </div>
@@ -57,26 +57,26 @@ const plain = variant === 'plain';
   <div class:list={['flex flex-1 flex-col', plain ? 'pt-6' : 'p-6 sm:p-7']}>
     {
       plain ? (
-        <p class="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm font-semibold uppercase tracking-widest">
+        <p class="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs font-semibold uppercase tracking-[0.12em]">
           <span class="text-primary">Case {caseNumber(project)}</span>{' '}
           <span class="size-1 rounded-pill bg-line" aria-hidden="true" />{' '}
           <span class="text-body">{project.category}</span>
         </p>
       ) : (
-        <div class="flex flex-wrap gap-2">
-          <Badge>{project.category}</Badge>
-          {project.prototype && <Badge tone="outline">Prototype</Badge>}
-        </div>
+        <p class="flex flex-wrap items-center gap-x-2.5 text-xs font-semibold uppercase tracking-[0.12em]">
+          <span class="text-primary">{project.category}</span>
+          {project.prototype && <span class="text-muted">Prototype</span>}
+        </p>
       )
     }
-    <Heading class:list={['text-xl', plain ? 'mt-3 lg:text-2xl' : 'mt-4']}>{project.title}</Heading>
+    <Heading class:list={['text-lg', plain ? 'mt-3' : 'mt-3']}>{project.title}</Heading>
     <p class="mt-2 flex-1">{project.summary}</p>
 
     {
       plain && tech.length > 0 && (
         <ul class="mt-5 flex flex-wrap gap-2" aria-label="Tech stack">
           {tech.map((t) => (
-            <li class="rounded-pill border border-line bg-surface px-3 py-1 text-sm text-body">{t}</li>
+            <li class="rounded-control border border-line bg-surface px-2.5 py-1 text-sm text-body">{t}</li>
           ))}
         </ul>
       )
@@ -86,7 +86,7 @@ const plain = variant === 'plain';
       href={`/work/${project.slug}`}
       class:list={[
         "mt-6 inline-flex items-center gap-1.5 self-start font-semibold after:absolute after:inset-0 after:rounded-card after:content-['']",
-        plain ? 'text-primary hover:text-primary-hover' : 'text-ink hover:text-primary',
+        'text-primary hover:text-primary-hover',
       ]}
     >
       View project<span class="sr-only">: {project.title}</span>

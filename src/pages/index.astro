@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/ui/Container.astro';
-import Section, { type SectionTone } from '../components/ui/Section.astro';
+import Section from '../components/ui/Section.astro';
 import SectionHeading from '../components/ui/SectionHeading.astro';
 import Eyebrow from '../components/ui/Eyebrow.astro';
 import Button from '../components/ui/Button.astro';
@@ -10,18 +10,19 @@ import StatsRow from '../components/sections/StatsRow.astro';
 import ClientLogos from '../components/sections/ClientLogos.astro';
 import NumberedCards from '../components/sections/NumberedCards.astro';
 import ServiceCard from '../components/sections/ServiceCard.astro';
-import CTABand from '../components/sections/CTABand.astro';
 import ProjectCard from '../components/sections/ProjectCard.astro';
 import Testimonials from '../components/sections/Testimonials.astro';
 import ProcessSteps from '../components/sections/ProcessSteps.astro';
 import FinalCTA from '../components/sections/FinalCTA.astro';
 import { site } from '../data/site';
 import { services } from '../data/services';
+import { stats } from '../data/stats';
+import { clientLogos } from '../data/clientLogos';
 import { featuredProjects } from '../data/projects';
 import { testimonials } from '../data/testimonials';
 import { whyMuchLogic } from '../data/home';
 
-// Alternate section backgrounds over the sections that actually render,
+// After the hero, backgrounds alternate over the sections that actually render,
 // so hidden (empty) sections never leave two greys or two whites side by side.
 const sectionOrder = [
   'why',
@@ -29,10 +30,11 @@ const sectionOrder = [
   'work',
   ...(testimonials.length > 0 ? ['testimonials'] : []),
   'process',
-  'final',
 ];
-const tone = (key: string): SectionTone =>
-  sectionOrder.indexOf(key) % 2 === 0 ? 'alt' : 'white';
+const tone = (key: string): 'white' | 'alt' => (sectionOrder.indexOf(key) % 2 === 0 ? 'white' : 'alt');
+
+// Credibility strip under the hero: only when there are real numbers or client logos to show
+const showProof = stats.length > 0 || clientLogos.length > 0;
 ---
 
 <BaseLayout
@@ -40,74 +42,68 @@ const tone = (key: string): SectionTone =>
   description="MuchLogic builds smart software and AI for growing businesses: MuchLogic POS, custom software, websites, mobile apps and automation. Built in Sri Lanka."
 >
   <!-- Hero -->
-  <section class="bg-surface pb-14 pt-12 md:pb-24 md:pt-20" aria-labelledby="hero-title">
-    <Container>
-      <div class="mx-auto max-w-6xl text-center">
-        <p
-          class="inline-flex items-center gap-2 rounded-pill border border-line bg-surface-alt px-4 py-1.5 text-sm font-medium text-body"
-        >
-          <span class="size-2 rounded-pill bg-primary" aria-hidden="true"></span>
-          Built in Sri Lanka
-        </p>
+  <section
+    class="hero-bg relative flex min-h-[min(calc(100svh-6.5rem),54rem)] items-center overflow-hidden text-dark-muted"
+    aria-labelledby="hero-title"
+  >
+    <Container class="py-16 md:py-24">
+      <div class="mx-auto max-w-5xl text-center">
+        <Eyebrow onDark>Software company · Sri Lanka</Eyebrow>
         <h1
           id="hero-title"
-          class="mt-6 text-[2.5rem] font-extrabold leading-[1.05] tracking-display sm:text-6xl lg:text-[3.75rem] xl:text-7xl"
+          class="mt-5 text-[2.5rem] font-extrabold leading-[1.05] tracking-display text-white sm:text-6xl lg:text-[3.75rem]"
         >
           <!-- On large screens the highlighted phrase always stays together on line one -->
-          <span class="lg:block">We build <span class="text-primary">smart software and AI</span></span>{' '}
+          <span class="lg:block">We build <span class="text-primary-on-dark">smart software and AI</span></span>{' '}
           that grows your business
         </h1>
-        <p class="mx-auto mt-6 max-w-2xl text-lg md:text-xl">
+        <p class="mx-auto mt-6 max-w-2xl text-[1.0625rem] leading-relaxed md:text-lg">
           From retail POS systems to custom web apps and AI tools, we design, build and support
           software that helps businesses work faster and grow.
         </p>
-        <div
-          class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8"
-        >
+        <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
           <Button href="/contact" size="lg" block>Start a project</Button>
-          <a
-            href="/work"
-            class="group inline-flex min-h-12 items-center gap-1.5 font-semibold text-ink hover:text-primary"
-          >
-            See our work
-            <Icon
-              name="chevron-right"
-              size={18}
-              class="transition-transform duration-200 group-hover:translate-x-0.5"
-            />
-          </a>
+          <Button href="/work" variant="on-dark" size="lg" block>See our work</Button>
         </div>
       </div>
-
-      <StatsRow class="mt-16 md:mt-24" />
-      <ClientLogos class="mt-16 md:mt-20" />
     </Container>
   </section>
 
+  {
+    showProof && (
+      <section class="border-b border-line bg-surface py-10 md:py-12" aria-label="MuchLogic at a glance">
+        <Container class="space-y-10">
+          <StatsRow />
+          <ClientLogos />
+        </Container>
+      </section>
+    )
+  }
+
   <!-- Why MuchLogic -->
   <Section tone={tone('why')} aria-labelledby="why-title">
-    <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
       <div data-reveal>
         <Eyebrow>Why MuchLogic</Eyebrow>
         <h2
           id="why-title"
-          class="mt-3 text-[2rem] leading-[1.15] tracking-display md:text-[2.625rem] lg:text-5xl"
+          class="mt-3 text-[1.75rem] leading-[1.2] tracking-heading md:text-[2.125rem] lg:text-[2.375rem]"
         >
           Software that works as hard as you do
         </h2>
-        <p class="mt-5 max-w-lg text-lg">
+        <p class="mt-5 max-w-md text-[1.0625rem]">
           We help growing businesses plan, build and improve the software they depend on. Clear
           thinking, solid engineering and real support after launch, all from one team.
         </p>
         <a
           href="/about"
-          class="group mt-8 inline-flex min-h-11 items-center gap-1.5 font-semibold text-primary hover:text-primary-hover"
+          class="group mt-7 inline-flex min-h-11 items-center gap-1.5 font-semibold text-primary hover:text-primary-hover"
         >
           More about us
           <Icon
             name="arrow-right"
             size={18}
-            class="transition-transform duration-200 group-hover:translate-x-0.5"
+            class="transition-transform duration-150 group-hover:translate-x-0.5"
           />
         </a>
       </div>
@@ -115,32 +111,28 @@ const tone = (key: string): SectionTone =>
     </div>
   </Section>
 
-  <!-- Services + idea CTA -->
+  <!-- Services -->
   <Section tone={tone('services')} aria-labelledby="services-title">
-    <SectionHeading
-      id="services-title"
-      eyebrow="Our services"
-      align="center"
-      description="Everything you need to run, sell and grow, built and supported by one team."
-    >
-      Solutions that move you forward
-    </SectionHeading>
+    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <SectionHeading id="services-title" eyebrow="Our services" class="max-w-xl">
+        Solutions that move you forward
+      </SectionHeading>
+      <p class="max-w-md text-[1.0625rem]">
+        Everything you need to run, sell and grow, built and supported by one team.
+      </p>
+    </div>
 
-    <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-6">
+    <ul
+      class="mt-10 grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2 lg:mt-12 lg:grid-cols-3"
+    >
       {
-        services.map((service, i) => (
-          <li data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+        services.map((service) => (
+          <li class="bg-surface">
             <ServiceCard service={service} />
           </li>
         ))
       }
     </ul>
-
-    <CTABand
-      class="mt-14 md:mt-24"
-      title="Have an idea?"
-      subtitle="Let’s build it together."
-    />
   </Section>
 
   <!-- Featured projects -->
@@ -149,15 +141,15 @@ const tone = (key: string): SectionTone =>
       <SectionHeading id="work-title" eyebrow="Our work" class="max-w-2xl">
         Recent projects we’re proud of
       </SectionHeading>
-      <Button href="/work" variant="secondary" icon="arrow-right" class="self-start sm:self-auto">
-        More projects
+      <Button href="/work" variant="secondary" class="self-start sm:self-auto">
+        All projects
       </Button>
     </div>
 
-    <ul class="mt-10 grid gap-5 md:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-6">
+    <ul class="mt-10 grid gap-6 md:grid-cols-2 lg:mt-12 lg:grid-cols-3">
       {
-        featuredProjects.slice(0, 3).map((project, i) => (
-          <li data-reveal style={`--reveal-delay:${i * 80}ms`}>
+        featuredProjects.slice(0, 3).map((project) => (
+          <li data-reveal>
             <ProjectCard project={project} />
           </li>
         ))
@@ -169,11 +161,11 @@ const tone = (key: string): SectionTone =>
 
   <!-- Process -->
   <Section tone={tone('process')} aria-labelledby="process-title">
-    <SectionHeading id="process-title" eyebrow="Our process" align="center">
+    <SectionHeading id="process-title" eyebrow="Our process" class="max-w-2xl">
       How we bring ideas to life
     </SectionHeading>
-    <ProcessSteps class="mt-12 lg:mt-16" />
+    <ProcessSteps class="mt-10 lg:mt-12" />
   </Section>
 
-  <FinalCTA tone={tone('final')} />
+  <FinalCTA />
 </BaseLayout>

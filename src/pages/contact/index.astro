@@ -9,7 +9,7 @@ import ProcessSteps from '../../components/sections/ProcessSteps.astro';
 import ContactForm from '../../components/sections/ContactForm.astro';
 import ContactCards from '../../components/sections/ContactCards.astro';
 import FAQ from '../../components/sections/FAQ.astro';
-import { contactHeroTags, nextSteps } from '../../data/contact';
+import { nextSteps } from '../../data/contact';
 import { locationLabel } from '../../data/site';
 ---
 
@@ -20,8 +20,6 @@ import { locationLabel } from '../../data/site';
   <PageHero
     eyebrow="Contact us"
     description="Whether you have a clear project in mind or just want to explore what’s possible, we’ll help you work out the next steps."
-    tags={contactHeroTags}
-    tagDots
   >
     Let’s build something <span class="text-muted">that works for you.</span>
   </PageHero>
@@ -33,11 +31,11 @@ import { locationLabel } from '../../data/site';
         <Eyebrow>Get in touch</Eyebrow>
         <h2
           id="form-title"
-          class="mt-3 text-[2rem] leading-[1.15] tracking-display md:text-[2.625rem] lg:text-5xl"
+          class="mt-3 text-[1.75rem] leading-[1.2] tracking-heading md:text-[2.125rem] lg:text-[2.375rem]"
         >
           Tell us about your project
         </h2>
-        <p class="mt-5 text-lg">
+        <p class="mt-5 text-[1.0625rem]">
           Share a few details and we’ll come back with practical advice and a clear way forward.
         </p>
 
@@ -53,22 +51,23 @@ import { locationLabel } from '../../data/site';
   <Section aria-labelledby="contact-options-title">
     <h2 id="contact-options-title" class="sr-only">Other ways to reach us</h2>
     <ContactCards />
-    <p class="mt-10 flex items-center justify-center gap-2 text-center text-lg font-semibold text-ink">
+    <p class="mt-10 flex items-center gap-2 text-lg font-semibold text-ink">
       <Icon name="map-pin" size={20} class="text-primary" />
       Based in {locationLabel}
     </p>
-    <p class="mt-2 text-center">We work with clients across Sri Lanka and abroad, online.</p>
+    <p class="mt-1">We work with clients across Sri Lanka and abroad, online.</p>
   </Section>
 
   <!-- FAQ -->
   <Section tone="alt" aria-labelledby="faq-title">
-    <SectionHeading
-      id="faq-title"
-      align="center"
-      description="Everything you need to know about working with us."
-    >
-      Questions we often get
-    </SectionHeading>
-    <FAQ class="mx-auto mt-12 max-w-3xl" />
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
+      <SectionHeading
+        id="faq-title"
+        description="Everything you need to know about working with us."
+      >
+        Questions we often get
+      </SectionHeading>
+      <FAQ />
+    </div>
   </Section>
 </BaseLayout>

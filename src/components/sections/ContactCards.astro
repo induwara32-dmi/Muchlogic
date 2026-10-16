@@ -78,23 +78,23 @@ const layouts: Record<number, string> = {
 {
   visible.length > 0 && (
     <ul
-      class:list={['mx-auto grid gap-5', layouts[visible.length], className]}
+      class:list={['grid gap-5', layouts[visible.length], className]}
     >
-      {visible.map((card, i) => (
-        <li data-reveal style={`--reveal-delay:${i * 80}ms`}>
+      {visible.map((card) => (
+        <li data-reveal>
           <a
             href={card.href}
             {...(card.external && { target: '_blank', rel: 'noopener noreferrer' })}
-            class="group flex h-full flex-col items-center rounded-card border border-line bg-surface p-7 text-center transition-[border-color,box-shadow] duration-200 hover:border-primary/30 hover:shadow-card"
+            class="group flex h-full flex-col rounded-card border border-line bg-surface p-6 shadow-card transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5"
           >
-            <span class="inline-flex size-12 items-center justify-center rounded-[10px] bg-primary-soft text-primary">
+            <span class="inline-flex size-11 items-center justify-center rounded-xl bg-primary-soft text-primary">
               <Icon name={card.icon} size={22} />
             </span>
-            <span class="mt-5 text-lg font-bold text-ink">{card.title}</span>{' '}
-            <span class="mt-1 text-body [overflow-wrap:anywhere]">{card.value}</span>{' '}
-            <span class="mt-5 inline-flex items-center gap-1.5 font-semibold text-primary group-hover:text-primary-hover">
+            <span class="mt-4 text-lg font-semibold text-ink">{card.title}</span>{' '}
+            <span class="mt-1 flex-1 text-body [overflow-wrap:anywhere]">{card.value}</span>{' '}
+            <span class="mt-5 inline-flex items-center gap-1.5 text-[0.9375rem] font-semibold text-primary group-hover:text-primary-hover">
               {card.action}
-              <Icon name="arrow-right" size={16} class="transition-transform duration-200 group-hover:translate-x-0.5" />
+              <Icon name="arrow-right" size={16} class="transition-transform duration-150 group-hover:translate-x-0.5" />
             </span>
             {card.external && <span class="sr-only">(opens in a new tab)</span>}
           </a>

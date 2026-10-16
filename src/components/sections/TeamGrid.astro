@@ -46,11 +46,10 @@ const members = team.map((member) => {
 
 {
   members.length > 0 && (
-    <ul class:list={['flex flex-wrap justify-center gap-6', className]}>
-      {members.map((member, i) => (
+    <ul class:list={['flex flex-wrap gap-6', className]}>
+      {members.map((member) => (
         <li
           data-reveal
-          style={`--reveal-delay:${i * 80}ms`}
           class="flex w-full flex-col gap-6 rounded-card border border-line bg-surface p-6 sm:flex-row sm:p-7 md:w-[calc(50%-0.75rem)] lg:max-w-[34rem]"
         >
           {member.photoSrc ? (
@@ -65,14 +64,14 @@ const members = team.map((member) => {
           ) : (
             <span
               aria-hidden="true"
-              class="inline-flex size-32 shrink-0 items-center justify-center rounded-card bg-primary-soft text-4xl font-bold tracking-display text-primary sm:size-40"
+              class="inline-flex size-32 shrink-0 items-center justify-center rounded-card bg-primary-soft text-4xl font-semibold tracking-display text-primary sm:size-40"
             >
               {initials(member.name)}
             </span>
           )}
           <div class="flex min-w-0 flex-col sm:min-h-40">
             <h3 class="text-xl">{member.name}</h3>
-            <p class="mt-1 text-sm font-bold uppercase tracking-widest text-primary">{member.role}</p>
+            <p class="mt-1 text-[0.8125rem] font-semibold uppercase tracking-[0.12em] text-primary">{member.role}</p>
             {usable(member.bio) && <p class="mt-3">{member.bio}</p>}
             {member.links.length > 0 && (
               <ul class="mt-5 flex gap-3 sm:mt-auto sm:pt-5" aria-label={`Contact ${member.name}`}>
@@ -83,7 +82,7 @@ const members = team.map((member) => {
                       aria-label={link.external ? `${link.label} (opens in a new tab)` : link.label}
                       title={link.label}
                       {...(link.external && { target: '_blank', rel: 'noopener noreferrer' })}
-                      class="inline-flex size-11 items-center justify-center rounded-pill bg-primary-soft text-primary transition-colors duration-200 hover:bg-primary hover:text-white focus-visible:bg-primary focus-visible:text-white"
+                      class="inline-flex size-11 items-center justify-center rounded-control bg-primary-soft text-primary transition-colors duration-150 hover:bg-primary hover:text-white focus-visible:bg-primary focus-visible:text-white"
                     >
                       <Icon name={link.icon} size={18} />
                     </a>

@@ -3,7 +3,7 @@ import Container from '../ui/Container.astro';
 import Logo from '../ui/Logo.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
-import { navLinks, site, emailHref, phoneHref } from '../../data/site';
+import { navLinks, site, emailHref, phoneHref, locationLabel } from '../../data/site';
 
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 
@@ -19,9 +19,33 @@ const links = navLinks.map((link) => ({
 }));
 ---
 
+<!-- Utility bar: contact details at a glance (phone number is tap-to-call on mobile) -->
+<div class="bg-dark text-[0.8125rem] text-dark-muted">
+  <Container class="flex h-10 items-center justify-between">
+    <p class="hidden items-center gap-2 lg:inline-flex">
+      <Icon name="map-pin" size={14} />
+      {locationLabel}
+    </p>
+    <ul class="flex w-full items-center justify-between gap-6 lg:w-auto lg:justify-end">
+      <li class="order-2 lg:order-none">
+        <a href={emailHref} class="inline-flex items-center gap-2 transition-colors hover:text-white">
+          <Icon name="mail" size={14} />
+          {site.email}
+        </a>
+      </li>
+      <li class="order-1 lg:order-none">
+        <a href={phoneHref} class="inline-flex items-center gap-2 font-medium text-white transition-colors hover:text-primary-on-dark lg:font-normal lg:text-dark-muted lg:hover:text-white">
+          <Icon name="phone" size={14} />
+          {site.phone.display}
+        </a>
+      </li>
+    </ul>
+  </Container>
+</div>
+
 <header
   data-header
-  class="sticky top-0 z-40 border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-200 data-scrolled:border-line data-scrolled:bg-surface/85 data-scrolled:backdrop-blur-md"
+  class="sticky top-0 z-40 border-b border-line bg-surface transition-shadow duration-200 data-scrolled:shadow-[0_2px_8px_-4px_rgb(11_27_46/0.15)]"
 >
   <Container class="flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
     <Logo />
@@ -35,14 +59,14 @@ const links = navLinks.map((link) => ({
                 href={link.href}
                 aria-current={link.exact ? 'page' : undefined}
                 class:list={[
-                  'relative inline-flex min-h-11 items-center rounded-md px-3.5 text-[0.9375rem] font-medium transition-colors',
+                  'relative inline-flex min-h-11 items-center px-4 text-[0.9375rem] font-medium transition-colors',
                   link.active ? 'text-ink' : 'text-body hover:text-ink',
                 ]}
               >
                 {link.label}
                 {link.active && (
                   <span
-                    class="absolute inset-x-3.5 bottom-1.5 h-0.5 rounded-pill bg-primary"
+                    class="absolute inset-x-4 bottom-0 h-0.5 bg-primary"
                     aria-hidden="true"
                   />
                 )}
@@ -55,7 +79,7 @@ const links = navLinks.map((link) => ({
 
     <div class="flex items-center gap-2">
       <div class="hidden lg:block">
-        <Button href="/contact" icon="arrow-right">Let’s talk</Button>
+        <Button href="/contact">Get a quote</Button>
       </div>
       <button
         type="button"
@@ -99,7 +123,7 @@ const links = navLinks.map((link) => ({
                   href={link.href}
                   aria-current={link.exact ? 'page' : undefined}
                   class:list={[
-                    'flex min-h-14 items-center justify-between py-3 text-2xl font-semibold tracking-heading',
+                    'flex min-h-14 items-center justify-between py-3 text-xl font-semibold tracking-heading',
                     link.active ? 'text-primary' : 'text-ink',
                   ]}
                 >
@@ -113,7 +137,7 @@ const links = navLinks.map((link) => ({
       </nav>
 
       <div class="space-y-6">
-        <Button href="/contact" size="lg" icon="arrow-right" class="w-full">Let’s talk</Button>
+        <Button href="/contact" size="lg" class="w-full">Get a quote</Button>
         <ul class="space-y-2 text-base">
           <li>
             <a href={emailHref} class="inline-flex items-center gap-2 text-ink hover:text-primary">

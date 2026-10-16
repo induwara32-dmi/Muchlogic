@@ -15,7 +15,9 @@ const seo = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
     <SEO {...seo} />
@@ -26,7 +28,7 @@ const seo = Astro.props;
   <body class="flex min-h-dvh flex-col">
     <a
       href="#main"
-      class="fixed left-4 top-3 z-50 -translate-y-20 rounded-pill bg-dark px-5 py-3 text-sm font-semibold text-white transition-transform focus:translate-y-0"
+      class="fixed left-4 top-3 z-50 -translate-y-20 rounded-control bg-dark px-5 py-3 text-sm font-semibold text-white transition-transform focus:translate-y-0"
     >
       Skip to content
     </a>
@@ -56,6 +58,38 @@ const seo = Astro.props;
           { rootMargin: '0px 0px -10% 0px', threshold: 0.1 },
         );
         items.forEach((el) => observer.observe(el));
+      }
+    </script>
+
+    <script>
+      // Hero grid "flashlight": the highlighted grid follows the mouse pointer.
+      // Cheap by design: only runs with a real mouse, only on .hero-bg, at most once per frame.
+      const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (canHover && !reduceMotion) {
+        document.querySelectorAll<HTMLElement>('.hero-bg').forEach((hero) => {
+          let frame = 0;
+          let x = 0;
+          let y = 0;
+          const paint = () => {
+            hero.style.setProperty('--mx', `${x}px`);
+            hero.style.setProperty('--my', `${y}px`);
+            frame = 0;
+          };
+          hero.addEventListener(
+            'pointermove',
+            (event) => {
+              const box = hero.getBoundingClientRect();
+              x = event.clientX - box.left;
+              y = event.clientY - box.top;
+              hero.setAttribute('data-active', '');
+              if (!frame) frame = requestAnimationFrame(paint);
+            },
+            { passive: true },
+          );
+          hero.addEventListener('pointerleave', () => hero.removeAttribute('data-active'));
+        });
       }
     </script>
   </body>

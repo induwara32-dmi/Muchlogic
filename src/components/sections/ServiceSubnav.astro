@@ -16,13 +16,13 @@ const { services } = Astro.props;
 <nav
   aria-label="Services on this page"
   data-service-subnav
-  class="sticky top-16 z-30 border-y border-line bg-surface/90 backdrop-blur-md lg:top-[4.5rem]"
+  class="sticky top-16 z-30 border-b border-line bg-surface lg:top-[4.5rem]"
 >
   <Container class="flex items-center gap-5">
-    <p class="hidden shrink-0 text-sm font-medium text-body lg:block">What we deliver:</p>
+    <p class="hidden shrink-0 text-sm font-medium text-body lg:block">What we deliver</p>
     <ul
       data-chips
-      class="-mx-4 flex gap-2 overflow-x-auto px-4 py-3 [scrollbar-width:none] sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-1 lg:justify-between lg:px-0 [&::-webkit-scrollbar]:hidden"
+      class="-mx-4 flex gap-1 overflow-x-auto px-4 [scrollbar-width:none] sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-1 lg:justify-end lg:px-0 [&::-webkit-scrollbar]:hidden"
     >
       {
         services.map((service) => (
@@ -30,7 +30,7 @@ const { services } = Astro.props;
             <a
               href={`#${service.slug}`}
               data-chip={service.slug}
-              class="inline-flex min-h-10 items-center whitespace-nowrap rounded-pill border border-line bg-surface px-4 text-sm font-medium text-ink transition-colors hover:border-ink aria-[current=true]:border-primary aria-[current=true]:bg-primary-soft aria-[current=true]:text-primary"
+              class="inline-flex min-h-12 items-center whitespace-nowrap border-b-2 border-transparent px-3.5 text-sm font-medium text-body transition-colors hover:text-ink aria-[current=true]:border-primary aria-[current=true]:text-ink"
             >
               {service.title}
             </a>

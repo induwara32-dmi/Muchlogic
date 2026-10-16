@@ -39,18 +39,17 @@ const tone = (key: string): SectionTone =>
   </PageHero>
 
   <!-- What we believe -->
-  <section class="bg-surface pb-14 md:pb-24" aria-labelledby="believe-title">
-    <div data-reveal class="mx-auto max-w-4xl px-4 text-center sm:px-6">
-      <h2 id="believe-title" class="text-sm font-bold uppercase tracking-widest text-primary">
-        What we believe
-      </h2>
-      <p class="mt-6 text-2xl font-bold leading-snug tracking-heading text-ink md:text-[2rem]">
-        We don’t build software just to look good in a demo.{' '}
-        <span class="text-muted">
-          We build systems that businesses use every day: simple to run, secure, and supported long
-          after launch.
-        </span>
-      </p>
+  <section class="bg-surface py-14 md:py-20" aria-labelledby="believe-title">
+    <div data-reveal class="mx-auto max-w-site px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
+        <h2 id="believe-title" class="text-[0.8125rem] font-semibold uppercase tracking-[0.12em] text-primary">
+          What we believe
+        </h2>
+        <p class="border-l-2 border-primary pl-6 text-xl font-medium leading-snug tracking-heading text-ink md:text-2xl">
+          We don’t build software just to look good in a demo. We build systems that businesses use
+          every day: simple to run, secure, and supported long after launch.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -61,27 +60,23 @@ const tone = (key: string): SectionTone =>
         <Eyebrow>Our mission</Eyebrow>
         <h2
           id="mission-title"
-          class="mt-3 text-[2rem] leading-[1.15] tracking-display md:text-[2.625rem] lg:text-5xl"
+          class="mt-3 text-[1.75rem] leading-[1.2] tracking-heading md:text-[2.125rem] lg:text-[2.375rem]"
         >
           Practical technology, measured in real results
         </h2>
-        <p class="mt-5 max-w-lg text-lg">
+        <p class="mt-5 max-w-lg text-[1.0625rem]">
           We help businesses work faster, decide better and grow with confidence, using technology
           that fits how they already work.
         </p>
       </div>
-      <ul class="grid gap-4 sm:grid-cols-2 lg:gap-5">
+      <ul class="grid gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2">
         {
-          missionCards.map((card, i) => (
-            <li
-              data-reveal
-              style={`--reveal-delay:${i * 80}ms`}
-              class="rounded-card border border-line bg-surface p-6 sm:p-7"
-            >
-              <span class="inline-flex size-12 items-center justify-center rounded-[10px] bg-primary-soft text-primary">
+          missionCards.map((card) => (
+            <li data-reveal class="bg-surface p-6 sm:p-7">
+              <span class="inline-flex size-11 items-center justify-center rounded-xl bg-primary-soft text-primary">
                 <Icon name={card.icon} size={22} />
               </span>
-              <h3 class="mt-5 text-lg">{card.title}</h3>
+              <h3 class="mt-4 text-lg">{card.title}</h3>
               <p class="mt-1.5">{card.description}</p>
             </li>
           ))
@@ -92,20 +87,20 @@ const tone = (key: string): SectionTone =>
 
   <!-- Process -->
   <Section tone={tone('process')} aria-labelledby="about-process-title">
-    <SectionHeading id="about-process-title" eyebrow="How we deliver" align="center">
+    <SectionHeading id="about-process-title" eyebrow="How we deliver">
       From idea to launch, one clear path
     </SectionHeading>
-    <ProcessSteps class="mt-12 lg:mt-16" />
+    <ProcessSteps class="mt-10 lg:mt-12" />
   </Section>
 
   <!-- Leadership (only when team.ts has people) -->
   {
     team.length > 0 && (
       <Section tone={tone('team')} aria-labelledby="team-title">
-        <SectionHeading id="team-title" eyebrow="Leadership" align="center">
+        <SectionHeading id="team-title" eyebrow="Leadership">
           The people behind MuchLogic
         </SectionHeading>
-        <TeamGrid class="mt-12 lg:mt-16" />
+        <TeamGrid class="mt-10 lg:mt-12" />
       </Section>
     )
   }
@@ -117,11 +112,11 @@ const tone = (key: string): SectionTone =>
         <Eyebrow>Built in Sri Lanka</Eyebrow>
         <h2
           id="location-title"
-          class="mt-3 text-[2rem] leading-[1.15] tracking-display md:text-[2.625rem] lg:text-5xl"
+          class="mt-3 text-[1.75rem] leading-[1.2] tracking-heading md:text-[2.125rem] lg:text-[2.375rem]"
         >
           From Sri Lanka, for businesses everywhere
         </h2>
-        <div class="mt-6 max-w-lg space-y-5 text-lg">
+        <div class="mt-6 max-w-lg space-y-5 text-[1.0625rem]">
           <p>
             MuchLogic is a Sri Lankan software company. We work closely with local businesses, and
             we understand how they buy, sell and grow.
@@ -138,16 +133,14 @@ const tone = (key: string): SectionTone =>
 
   <!-- Why businesses choose MuchLogic -->
   <Section tone={tone('reasons')} aria-labelledby="reasons-title">
-    <SectionHeading id="reasons-title" align="center">
+    <SectionHeading id="reasons-title">
       Why businesses choose MuchLogic
     </SectionHeading>
-    <ul class="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
+    <ul class="mt-10 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3">
       {
-        reasons.map((reason, i) => (
-          <li data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`} class="flex gap-4">
-            <span class="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-pill bg-primary text-white">
-              <Icon name="check" size={14} strokeWidth={3} />
-            </span>
+        reasons.map((reason) => (
+          <li data-reveal class="flex gap-4 border-t border-line pt-5">
+            <Icon name="check" size={20} strokeWidth={2.5} class="mt-0.5 shrink-0 text-primary" />
             <div>
               <h3 class="text-lg">{reason.title}</h3>
               <p class="mt-1">{reason.description}</p>

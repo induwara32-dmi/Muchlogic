@@ -1,38 +1,33 @@
 ---
-import Section, { type SectionTone } from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import { site, phoneHref } from '../../data/site';
-
-interface Props {
-  tone?: SectionTone;
-}
-
-const { tone = 'white' } = Astro.props;
 ---
 
-<Section tone={tone} aria-labelledby="final-cta-title">
-  <div data-reveal class="mx-auto max-w-3xl text-center">
-    <h2
-      id="final-cta-title"
-      class="text-[2.5rem] leading-[1.05] tracking-display md:text-6xl lg:text-7xl"
-    >
-      Ready to grow?{' '}
-      <span class="block text-primary">Let’s talk.</span>
-    </h2>
-    <p class="mx-auto mt-6 max-w-xl text-lg md:text-xl">
-      Tell us about your project. We’ll come back with a clear plan, timeline and quote.
-    </p>
-    <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-      <Button href="/contact" size="lg" icon="arrow-right" block>Start a project</Button>
+<section class="hero-bg text-dark-muted" aria-labelledby="final-cta-title">
+  <Container class="grid gap-8 py-14 md:py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-16">
+    <div data-reveal class="max-w-2xl">
+      <h2
+        id="final-cta-title"
+        class="text-[1.75rem] leading-[1.2] tracking-heading text-white md:text-[2.125rem]"
+      >
+        Ready to grow? Let’s talk.
+      </h2>
+      <p class="mt-4 text-[1.0625rem]">
+        Tell us about your project. We’ll come back with a clear plan, timeline and quote.
+      </p>
+    </div>
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <Button href="/contact" variant="light" size="lg" block>Start a project</Button>
       <a
         href={phoneHref}
-        class="inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-pill border border-line bg-surface px-6 font-semibold text-ink transition-colors hover:border-ink sm:w-auto"
+        class="inline-flex min-h-12 items-center justify-center gap-2.5 rounded-control border border-white/20 bg-white/10 px-6 font-medium text-white transition-[background-color,transform] duration-150 hover:bg-white/15 active:scale-[0.98]"
       >
-        <Icon name="phone" size={18} class="text-primary" />
+        <Icon name="phone" size={18} class="text-primary-on-dark" />
         <span class="sr-only">Call us on</span>
         {site.phone.display}
       </a>
     </div>
-  </div>
-</Section>
+  </Container>
+</section>

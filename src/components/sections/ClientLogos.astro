@@ -22,16 +22,16 @@ const logos = clientLogos
 
 {
   logos.length > 0 && (
-    <div class:list={['border-t border-line pt-12', className]}>
-      <h2 class="text-center text-base font-medium text-body">Trusted by businesses of all sizes</h2>
-      <ul class="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+    <div class:list={[className]}>
+      <h2 class="text-sm font-medium text-body">Trusted by</h2>
+      <ul class="mt-5 flex flex-wrap items-center gap-x-12 gap-y-6">
         {logos.map((client) => (
           <li>
             <Image
               src={client.src}
               alt={client.name}
               height={40}
-              class="h-10 w-auto opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
+              class="h-9 w-auto opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0"
               loading="lazy"
             />
           </li>
