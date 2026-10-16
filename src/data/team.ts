@@ -5,27 +5,36 @@ export interface TeamMember {
   /** File name in src/assets/team/ (e.g. 'name.webp') — optional; initials are shown without it */
   photo?: string;
   linkedin?: string;
+  email?: string;
+  phone?: {
+    /** Shown on the page */
+    display: string;
+    /** E.164 for the tel: link, e.g. +94771234567 */
+    e164: string;
+  };
 }
 
 /**
- * Leadership on the About page. The section stays hidden while this is empty.
- *
- * Example:
- * {
- *   name: 'Full name',
- *   role: 'Co-founder & CTO',
- *   bio: 'One or two sentences.',
- *   photo: 'full-name.webp',
- *   linkedin: 'https://www.linkedin.com/in/...',
- * },
+ * Leadership on the About page, in display order. The section stays hidden while this is empty.
+ * Empty or TODO values are not rendered (the matching icon button is hidden).
  */
 export const team: TeamMember[] = [
+  {
+    name: 'Thisara C Prasanga',
+    role: 'Co-founder', // TODO: add the second part of the title (e.g. "Co-founder & CTO")
+    // bio: '', // TODO: one-line bio
+    // photo: 'thisara.webp', // TODO: add photo to src/assets/team/
+    linkedin: 'https://www.linkedin.com/in/thisara-prasanga-55bb77321',
+    email: 'prasangathisara@gmail.com',
+    phone: { display: '+94 76 799 6398', e164: '+94767996398' },
+  },
   {
     name: 'Induwara Rajapaksha',
     role: 'Co-founder', // TODO: add the second part of the title (e.g. "Co-founder & CEO")
     // bio: '', // TODO: one-line bio
     // photo: 'induwara.webp', // TODO: add photo to src/assets/team/
-    linkedin: 'https://www.linkedin.com/in/induwara-rajapaksha-249a65333',
+    linkedin: 'https://www.linkedin.com/in/induwara-rajapaksha',
+    email: 'dimuthuinduwara32@gmail.com',
+    phone: { display: '+94 70 322 1584', e164: '+94703221584' },
   },
-  // TODO: add the second co-founder (name, role, bio, LinkedIn, photo)
 ];

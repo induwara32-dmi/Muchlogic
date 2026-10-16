@@ -1,0 +1,105 @@
+---
+/** Email / Call / WhatsApp / LinkedIn cards from site.ts. Cards with placeholder values are hidden. */
+import Icon, { type IconName } from '../ui/Icon.astro';
+import {
+  site,
+  isPlaceholder,
+  emailHref,
+  phoneHref,
+  whatsappHref,
+} from '../../data/site';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+interface Card {
+  icon: IconName;
+  title: string;
+  value: string;
+  action: string;
+  href: string;
+  external?: boolean;
+  show: boolean;
+}
+
+const linkedin = site.social.find((s) => s.icon === 'linkedin')?.url ?? '';
+
+const cards: Card[] = [
+  {
+    icon: 'mail',
+    title: 'Email us',
+    value: site.email,
+    action: 'Send an email',
+    href: emailHref,
+    show: !isPlaceholder(site.email),
+  },
+  {
+    icon: 'phone',
+    title: 'Call us',
+    value: site.phone.display,
+    action: 'Make a call',
+    href: phoneHref,
+    show: !isPlaceholder(site.phone.e164),
+  },
+  {
+    icon: 'message-circle',
+    title: 'WhatsApp',
+    value: site.whatsapp.display,
+    action: 'Start a chat',
+    href: whatsappHref,
+    external: true,
+    show: !isPlaceholder(site.whatsapp.number),
+  },
+  {
+    icon: 'linkedin',
+    title: 'LinkedIn',
+    value: 'Follow our updates',
+    action: 'Follow us',
+    href: linkedin,
+    external: true,
+    show: !isPlaceholder(linkedin),
+  },
+];
+
+const visible = cards.filter((card) => card.show);
+
+// Grid adapts to however many cards are visible
+const layouts: Record<number, string> = {
+  1: 'max-w-sm',
+  2: 'max-w-3xl sm:grid-cols-2',
+  3: 'sm:grid-cols-2 lg:grid-cols-3',
+  4: 'sm:grid-cols-2 lg:grid-cols-4',
+};
+---
+
+{
+  visible.length > 0 && (
+    <ul
+      class:list={['mx-auto grid gap-5', layouts[visible.length], className]}
+    >
+      {visible.map((card, i) => (
+        <li data-reveal style={`--reveal-delay:${i * 80}ms`}>
+          <a
+            href={card.href}
+            {...(card.external && { target: '_blank', rel: 'noopener noreferrer' })}
+            class="group flex h-full flex-col items-center rounded-card border border-line bg-surface p-7 text-center transition-[border-color,box-shadow] duration-200 hover:border-primary/30 hover:shadow-card"
+          >
+            <span class="inline-flex size-12 items-center justify-center rounded-[10px] bg-primary-soft text-primary">
+              <Icon name={card.icon} size={22} />
+            </span>
+            <span class="mt-5 text-lg font-bold text-ink">{card.title}</span>{' '}
+            <span class="mt-1 text-body [overflow-wrap:anywhere]">{card.value}</span>{' '}
+            <span class="mt-5 inline-flex items-center gap-1.5 font-semibold text-primary group-hover:text-primary-hover">
+              {card.action}
+              <Icon name="arrow-right" size={16} class="transition-transform duration-200 group-hover:translate-x-0.5" />
+            </span>
+            {card.external && <span class="sr-only">(opens in a new tab)</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

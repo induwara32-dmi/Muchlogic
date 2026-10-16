@@ -59,7 +59,8 @@ export const legalLinks = [
 
 /** True while a value still contains placeholder characters (e.g. "+94 7X XXX XXXX"). */
 export function isPlaceholder(value: string): boolean {
-  return value.trim() === '' || /X{2,}|TODO/i.test(value);
+  // "XX" is case-sensitive so real values like "maxx@…" are not treated as placeholders
+  return value.trim() === '' || /X{2,}/.test(value) || /TODO/i.test(value);
 }
 
 export const locationLabel = site.location.city

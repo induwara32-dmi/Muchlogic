@@ -8,6 +8,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "postbuild": "node scripts/check-text.mjs dist",
+    "check": "astro check && astro build && node scripts/check-text.mjs dist",
     "preview": "astro preview",
     "astro": "astro"
   },
