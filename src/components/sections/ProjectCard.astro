@@ -58,8 +58,8 @@ const plain = variant === 'plain';
     {
       plain ? (
         <p class="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm font-semibold uppercase tracking-widest">
-          <span class="text-primary">Case {caseNumber(project)}</span>
-          <span class="size-1 rounded-pill bg-line" aria-hidden="true" />
+          <span class="text-primary">Case {caseNumber(project)}</span>{' '}
+          <span class="size-1 rounded-pill bg-line" aria-hidden="true" />{' '}
           <span class="text-body">{project.category}</span>
         </p>
       ) : (

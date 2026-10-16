@@ -13,24 +13,33 @@ interface Props {
   tags?: string[];
   /** Show a small orange dot before each tag */
   tagDots?: boolean;
+  align?: 'center' | 'left';
 }
 
-const { eyebrow, description, tags = [], tagDots = false } = Astro.props;
+const { eyebrow, description, tags = [], tagDots = false, align = 'center' } = Astro.props;
+const centered = align === 'center';
 ---
 
 <section class="bg-surface pb-12 pt-12 md:pb-20 md:pt-20" aria-labelledby="page-title">
-  <Container class="text-center">
+  <Container class={centered ? 'text-center' : undefined}>
     {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
     <h1
       id="page-title"
-      class="mx-auto mt-4 max-w-4xl text-[2.5rem] font-extrabold leading-[1.05] tracking-display sm:text-6xl lg:text-7xl"
+      class:list={[
+        'mt-4 text-[2.5rem] font-extrabold leading-[1.05] tracking-display sm:text-6xl lg:text-7xl',
+        centered ? 'mx-auto max-w-4xl' : 'max-w-5xl',
+      ]}
     >
       <slot />
     </h1>
-    {description && <p class="mx-auto mt-6 max-w-2xl text-lg md:text-xl">{description}</p>}
+    {
+      description && (
+        <p class:list={['mt-6 max-w-2xl text-lg md:text-xl', centered && 'mx-auto']}>{description}</p>
+      )
+    }
     {
       tags.length > 0 && (
-        <ul class="mt-8 flex flex-wrap justify-center gap-2.5">
+        <ul class:list={['mt-8 flex flex-wrap gap-2.5', centered && 'justify-center']}>
           {tags.map((tag) => (
             <li class="inline-flex items-center gap-2 rounded-pill border border-line px-4 py-1.5 text-sm font-medium text-body">
               {tagDots && <span class="size-1.5 rounded-pill bg-primary" aria-hidden="true" />}

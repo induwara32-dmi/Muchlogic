@@ -36,11 +36,14 @@ export interface Project {
   featured: boolean;
   /** Shows a visible "Prototype" badge */
   prototype?: boolean;
+  /** Left out of the whole site (no page, cards, filters, counters, prev/next or sitemap entry) */
+  hidden?: boolean;
   /** Service slugs from services.ts, shown as "Services" on the case study */
   services: string[];
 }
 
-export const projects: Project[] = [
+/** Every project, including hidden ones. Use `projects` everywhere else. */
+const allProjects: Project[] = [
   {
     slug: 'muchlogic-pos',
     title: 'MuchLogic POS',
@@ -65,7 +68,7 @@ export const projects: Project[] = [
     title: 'Designkoolama.lk',
     category: 'Websites',
     client: 'Designkoolama Pvt Ltd, Matara',
-    industry: '', // TODO: confirm industry
+    industry: 'Creative & Design',
     summary:
       'Portfolio website rebuilt from WordPress/Elementor into Next.js, with portfolio filtering, dark/light mode and WhatsApp integration.',
     description:
@@ -100,7 +103,6 @@ export const projects: Project[] = [
     services: ['web-ecommerce'],
   },
   {
-    // TODO: confirm AgriLink should appear as a MuchLogic project
     slug: 'agrilink',
     title: 'AgriLink',
     category: 'Web Platforms',
@@ -108,7 +110,12 @@ export const projects: Project[] = [
     industry: 'Agriculture',
     summary: 'Marketplace connecting farmers, buyers, transporters and admins.',
     description: 'A marketplace platform connecting farmers, buyers, transporters and admins.',
-    whatWeDid: ['TODO: confirm what we did'],
+    whatWeDid: [
+      'Built a marketplace connecting four user types: farmers, buyers, transporters and admins',
+      'Built the frontend with Next.js and TypeScript, and the REST API with Express',
+      'Designed the PostgreSQL database with Prisma ORM, hosted on Neon',
+      'Deployed the frontend on Vercel',
+    ],
     tech: ['Next.js', 'TypeScript', 'Express', 'PostgreSQL', 'Prisma'],
     liveUrl: 'https://agrilink-iota.vercel.app',
     image: '', // TODO: add screenshot, e.g. 'agrilink.webp'
@@ -132,9 +139,13 @@ export const projects: Project[] = [
     imageAlt: 'Doc365 prototype screen',
     featured: false,
     prototype: true,
+    hidden: true, // TODO: unhide once Doc365 is ready to show
     services: ['custom-software'],
   },
 ];
+
+/** Visible projects — the single list every page, filter, counter and route uses. */
+export const projects: Project[] = allProjects.filter((p) => !p.hidden);
 
 export const featuredProjects = projects.filter((p) => p.featured);
 

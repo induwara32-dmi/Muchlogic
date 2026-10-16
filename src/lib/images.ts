@@ -13,7 +13,17 @@ const serviceImages = import.meta.glob<ImageMetadata>(
   { eager: true, import: 'default' },
 ) as ImageMap;
 
-const servicePlaceholders = import.meta.glob<ImageMetadata>('../assets/placeholders/service-*.svg', {
+const teamPhotos = import.meta.glob<ImageMetadata>('../assets/team/*.{png,jpg,jpeg,webp,avif}', {
+  eager: true,
+  import: 'default',
+}) as ImageMap;
+
+/** Team photo from src/assets/team/, or undefined (the card then shows initials). */
+export function getTeamPhoto(file: string | undefined): ImageMetadata | undefined {
+  return fromFolder(teamPhotos, 'team', file);
+}
+
+const servicePlaceholders =import.meta.glob<ImageMetadata>('../assets/placeholders/service-*.svg', {
   eager: true,
   import: 'default',
 }) as ImageMap;
