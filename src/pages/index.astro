@@ -1,0 +1,22 @@
+---
+// Phase 1 placeholder — the full Home page is built in Phase 2.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title={site.name} description={site.description}>
+  <section class="bg-surface-alt py-14 md:py-24">
+    <Container class="text-center">
+      <h1 class="text-4xl md:text-6xl">
+        We build <span class="text-primary">smart software and AI</span> that grows your business
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-lg">Home page coming in Phase 2.</p>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <Button href="/contact" size="lg" block>Start a project</Button>
+        <Button href="/work" size="lg" variant="secondary" block>See our work</Button>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

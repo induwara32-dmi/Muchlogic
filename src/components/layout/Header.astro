@@ -1,0 +1,212 @@
+---
+import Container from '../ui/Container.astro';
+import Logo from '../ui/Logo.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { navLinks, site, emailHref, phoneHref } from '../../data/site';
+
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+
+function isActive(href: string): boolean {
+  if (href === '/') return path === '/';
+  return path === href || path.startsWith(`${href}/`);
+}
+
+const links = navLinks.map((link) => ({
+  ...link,
+  active: isActive(link.href),
+  exact: path === link.href,
+}));
+---
+
+<header
+  data-header
+  class="sticky top-0 z-40 border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-200 data-scrolled:border-line data-scrolled:bg-surface/85 data-scrolled:backdrop-blur-md"
+>
+  <Container class="flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
+    <Logo />
+
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                aria-current={link.exact ? 'page' : undefined}
+                class:list={[
+                  'relative inline-flex min-h-11 items-center rounded-md px-3.5 text-[0.9375rem] font-medium transition-colors',
+                  link.active ? 'text-ink' : 'text-body hover:text-ink',
+                ]}
+              >
+                {link.label}
+                {link.active && (
+                  <span
+                    class="absolute inset-x-3.5 bottom-1.5 h-0.5 rounded-pill bg-primary"
+                    aria-hidden="true"
+                  />
+                )}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <div class="hidden lg:block">
+        <Button href="/contact" icon="arrow-right">Let’s talk</Button>
+      </div>
+      <button
+        type="button"
+        data-menu-open
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="-mr-2 inline-flex size-11 items-center justify-center rounded-md text-ink lg:hidden"
+      >
+        <Icon name="menu" size={24} />
+        <span class="sr-only">Open menu</span>
+      </button>
+    </div>
+  </Container>
+</header>
+
+<dialog
+  id="mobile-menu"
+  aria-label="Menu"
+  class="m-0 h-dvh max-h-none w-full max-w-none bg-surface p-0 text-body lg:hidden"
+>
+  <div class="flex h-full flex-col overflow-y-auto">
+    <Container class="flex h-16 shrink-0 items-center justify-between">
+      <Logo />
+      <button
+        type="button"
+        data-menu-close
+        class="-mr-2 inline-flex size-11 items-center justify-center rounded-md text-ink"
+      >
+        <Icon name="x" size={24} />
+        <span class="sr-only">Close menu</span>
+      </button>
+    </Container>
+
+    <Container class="flex flex-1 flex-col justify-between gap-10 pb-10 pt-6">
+      <nav aria-label="Mobile">
+        <ul class="divide-y divide-line border-y border-line">
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  aria-current={link.exact ? 'page' : undefined}
+                  class:list={[
+                    'flex min-h-14 items-center justify-between py-3 text-2xl font-semibold tracking-tight',
+                    link.active ? 'text-primary' : 'text-ink',
+                  ]}
+                >
+                  {link.label}
+                  <Icon name="arrow-right" size={20} class="text-muted" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="space-y-6">
+        <Button href="/contact" size="lg" icon="arrow-right" class="w-full">Let’s talk</Button>
+        <ul class="space-y-2 text-base">
+          <li>
+            <a href={emailHref} class="inline-flex items-center gap-2 text-ink hover:text-primary">
+              <Icon name="mail" size={18} class="text-primary" />
+              {site.email}
+            </a>
+          </li>
+          <li>
+            <a href={phoneHref} class="inline-flex items-center gap-2 text-ink hover:text-primary">
+              <Icon name="phone" size={18} class="text-primary" />
+              {site.phone.display}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </Container>
+  </div>
+</dialog>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const menu = document.querySelector<HTMLDialogElement>('#mobile-menu');
+  const openButton = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+  const closeButton = menu?.querySelector<HTMLButtonElement>('[data-menu-close]');
+
+  // Sticky header: white + blur once the page has scrolled
+  if (header) {
+    let ticking = false;
+    const update = () => {
+      header.toggleAttribute('data-scrolled', window.scrollY > 8);
+      ticking = false;
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true },
+    );
+    update();
+  }
+
+  if (menu && openButton && closeButton) {
+    const root = document.documentElement;
+
+    const openMenu = () => {
+      menu.showModal();
+      openButton.setAttribute('aria-expanded', 'true');
+      root.style.overflow = 'hidden';
+      closeButton.focus();
+    };
+
+    const closeMenu = () => {
+      if (menu.open) menu.close();
+    };
+
+    openButton.addEventListener('click', openMenu);
+    closeButton.addEventListener('click', closeMenu);
+
+    // Fires for close(), Escape and form-method="dialog"
+    menu.addEventListener('close', () => {
+      openButton.setAttribute('aria-expanded', 'false');
+      root.style.overflow = '';
+      openButton.focus();
+    });
+
+    // Close before navigating so the scroll lock is released
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+
+    // Keep Tab / Shift+Tab inside the menu
+    menu.addEventListener('keydown', (event) => {
+      if (event.key !== 'Tab') return;
+      const focusable = Array.from(
+        menu.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'),
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!first || !last) return;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    // Close if the viewport grows to the desktop layout
+    window.matchMedia('(min-width: 64rem)').addEventListener('change', (event) => {
+      if (event.matches) closeMenu();
+    });
+  }
+</script>

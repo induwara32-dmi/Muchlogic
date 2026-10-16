@@ -1,0 +1,27 @@
+---
+import { site, isPlaceholder, activeSocials } from '../../data/site';
+
+// Placeholder values (e.g. "+94 7X XXX XXXX") are left out so search engines never see them.
+const address: Record<string, string> = {
+  '@type': 'PostalAddress',
+  addressCountry: site.location.countryCode,
+};
+if (site.location.city) address.addressLocality = site.location.city;
+if (site.location.streetAddress) address.streetAddress = site.location.streetAddress;
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  ...(site.legalName !== site.name && { legalName: site.legalName }),
+  url: site.url,
+  logo: new URL('/favicon.svg', site.url).href,
+  description: site.description,
+  email: site.email,
+  ...(!isPlaceholder(site.phone.e164) && { telephone: site.phone.e164 }),
+  address,
+  ...(activeSocials.length > 0 && { sameAs: activeSocials.map((s) => s.url) }),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(organization)} />

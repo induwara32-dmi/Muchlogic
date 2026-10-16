@@ -1,0 +1,27 @@
+---
+import LogoMark from '../../assets/logo.svg';
+import { site } from '../../data/site';
+
+interface Props {
+  /** Use on dark backgrounds */
+  inverted?: boolean;
+  class?: string;
+}
+
+const { inverted = false, class: className } = Astro.props;
+---
+
+<!-- TODO: swap for the real logo once available -->
+<a
+  href="/"
+  class:list={['inline-flex items-center gap-2.5 rounded-md', className]}
+  aria-label={`${site.name} home`}
+>
+  <LogoMark class="size-8 text-primary" aria-hidden="true" />
+  <span
+    class:list={['text-xl font-extrabold tracking-tight', inverted ? 'text-white' : 'text-ink']}
+    aria-hidden="true"
+  >
+    Much<span class={inverted ? 'text-primary-on-dark' : 'text-primary'}>Logic</span>
+  </span>
+</a>

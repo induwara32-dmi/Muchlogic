@@ -1,0 +1,67 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Icon, { type IconName } from './Icon.astro';
+
+type Variant = 'primary' | 'secondary' | 'ghost' | 'on-dark';
+type Size = 'md' | 'lg';
+
+type Props = {
+  href?: string;
+  variant?: Variant;
+  size?: Size;
+  /** Full width below the sm breakpoint */
+  block?: boolean;
+  icon?: IconName;
+  external?: boolean;
+  class?: string;
+} & Omit<HTMLAttributes<'a'> & HTMLAttributes<'button'>, 'class'>;
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  block = false,
+  icon,
+  external = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const variants: Record<Variant, string> = {
+  primary: 'bg-primary text-white hover:bg-primary-hover',
+  secondary: 'border border-line bg-surface text-ink hover:border-ink',
+  ghost: 'text-ink hover:text-primary',
+  'on-dark': 'border border-dark-line text-white hover:border-white',
+};
+
+const sizes: Record<Size, string> = {
+  md: 'min-h-11 px-5 text-sm',
+  lg: 'min-h-12 px-6 text-base',
+};
+
+const classes = [
+  'group inline-flex items-center justify-center gap-2 rounded-pill font-semibold transition-colors duration-200',
+  'disabled:cursor-not-allowed disabled:opacity-60',
+  variants[variant],
+  variant === 'ghost' ? 'px-0' : sizes[size],
+  block && 'w-full sm:w-auto',
+  className,
+];
+
+const Tag = href ? 'a' : 'button';
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<Tag href={href} class:list={classes} {...externalAttrs} {...rest}>
+  <slot />
+  {
+    icon && (
+      <Icon
+        name={icon}
+        size={18}
+        class="transition-transform duration-200 group-hover:translate-x-0.5"
+      />
+    )
+  }
+  {external && <span class="sr-only">(opens in a new tab)</span>}
+</Tag>
