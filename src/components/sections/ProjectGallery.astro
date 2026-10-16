@@ -1,0 +1,104 @@
+---
+/**
+ * Our Work grid with category filters.
+ * - Filter chips are <button aria-pressed>, synced with ?category=<slug>
+ * - Only categories that have projects get a chip
+ * - Without JS every project is shown and the chips stay hidden
+ */
+import ProjectCard from './ProjectCard.astro';
+import { activeCategories, categorySlug, projects } from '../../data/projects';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const filters = [
+  { slug: 'all', label: 'All' },
+  ...activeCategories.map((c) => ({ slug: categorySlug(c), label: c })),
+];
+const total = projects.length;
+const countText = (shown: number) => `Showing ${shown} of ${total} ${total === 1 ? 'project' : 'projects'}`;
+---
+
+<div data-gallery data-total={total} class={className}>
+  <div
+    role="group"
+    aria-label="Filter projects by category"
+    class="hidden flex-wrap justify-center gap-2.5 js:flex"
+  >
+    {
+      filters.map((filter) => (
+        <button
+          type="button"
+          data-filter={filter.slug}
+          aria-pressed={filter.slug === 'all' ? 'true' : 'false'}
+          aria-controls="project-grid"
+          class="inline-flex min-h-11 items-center rounded-pill border border-line bg-surface px-5 font-semibold text-ink transition-colors hover:border-ink aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-white"
+        >
+          {filter.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <ul
+    id="project-grid"
+    class="mt-10 grid gap-x-8 gap-y-12 md:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-y-16"
+  >
+    {
+      projects.map((project, i) => (
+        <li data-category={categorySlug(project.category)} data-reveal style={`--reveal-delay:${(i % 3) * 80}ms`}>
+          <ProjectCard project={project} variant="plain" priority={i < 3} />
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="mt-14 border-t border-line pt-8 lg:mt-20">
+    <p data-count aria-live="polite" class="text-body">{countText(total)}</p>
+  </div>
+</div>
+
+<script>
+  const gallery = document.querySelector<HTMLElement>('[data-gallery]');
+
+  if (gallery) {
+    const buttons = Array.from(gallery.querySelectorAll<HTMLButtonElement>('button[data-filter]'));
+    const items = Array.from(gallery.querySelectorAll<HTMLElement>('[data-category]'));
+    const count = gallery.querySelector<HTMLElement>('[data-count]');
+    const total = Number(gallery.dataset.total);
+    const validSlugs = new Set(buttons.map((b) => b.dataset.filter));
+
+    const apply = (requested: string | null, updateUrl: boolean) => {
+      const slug = requested && validSlugs.has(requested) ? requested : 'all';
+      let shown = 0;
+
+      for (const button of buttons) {
+        button.setAttribute('aria-pressed', String(button.dataset.filter === slug));
+      }
+      for (const item of items) {
+        const visible = slug === 'all' || item.dataset.category === slug;
+        item.hidden = !visible;
+        if (visible) shown++;
+      }
+      if (count) {
+        count.textContent = `Showing ${shown} of ${total} ${total === 1 ? 'project' : 'projects'}`;
+      }
+      if (updateUrl) {
+        const url = new URL(window.location.href);
+        if (slug === 'all') url.searchParams.delete('category');
+        else url.searchParams.set('category', slug);
+        history.replaceState(null, '', url);
+      }
+    };
+
+    buttons.forEach((button) =>
+      button.addEventListener('click', () => apply(button.dataset.filter ?? 'all', true)),
+    );
+
+    // Preselect from the URL (e.g. "See our work" links on /services); drop unknown values
+    const requested = new URLSearchParams(window.location.search).get('category');
+    apply(requested, requested !== null && !validSlugs.has(requested));
+  }
+</script>

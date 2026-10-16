@@ -11,9 +11,11 @@ interface Props {
   eyebrow?: string;
   description?: string;
   tags?: string[];
+  /** Show a small orange dot before each tag */
+  tagDots?: boolean;
 }
 
-const { eyebrow, description, tags = [] } = Astro.props;
+const { eyebrow, description, tags = [], tagDots = false } = Astro.props;
 ---
 
 <section class="bg-surface pb-12 pt-12 md:pb-20 md:pt-20" aria-labelledby="page-title">
@@ -30,7 +32,10 @@ const { eyebrow, description, tags = [] } = Astro.props;
       tags.length > 0 && (
         <ul class="mt-8 flex flex-wrap justify-center gap-2.5">
           {tags.map((tag) => (
-            <li class="rounded-pill border border-line px-4 py-1.5 text-sm font-medium text-body">{tag}</li>
+            <li class="inline-flex items-center gap-2 rounded-pill border border-line px-4 py-1.5 text-sm font-medium text-body">
+              {tagDots && <span class="size-1.5 rounded-pill bg-primary" aria-hidden="true" />}
+              {tag}
+            </li>
           ))}
         </ul>
       )

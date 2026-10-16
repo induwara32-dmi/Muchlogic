@@ -1,3 +1,16 @@
+import {
+  siAstro,
+  siExpress,
+  siNextdotjs,
+  siNodedotjs,
+  siPostgresql,
+  siPrisma,
+  siReact,
+  siTailwindcss,
+  siTypescript,
+  siVercel,
+  type SimpleIcon,
+} from 'simple-icons';
 import { categorySlug, projectsInCategory, type ProjectCategory } from './projects';
 
 export type ServiceIcon = 'code' | 'monitor' | 'sparkles' | 'globe' | 'smartphone' | 'megaphone';
@@ -171,16 +184,27 @@ export const servicePillars: ServicePillar[] = [
   },
 ];
 
-/** Technologies we actually use. TODO: confirm this list. */
-export const technologies: string[] = [
-  'TypeScript',
-  'React',
-  'Next.js',
-  'Astro',
-  'Node.js',
-  'Express',
-  'PostgreSQL',
-  'Prisma',
-  'Tailwind CSS',
-  'Vercel',
+export interface Technology {
+  name: string;
+  /** Logo from simple-icons; omit when there is none and only the name is shown */
+  icon?: SimpleIcon;
+}
+
+/** Technologies we use (confirmed). TODO: add the MuchLogic POS tech once confirmed. */
+export const technologies: Technology[] = [
+  { name: 'Next.js', icon: siNextdotjs },
+  { name: 'React', icon: siReact },
+  { name: 'TypeScript', icon: siTypescript },
+  { name: 'Astro', icon: siAstro },
+  { name: 'Tailwind CSS', icon: siTailwindcss },
+  { name: 'Node.js', icon: siNodedotjs },
+  { name: 'Express', icon: siExpress },
+  { name: 'PostgreSQL', icon: siPostgresql },
+  { name: 'Prisma', icon: siPrisma },
+  { name: 'Vercel', icon: siVercel },
 ];
+
+/** Logo for a technology name (e.g. from a project's tech list), if we have one */
+export function techIcon(name: string): SimpleIcon | undefined {
+  return technologies.find((t) => t.name.toLowerCase() === name.toLowerCase())?.icon;
+}

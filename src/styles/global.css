@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "@fontsource-variable/plus-jakarta-sans";
 
+/* `js:` variant — applies only once BaseLayout has added the .js class (JS is running) */
+@custom-variant js (.js &);
+
 /*
  * Design tokens — the ONLY place colours, fonts, radii and widths are defined.
  * The default Tailwind palette is cleared so components can't drift to ad-hoc colours.

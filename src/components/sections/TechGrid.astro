@@ -1,5 +1,8 @@
 ---
-/** Technologies we use — names only (no third-party logos). List lives in services.ts. */
+/**
+ * Technologies we use, from services.ts. Logos (simple-icons) are monochrome and take their
+ * brand colour on hover/focus; technologies without a logo show the name only.
+ */
 import { technologies } from '../../data/services';
 
 interface Props {
@@ -14,10 +17,21 @@ const { class: className } = Astro.props;
     technologies.map((tech, i) => (
       <li
         data-reveal
-        style={`--reveal-delay:${(i % 5) * 50}ms`}
-        class="flex min-h-20 items-center justify-center rounded-card border border-line bg-surface px-4 py-5 text-center font-semibold text-ink"
+        style={`--reveal-delay:${(i % 5) * 50}ms${tech.icon ? `;--brand:#${tech.icon.hex}` : ''}`}
+        class="group flex min-h-28 flex-col items-center justify-center gap-3 rounded-card border border-line bg-surface px-4 py-5 text-center transition-[border-color,box-shadow] duration-200 hover:border-primary/30 hover:shadow-card"
       >
-        {tech}
+        {tech.icon && (
+          <svg
+            viewBox="0 0 24 24"
+            width="32"
+            height="32"
+            aria-hidden="true"
+            class="size-8 fill-muted transition-colors duration-200 group-hover:fill-[var(--brand)]"
+          >
+            <path d={tech.icon.path} />
+          </svg>
+        )}
+        <span class="font-semibold text-ink">{tech.name}</span>
       </li>
     ))
   }

@@ -21,6 +21,8 @@ export interface Project {
   title: string;
   category: ProjectCategory;
   client: string;
+  /** Shown as "Industry" on the case study; leave empty to hide the row */
+  industry: string;
   /** One or two sentences for cards */
   summary: string;
   /** Longer text for the case study page */
@@ -44,6 +46,7 @@ export const projects: Project[] = [
     title: 'MuchLogic POS',
     category: 'POS & Retail',
     client: 'Internal product',
+    industry: 'Retail',
     summary: 'Offline-first POS and inventory software for Windows retail businesses.',
     description:
       'MuchLogic POS is our own point of sale and inventory software for Windows retail businesses. It is built offline-first, so shops can keep billing even without an internet connection.',
@@ -62,6 +65,7 @@ export const projects: Project[] = [
     title: 'Designkoolama.lk',
     category: 'Websites',
     client: 'Designkoolama Pvt Ltd, Matara',
+    industry: '', // TODO: confirm industry
     summary:
       'Portfolio website rebuilt from WordPress/Elementor into Next.js, with portfolio filtering, dark/light mode and WhatsApp integration.',
     description:
@@ -84,6 +88,7 @@ export const projects: Project[] = [
     title: 'Shanu Ceylon Tours',
     category: 'Websites',
     client: 'Shanu Ceylon Tours', // TODO: confirm client name
+    industry: 'Tourism',
     summary: 'Tour company website for shanuceylontours.com.',
     description: 'Tour company website for shanuceylontours.com.', // TODO: confirm description and status
     whatWeDid: ['TODO: confirm what we did'],
@@ -100,6 +105,7 @@ export const projects: Project[] = [
     title: 'AgriLink',
     category: 'Web Platforms',
     client: 'Internal project',
+    industry: 'Agriculture',
     summary: 'Marketplace connecting farmers, buyers, transporters and admins.',
     description: 'A marketplace platform connecting farmers, buyers, transporters and admins.',
     whatWeDid: ['TODO: confirm what we did'],
@@ -115,6 +121,7 @@ export const projects: Project[] = [
     title: 'Doc365',
     category: 'Healthcare',
     client: 'TODO: confirm client', // TODO: confirm client
+    industry: 'Healthcare',
     summary:
       'Prototype of a consent-based health record and e-prescription exchange using FHIR.',
     description:
@@ -130,6 +137,26 @@ export const projects: Project[] = [
 ];
 
 export const featuredProjects = projects.filter((p) => p.featured);
+
+/** True for empty values and anything still marked TODO — such values are never rendered. */
+export function isTodo(value: string | undefined): boolean {
+  return !value || /TODO/i.test(value);
+}
+
+/** Fields of a project that are safe to show (placeholders removed). */
+export function publicDetails(project: Project) {
+  return {
+    client: isTodo(project.client) ? undefined : project.client,
+    industry: isTodo(project.industry) ? undefined : project.industry,
+    whatWeDid: project.whatWeDid.filter((item) => !isTodo(item)),
+    tech: project.tech.filter((item) => !isTodo(item)),
+  };
+}
+
+/** 1-based position, used for "Case 01" labels */
+export function caseNumber(project: Project): string {
+  return String(projects.indexOf(project) + 1).padStart(2, '0');
+}
 
 /** Categories that currently have at least one project, in the canonical order. */
 export const activeCategories = projectCategories.filter((c) =>

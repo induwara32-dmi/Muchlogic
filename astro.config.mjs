@@ -8,6 +8,8 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://muchlogic.com',
+  // Internal links, canonicals and the sitemap all use URLs without a trailing slash
+  trailingSlash: 'never',
   // Static by default; only routes with `export const prerender = false` (the contact API) run on demand.
   adapter: vercel(),
   integrations: [

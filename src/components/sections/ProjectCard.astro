@@ -2,25 +2,43 @@
 import { Image } from 'astro:assets';
 import Icon from '../ui/Icon.astro';
 import Badge from '../ui/Badge.astro';
-import type { Project } from '../../data/projects';
+import { caseNumber, publicDetails, type Project } from '../../data/projects';
 import { getProjectImage } from '../../lib/images';
 
 interface Props {
   project: Project;
-  showTech?: boolean;
+  /**
+   * 'card' = bordered card with category badge (Home)
+   * 'plain' = borderless, "Case 01 · Category" label and tech pills (Our Work)
+   */
+  variant?: 'card' | 'plain';
   headingLevel?: 'h2' | 'h3';
   /** Eager-load when the card is above the fold */
   priority?: boolean;
 }
 
-const { project, showTech = false, headingLevel: Heading = 'h3', priority = false } = Astro.props;
+const { project, variant = 'card', headingLevel: Heading = 'h3', priority = false } = Astro.props;
 const image = getProjectImage(project.image);
+const { tech } = publicDetails(project);
+const plain = variant === 'plain';
 ---
 
 <article
-  class="group relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-[box-shadow,border-color] duration-200 hover:border-primary/30 hover:shadow-card"
+  class:list={[
+    'group relative flex h-full flex-col',
+    plain
+      ? ''
+      : 'overflow-hidden rounded-card border border-line bg-surface transition-[box-shadow,border-color] duration-200 hover:border-primary/30 hover:shadow-card',
+  ]}
 >
-  <div class="aspect-[16/10] overflow-hidden border-b border-line bg-surface-alt">
+  <div
+    class:list={[
+      'relative aspect-[16/10] overflow-hidden bg-surface-alt',
+      plain
+        ? 'rounded-card border border-line transition-shadow duration-200 group-hover:shadow-card'
+        : 'border-b border-line',
+    ]}
+  >
     <Image
       src={image.src}
       alt={image.isPlaceholder ? '' : project.imageAlt}
@@ -33,21 +51,32 @@ const image = getProjectImage(project.image);
       loading={priority ? 'eager' : 'lazy'}
       class="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
     />
+    {plain && project.prototype && <Badge tone="outline" class="absolute left-4 top-4 z-10">Prototype</Badge>}
   </div>
 
-  <div class="flex flex-1 flex-col p-6 sm:p-7">
-    <div class="flex flex-wrap gap-2">
-      <Badge>{project.category}</Badge>
-      {project.prototype && <Badge tone="outline">Prototype</Badge>}
-    </div>
-    <Heading class="mt-4 text-xl">{project.title}</Heading>
+  <div class:list={['flex flex-1 flex-col', plain ? 'pt-6' : 'p-6 sm:p-7']}>
+    {
+      plain ? (
+        <p class="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm font-semibold uppercase tracking-widest">
+          <span class="text-primary">Case {caseNumber(project)}</span>
+          <span class="size-1 rounded-pill bg-line" aria-hidden="true" />
+          <span class="text-body">{project.category}</span>
+        </p>
+      ) : (
+        <div class="flex flex-wrap gap-2">
+          <Badge>{project.category}</Badge>
+          {project.prototype && <Badge tone="outline">Prototype</Badge>}
+        </div>
+      )
+    }
+    <Heading class:list={['text-xl', plain ? 'mt-3 lg:text-2xl' : 'mt-4']}>{project.title}</Heading>
     <p class="mt-2 flex-1">{project.summary}</p>
 
     {
-      showTech && project.tech.length > 0 && (
+      plain && tech.length > 0 && (
         <ul class="mt-5 flex flex-wrap gap-2" aria-label="Tech stack">
-          {project.tech.map((t) => (
-            <li class="rounded-pill bg-surface-alt px-2.5 py-1 text-sm text-body">{t}</li>
+          {tech.map((t) => (
+            <li class="rounded-pill border border-line bg-surface px-3 py-1 text-sm text-body">{t}</li>
           ))}
         </ul>
       )
@@ -55,11 +84,14 @@ const image = getProjectImage(project.image);
 
     <a
       href={`/work/${project.slug}`}
-      class="mt-6 inline-flex items-center gap-1.5 self-start font-semibold text-ink after:absolute after:inset-0 after:rounded-card after:content-[''] hover:text-primary"
+      class:list={[
+        "mt-6 inline-flex items-center gap-1.5 self-start font-semibold after:absolute after:inset-0 after:rounded-card after:content-['']",
+        plain ? 'text-primary hover:text-primary-hover' : 'text-ink hover:text-primary',
+      ]}
     >
       View project<span class="sr-only">: {project.title}</span>
       <Icon
-        name="arrow-right"
+        name={plain ? 'chevron-right' : 'arrow-right'}
         size={18}
         class="transition-transform duration-200 group-hover:translate-x-0.5"
       />
