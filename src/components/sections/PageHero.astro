@@ -1,0 +1,40 @@
+---
+/**
+ * Centred hero for inner pages (Services, Work, About, Contact).
+ * Put the title in the default slot; wrap muted words in <span class="text-muted">.
+ * Optional `tags` render as small outline pills below the description.
+ */
+import Container from '../ui/Container.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+
+interface Props {
+  eyebrow?: string;
+  description?: string;
+  tags?: string[];
+}
+
+const { eyebrow, description, tags = [] } = Astro.props;
+---
+
+<section class="bg-surface pb-12 pt-12 md:pb-20 md:pt-20" aria-labelledby="page-title">
+  <Container class="text-center">
+    {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+    <h1
+      id="page-title"
+      class="mx-auto mt-4 max-w-4xl text-[2.5rem] font-extrabold leading-[1.05] tracking-display sm:text-6xl lg:text-7xl"
+    >
+      <slot />
+    </h1>
+    {description && <p class="mx-auto mt-6 max-w-2xl text-lg md:text-xl">{description}</p>}
+    {
+      tags.length > 0 && (
+        <ul class="mt-8 flex flex-wrap justify-center gap-2.5">
+          {tags.map((tag) => (
+            <li class="rounded-pill border border-line px-4 py-1.5 text-sm font-medium text-body">{tag}</li>
+          ))}
+        </ul>
+      )
+    }
+    <slot name="after" />
+  </Container>
+</section>

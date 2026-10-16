@@ -1,35 +1,52 @@
 ---
 import Button from '../ui/Button.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
 
 interface Props {
   title: string;
   /** Second line, shown muted */
   subtitle?: string;
+  eyebrow?: string;
   description?: string;
   ctaLabel?: string;
   ctaHref?: string;
+  /** 'split' = text left, button right (Home); 'center' = stacked and centred */
+  layout?: 'split' | 'center';
   class?: string;
 }
 
 const {
   title,
   subtitle,
+  eyebrow,
   description,
   ctaLabel = 'Start your project',
   ctaHref = '/contact',
+  layout = 'split',
   class: className,
 } = Astro.props;
+
+const centered = layout === 'center';
 ---
 
 <div
   data-reveal
   class:list={[
-    'flex flex-col gap-8 rounded-card bg-dark px-6 py-10 sm:px-10 md:flex-row md:items-center md:justify-between md:px-16 md:py-14',
+    'flex flex-col gap-8 rounded-card bg-dark px-6 py-10 sm:px-10',
+    centered
+      ? 'items-center text-center md:px-16 md:py-20'
+      : 'md:flex-row md:items-center md:justify-between md:px-16 md:py-14',
     className,
   ]}
 >
-  <div class="max-w-2xl">
-    <h2 class="text-3xl leading-tight tracking-display text-white md:text-4xl">
+  <div class:list={[centered ? 'max-w-3xl' : 'max-w-2xl']}>
+    {eyebrow && <Eyebrow onDark class="mb-4">{eyebrow}</Eyebrow>}
+    <h2
+      class:list={[
+        'leading-tight tracking-display text-white',
+        centered ? 'text-3xl md:text-5xl' : 'text-3xl md:text-4xl',
+      ]}
+    >
       {title}{' '}
       {subtitle && <span class="block text-dark-muted">{subtitle}</span>}
     </h2>

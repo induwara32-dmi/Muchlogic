@@ -1,0 +1,86 @@
+---
+/** One service section on /services — image and text, alternating sides. */
+import { Image } from 'astro:assets';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { serviceWorkHref, type Service } from '../../data/services';
+import { getServiceImage } from '../../lib/images';
+
+interface Props {
+  service: Service;
+  index: number;
+}
+
+const { service, index } = Astro.props;
+const reversed = index % 2 === 1;
+const number = String(index + 1).padStart(2, '0');
+const image = getServiceImage(service.slug, service.image);
+const workHref = serviceWorkHref(service);
+const titleId = `${service.slug}-title`;
+---
+
+<section
+  id={service.slug}
+  aria-labelledby={titleId}
+  class:list={[
+    'scroll-mt-32 py-14 md:py-24 lg:scroll-mt-36',
+    reversed ? 'bg-surface-alt' : 'bg-surface',
+  ]}
+>
+  <Container class="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+    <div data-reveal class:list={['overflow-hidden rounded-card border border-line', reversed && 'lg:order-2']}>
+      <Image
+        src={image.src}
+        alt={service.imageAlt}
+        width={1200}
+        height={1000}
+        loading={index === 0 ? 'eager' : 'lazy'}
+        class="aspect-[6/5] size-full object-cover"
+      />
+    </div>
+
+    <div data-reveal style="--reveal-delay:80ms">
+      <p class="flex items-center gap-3 text-sm font-semibold">
+        <span class="text-primary">Service {number}</span>
+        <span class="h-px w-8 bg-line" aria-hidden="true"></span>
+        <span class="text-body">{service.title}</span>
+      </p>
+      <h2
+        id={titleId}
+        class="mt-4 text-[2rem] leading-[1.15] tracking-display md:text-[2.625rem] lg:text-5xl"
+      >
+        {service.headline}
+      </h2>
+      <p class="mt-5 text-lg">{service.description}</p>
+
+      <ul class="mt-7 space-y-3.5">
+        {
+          service.bullets.map((bullet) => (
+            <li class="flex items-start gap-3 text-ink">
+              <span class="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-pill bg-primary text-white">
+                <Icon name="check" size={12} strokeWidth={3} />
+              </span>
+              {bullet}
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <Button href={`/contact?service=${service.slug}`} size="lg" block>
+          {service.ctaLabel}
+          <span class="sr-only">: {service.title}</span>
+        </Button>
+        {
+          workHref && (
+            <Button href={workHref} variant="secondary" size="lg" block>
+              See our work
+              <span class="sr-only">in {service.title}</span>
+            </Button>
+          )
+        }
+      </div>
+    </div>
+  </Container>
+</section>

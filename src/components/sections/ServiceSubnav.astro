@@ -1,0 +1,80 @@
+---
+/**
+ * Sticky anchor chips for the service sections. Sits directly below the sticky header.
+ * Highlights the chip for the section in view (progressive enhancement; plain anchors without JS).
+ */
+import Container from '../ui/Container.astro';
+import type { Service } from '../../data/services';
+
+interface Props {
+  services: Service[];
+}
+
+const { services } = Astro.props;
+---
+
+<nav
+  aria-label="Services on this page"
+  data-service-subnav
+  class="sticky top-16 z-30 border-y border-line bg-surface/90 backdrop-blur-md lg:top-[4.5rem]"
+>
+  <Container class="flex items-center gap-5">
+    <p class="hidden shrink-0 text-sm font-medium text-body lg:block">What we deliver:</p>
+    <ul
+      data-chips
+      class="-mx-4 flex gap-2 overflow-x-auto px-4 py-3 [scrollbar-width:none] sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-1 lg:justify-between lg:px-0 [&::-webkit-scrollbar]:hidden"
+    >
+      {
+        services.map((service) => (
+          <li class="shrink-0">
+            <a
+              href={`#${service.slug}`}
+              data-chip={service.slug}
+              class="inline-flex min-h-10 items-center whitespace-nowrap rounded-pill border border-line bg-surface px-4 text-sm font-medium text-ink transition-colors hover:border-ink aria-[current=true]:border-primary aria-[current=true]:bg-primary-soft aria-[current=true]:text-primary"
+            >
+              {service.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+</nav>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-service-subnav]');
+  const list = nav?.querySelector<HTMLElement>('[data-chips]');
+  const chips = Array.from(nav?.querySelectorAll<HTMLAnchorElement>('[data-chip]') ?? []);
+  const sections = chips
+    .map((chip) => document.getElementById(chip.dataset.chip ?? ''))
+    .filter((el): el is HTMLElement => el !== null);
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const setActive = (slug: string | null) => {
+    for (const chip of chips) {
+      const active = chip.dataset.chip === slug;
+      if (active) chip.setAttribute('aria-current', 'true');
+      else chip.removeAttribute('aria-current');
+      // Keep the active chip visible in the horizontally scrolling list (mobile)
+      if (active && list && list.scrollWidth > list.clientWidth) {
+        list.scrollTo({
+          left: chip.offsetLeft - list.clientWidth / 2 + chip.clientWidth / 2,
+          behavior: reduceMotion ? 'auto' : 'smooth',
+        });
+      }
+    }
+  };
+
+  if (sections.length > 0 && 'IntersectionObserver' in window) {
+    // A section is "current" when it crosses a band just below the sticky bars
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }
+      },
+      { rootMargin: '-30% 0px -60% 0px' },
+    );
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>

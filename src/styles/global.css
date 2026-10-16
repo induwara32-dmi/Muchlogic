@@ -62,8 +62,6 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
-    /* Anchor targets land below the sticky header */
-    scroll-padding-top: 5.5rem;
   }
 
   body {
@@ -93,6 +91,7 @@
     color: var(--color-ink);
   }
 
+  /* Anchor targets land below the sticky header (sections under extra sticky bars override this) */
   [id] {
     scroll-margin-top: 5.5rem;
   }
