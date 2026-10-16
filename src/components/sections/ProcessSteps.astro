@@ -1,29 +1,63 @@
 ---
-import { processSteps } from '../../data/process';
+/**
+ * Step timeline.
+ * - Mobile: vertical timeline, badges in a left column joined by a vertical line
+ * - Tablet: 2×2 grid, no connector
+ * - Desktop: one row, horizontal line through the badge centres (first → last)
+ * Defaults to the shared process from process.ts; pass `items` for other step lists.
+ */
+import { processSteps, type ProcessStep } from '../../data/process';
 
 interface Props {
+  items?: ProcessStep[];
+  /** Heading level for step titles */
+  headingLevel?: 'h3' | 'h4';
   class?: string;
 }
 
-const { class: className } = Astro.props;
+const { items = processSteps, headingLevel: Heading = 'h3', class: className } = Astro.props;
+
+const count = items.length;
+const gap = '2rem'; // desktop column gap — keep in sync with lg:gap-x-8
+const badge = '2.75rem'; // 44px
 ---
 
-<ol class:list={['grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6', className]}>
+<ol
+  class:list={[
+    'relative md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10 lg:grid-cols-[repeat(var(--steps),minmax(0,1fr))]',
+    className,
+  ]}
+  style={`--steps:${count}`}
+>
+  {/* Desktop connector: from the centre of the first badge to the centre of the last */}
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute hidden h-px bg-line lg:block"
+    style={`top:calc(${badge} / 2); left:calc(${badge} / 2); right:calc((100% - ${count - 1} * ${gap}) / ${count} - ${badge} / 2)`}
+  ></span>
+
   {
-    processSteps.map((step, i) => (
+    items.map((step, i) => (
       <li
         data-reveal
-        style={`--reveal-delay:${i * 80}ms`}
-        class="relative overflow-hidden rounded-card border border-line bg-surface p-6 lg:p-7"
+        style={`--reveal-delay:${i * 100}ms`}
+        class:list={[
+          'group relative grid grid-cols-[2.75rem_minmax(0,1fr)] gap-x-4 pb-8 last:pb-0 md:block md:pb-0',
+          // Mobile connector: badge bottom → next badge top
+          i < count - 1 &&
+            "before:absolute before:bottom-0 before:left-[calc(1.375rem-1px)] before:top-11 before:w-0.5 before:bg-line before:content-[''] md:before:hidden",
+        ]}
       >
         <span
-          class="pointer-events-none absolute right-4 top-3 text-5xl font-extrabold leading-none tracking-tighter text-primary/15 select-none"
           aria-hidden="true"
+          class="relative z-10 inline-flex size-11 items-center justify-center rounded-pill bg-primary-soft font-semibold tabular-nums text-primary transition-colors duration-200 group-focus-within:bg-primary group-focus-within:text-white group-hover:bg-primary group-hover:text-white"
         >
           {String(i + 1).padStart(2, '0')}
         </span>
-        <h3 class="relative pr-14 text-lg lg:text-xl">{step.title}</h3>
-        <p class="relative mt-3">{step.description}</p>
+        <div class="pt-2 md:mt-5 md:pt-0">
+          <Heading class="text-lg lg:text-xl">{step.title}</Heading>
+          <p class="mt-2">{step.description}</p>
+        </div>
       </li>
     ))
   }

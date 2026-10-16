@@ -16,16 +16,16 @@ import { services } from '../../data/services';
 
 const year = new Date().getFullYear();
 
-const headingClass = 'text-sm font-semibold text-white';
+const headingClass = 'text-sm font-semibold text-ink';
 const linkClass =
-  'inline-flex min-h-8 items-center text-[0.9375rem] text-dark-muted transition-colors hover:text-white';
+  'inline-flex min-h-8 items-center text-[0.9375rem] text-body transition-colors hover:text-ink';
 ---
 
-<footer class="bg-dark text-dark-muted">
+<footer class="border-t border-line bg-surface text-body">
   <Container class="py-14 md:py-20">
     <div class="grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-12 lg:gap-8">
       <div class="sm:col-span-2 md:col-span-3 lg:col-span-4">
-        <Logo inverted />
+        <Logo />
         <p class="mt-4 max-w-xs text-[0.9375rem] leading-relaxed">{site.tagline}</p>
         {
           activeSocials.length > 0 && (
@@ -36,7 +36,7 @@ const linkClass =
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex size-11 items-center justify-center rounded-pill border border-dark-line text-white transition-colors hover:border-primary-on-dark hover:text-primary-on-dark"
+                    class="inline-flex size-11 items-center justify-center rounded-pill border border-line text-ink transition-colors hover:border-primary hover:text-primary"
                   >
                     <Icon name={social.icon} size={18} />
                     <span class="sr-only">{`${site.name} on ${social.label} (opens in a new tab)`}</span>
@@ -82,14 +82,14 @@ const linkClass =
         <h2 class={headingClass}>Contact</h2>
         <ul class="mt-4 space-y-3 text-[0.9375rem]">
           <li>
-            <a href={emailHref} class="inline-flex items-center gap-2.5 hover:text-white">
-              <Icon name="mail" size={18} class="text-primary-on-dark" />
+            <a href={emailHref} class="inline-flex items-center gap-2.5 hover:text-ink">
+              <Icon name="mail" size={18} class="text-primary" />
               {site.email}
             </a>
           </li>
           <li>
-            <a href={phoneHref} class="inline-flex items-center gap-2.5 hover:text-white">
-              <Icon name="phone" size={18} class="text-primary-on-dark" />
+            <a href={phoneHref} class="inline-flex items-center gap-2.5 hover:text-ink">
+              <Icon name="phone" size={18} class="text-primary" />
               {site.phone.display}
             </a>
           </li>
@@ -98,15 +98,15 @@ const linkClass =
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-2.5 hover:text-white"
+              class="inline-flex items-center gap-2.5 hover:text-ink"
             >
-              <Icon name="message-circle" size={18} class="text-primary-on-dark" />
+              <Icon name="message-circle" size={18} class="text-primary" />
               <span>WhatsApp {site.whatsapp.display}</span>
               <span class="sr-only">(opens in a new tab)</span>
             </a>
           </li>
           <li class="inline-flex items-center gap-2.5">
-            <Icon name="map-pin" size={18} class="text-primary-on-dark" />
+            <Icon name="map-pin" size={18} class="text-primary" />
             Based in {locationLabel}
           </li>
         </ul>
@@ -114,14 +114,14 @@ const linkClass =
     </div>
 
     <div
-      class="mt-12 flex flex-col gap-4 border-t border-dark-line pt-8 text-sm sm:flex-row sm:items-center sm:justify-between"
+      class="mt-12 flex flex-col gap-4 border-t border-line pt-8 text-sm sm:flex-row sm:items-center sm:justify-between"
     >
       <p>&copy; {year} {site.name}. All rights reserved.</p>
       <ul class="flex gap-6">
         {
           legalLinks.map((link) => (
             <li>
-              <a href={link.href} class="hover:text-white">
+              <a href={link.href} class="hover:text-ink">
                 {link.label}
               </a>
             </li>

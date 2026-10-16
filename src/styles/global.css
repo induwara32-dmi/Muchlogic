@@ -44,6 +44,10 @@
 
   --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
+  /* Letter-spacing: large display headings / smaller headings */
+  --tracking-display: -0.02em;
+  --tracking-heading: -0.01em;
+
   --radius-card: 12px;
   --radius-pill: 9999px;
 
@@ -70,7 +74,7 @@
   h2,
   h3,
   h4 {
-    @apply font-bold tracking-tight text-ink;
+    @apply font-bold tracking-heading text-ink;
     text-wrap: balance;
   }
 
