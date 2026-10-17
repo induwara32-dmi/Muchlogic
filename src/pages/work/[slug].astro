@@ -72,7 +72,7 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
             <span class="text-xs font-semibold uppercase tracking-[0.12em] text-body">Case study {number}</span>{' '}
             {project.prototype && <Badge tone="outline">Prototype</Badge>}
           </div>
-          <h1 class="mt-5 text-[2.5rem] font-extrabold leading-[1.05] tracking-display sm:text-6xl">
+          <h1 class="mt-5 text-[2.125rem] font-extrabold leading-[1.08] tracking-display sm:text-6xl">
             {project.title}
           </h1>
           <p class="mt-5 text-[1.0625rem] md:text-lg">{project.description}</p>
@@ -83,13 +83,13 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
             src={image.src}
             alt={image.isPlaceholder ? '' : project.imageAlt}
             width={1600}
-            height={1000}
+            height={Math.round(1600 * (image.src.height / image.src.width))}
             {...!image.isPlaceholder && { widths: [800, 1200, 1600], sizes: '(min-width: 1200px) 1136px, 100vw' }}
             loading="eager"
             class:list={[
-              'size-full object-cover',
-              // Placeholders get a shorter frame so they don't dominate the page
-              image.isPlaceholder ? 'aspect-[16/10] sm:aspect-[21/9]' : 'aspect-[16/10]',
+              'size-full',
+              // Placeholders get a shorter, cropped frame; real screenshots show in full
+              image.isPlaceholder ? 'aspect-[16/10] object-cover sm:aspect-[21/9]' : 'h-auto',
             ]}
           />
         </div>
@@ -157,8 +157,22 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
 
         <div class="mt-12 flex flex-col gap-3 border-t border-line pt-10 sm:flex-row md:mt-16">
           {
+            project.downloadUrl && (
+              <Button href={project.downloadUrl} size="lg" icon="external-link" external block>
+                Download from Microsoft Store
+              </Button>
+            )
+          }
+          {
             project.liveUrl && (
-              <Button href={project.liveUrl} size="lg" icon="external-link" external block>
+              <Button
+                href={project.liveUrl}
+                size="lg"
+                variant={project.downloadUrl ? 'secondary' : 'primary'}
+                icon="external-link"
+                external
+                block
+              >
                 Visit live site
               </Button>
             )
@@ -166,7 +180,7 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
           <Button
             href={similarHref}
             size="lg"
-            variant={project.liveUrl ? 'secondary' : 'primary'}
+            variant={project.downloadUrl || project.liveUrl ? 'secondary' : 'primary'}
             icon="arrow-right"
             block
           >

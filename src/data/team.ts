@@ -23,16 +23,16 @@ export const team: TeamMember[] = [
     name: 'Thisara C Prasanga',
     role: 'Co-founder', // TODO: add the second part of the title (e.g. "Co-founder & CTO")
     // bio: '', // TODO: one-line bio
-    // photo: 'thisara.webp', // TODO: add photo to src/assets/team/
+    photo: 'thisara.webp',
     linkedin: 'https://www.linkedin.com/in/thisara-prasanga-55bb77321',
-    email: 'prasangathisara@gmail.com',
-    phone: { display: '+94 76 799 6398', e164: '+94767996398' },
+    email: 'thisarachathura1@gmail.com',
+    phone: { display: '+94 78 205 9584', e164: '+94782059584' },
   },
   {
     name: 'Induwara Rajapaksha',
     role: 'Co-founder', // TODO: add the second part of the title (e.g. "Co-founder & CEO")
     // bio: '', // TODO: one-line bio
-    // photo: 'induwara.webp', // TODO: add photo to src/assets/team/
+    photo: 'induwara-rajapaksha.webp',
     linkedin: 'https://www.linkedin.com/in/induwara-rajapaksha',
     email: 'dimuthuinduwara32@gmail.com',
     phone: { display: '+94 70 322 1584', e164: '+94703221584' },

@@ -26,24 +26,26 @@ import { locationLabel } from '../../data/site';
 
   <!-- Form + what happens next -->
   <Section tone="alt" aria-labelledby="form-title">
-    <div class="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
-      <div>
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-x-16 lg:gap-y-12">
+      <div class="lg:col-start-1 lg:row-start-1">
         <Eyebrow>Get in touch</Eyebrow>
         <h2
           id="form-title"
-          class="mt-3 text-[1.75rem] leading-[1.2] tracking-heading md:text-[2.125rem] lg:text-[2.375rem]"
+          class="mt-3 text-[1.5rem] leading-[1.25] tracking-heading md:text-[2.125rem] lg:text-[2.375rem]"
         >
           Tell us about your project
         </h2>
-        <p class="mt-5 text-[1.0625rem]">
+        <p class="mt-4 text-[1.0625rem]">
           Share a few details and we’ll come back with practical advice and a clear way forward.
         </p>
-
-        <h3 class="mt-12 text-xl">What happens next</h3>
-        <ProcessSteps items={nextSteps} layout="vertical" headingLevel="h4" class="mt-6" />
       </div>
 
-      <ContactForm labelledBy="form-title" />
+      <ContactForm labelledBy="form-title" class="lg:col-start-2 lg:row-span-2 lg:row-start-1" />
+
+      <div class="lg:col-start-1 lg:row-start-2">
+        <h3 class="text-xl">What happens next</h3>
+        <ProcessSteps items={nextSteps} layout="vertical" headingLevel="h4" class="mt-5" />
+      </div>
     </div>
   </Section>
 

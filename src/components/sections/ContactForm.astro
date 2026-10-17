@@ -12,9 +12,10 @@ import { ELAPSED_FIELD, HONEYPOT_FIELD, LIMITS } from '../../lib/contact';
 
 interface Props {
   labelledBy?: string;
+  class?: string;
 }
 
-const { labelledBy } = Astro.props;
+const { labelledBy, class: className } = Astro.props;
 
 const serviceOptions = [...services.map((s) => ({ value: s.slug, label: s.title })), {
   value: NOT_SURE_SERVICE.slug,
@@ -39,7 +40,7 @@ const serverErrors = [
   method="post"
   action="/api/contact"
   aria-labelledby={labelledBy}
-  class="rounded-card border border-line bg-surface p-6 shadow-card sm:p-8 lg:p-10"
+  class:list={['rounded-card border border-line bg-surface p-5 shadow-card sm:p-8 lg:p-10', className]}
 >
   {
     serverErrors.map((error) => (

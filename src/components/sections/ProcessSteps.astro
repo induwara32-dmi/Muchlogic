@@ -29,7 +29,7 @@ const vertical = layout === 'vertical';
   class:list={[
     vertical
       ? 'divide-y divide-line border-y border-line'
-      : 'grid gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-[repeat(var(--steps),minmax(0,1fr))]',
+      : 'grid gap-x-8 gap-y-7 md:grid-cols-2 md:gap-y-10 lg:grid-cols-[repeat(var(--steps),minmax(0,1fr))]',
     className,
   ]}
   style={`--steps:${items.length}`}

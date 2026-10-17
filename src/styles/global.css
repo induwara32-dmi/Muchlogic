@@ -76,6 +76,13 @@
     scroll-behavior: smooth;
   }
 
+  /* Phones: scale every rem-based size down ~6% (text, spacing, headings together) */
+  @media (max-width: 639px) {
+    html {
+      font-size: 93.75%;
+    }
+  }
+
   body {
     @apply bg-surface font-sans text-base leading-[1.65] text-body antialiased;
   }

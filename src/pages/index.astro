@@ -43,15 +43,15 @@ const showProof = stats.length > 0 || clientLogos.length > 0;
 >
   <!-- Hero -->
   <section
-    class="hero-bg relative flex min-h-[min(calc(100svh-6.5rem),54rem)] items-center overflow-hidden text-dark-muted"
+    class="hero-bg relative flex items-center overflow-hidden text-dark-muted md:min-h-[min(calc(100svh-6.5rem),54rem)]"
     aria-labelledby="hero-title"
   >
-    <Container class="py-16 md:py-24">
+    <Container class="py-14 md:py-24">
       <div class="mx-auto max-w-5xl text-center">
         <Eyebrow onDark>Software company · Sri Lanka</Eyebrow>
         <h1
           id="hero-title"
-          class="mt-5 text-[2.5rem] font-extrabold leading-[1.05] tracking-display text-white sm:text-6xl lg:text-[3.75rem]"
+          class="mt-5 text-[2.125rem] font-extrabold leading-[1.08] tracking-display text-white sm:text-6xl lg:text-[3.75rem]"
         >
           <!-- On large screens the highlighted phrase always stays together on line one -->
           <span class="lg:block">We build <span class="text-primary-on-dark">smart software and AI</span></span>{' '}
@@ -87,7 +87,7 @@ const showProof = stats.length > 0 || clientLogos.length > 0;
         <Eyebrow>Why MuchLogic</Eyebrow>
         <h2
           id="why-title"
-          class="mt-3 text-[1.75rem] leading-[1.2] tracking-heading md:text-[2.125rem] lg:text-[2.375rem]"
+          class="mt-3 text-[1.5rem] leading-[1.25] tracking-heading md:text-[2.125rem] lg:text-[2.375rem]"
         >
           Software that works as hard as you do
         </h2>
@@ -146,10 +146,12 @@ const showProof = stats.length > 0 || clientLogos.length > 0;
       </Button>
     </div>
 
-    <ul class="mt-10 grid gap-6 md:grid-cols-2 lg:mt-12 lg:grid-cols-3">
+    <ul
+      class="-mx-4 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:-mx-6 sm:px-6 md:mx-0 md:mt-10 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-0 md:pb-0 lg:mt-12 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden"
+    >
       {
         featuredProjects.slice(0, 3).map((project) => (
-          <li data-reveal>
+          <li data-reveal class="w-[80%] shrink-0 snap-start md:w-auto">
             <ProjectCard project={project} />
           </li>
         ))
@@ -164,7 +166,7 @@ const showProof = stats.length > 0 || clientLogos.length > 0;
     <SectionHeading id="process-title" eyebrow="Our process" class="max-w-2xl">
       How we bring ideas to life
     </SectionHeading>
-    <ProcessSteps class="mt-10 lg:mt-12" />
+    <ProcessSteps class="mt-8 lg:mt-12" />
   </Section>
 
   <FinalCTA />

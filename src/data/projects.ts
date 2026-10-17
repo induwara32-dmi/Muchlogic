@@ -30,6 +30,8 @@ export interface Project {
   whatWeDid: string[];
   tech: string[];
   liveUrl?: string;
+  /** App download page (e.g. Microsoft Store). Shows a "Download" button on the case study */
+  downloadUrl?: string;
   /** File name in src/assets/projects/ — empty = placeholder */
   image: string;
   imageAlt: string;
@@ -57,9 +59,9 @@ const allProjects: Project[] = [
       'TODO: confirm what to list here (e.g. product design, development, support)',
     ],
     tech: [], // TODO: confirm tech stack (the design contradicts itself)
-    // liveUrl: '', // TODO: product page or download URL
-    image: '', // TODO: add screenshot, e.g. 'muchlogic-pos.webp'
-    imageAlt: 'MuchLogic POS screenshot',
+    downloadUrl: 'https://apps.microsoft.com/detail/9NH6BKDXQSQW?hl=en-us&gl=US&ocid=pdpshare',
+    image: 'muchlogic-pos.webp',
+    imageAlt: 'MuchLogic POS till screen showing a bill with items, quantities, discounts and payment options',
     featured: true,
     services: ['pos-systems'],
   },
