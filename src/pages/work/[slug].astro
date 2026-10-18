@@ -6,6 +6,7 @@ import Container from '../../components/ui/Container.astro';
 import Badge from '../../components/ui/Badge.astro';
 import Button from '../../components/ui/Button.astro';
 import Icon from '../../components/ui/Icon.astro';
+import WindowBar from '../../components/ui/WindowBar.astro';
 import { projects, caseNumber, publicDetails, type Project } from '../../data/projects';
 import { getService, techIcon } from '../../data/services';
 import { getProjectImage } from '../../lib/images';
@@ -91,7 +92,8 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
           <p class="mt-5 max-w-prose text-lead">{project.description}</p>
         </div>
 
-        <div class="mt-10 overflow-hidden rounded-card border border-line bg-surface-alt md:mt-14">
+        <div class="mt-10 overflow-hidden rounded-card border border-line bg-surface-alt shadow-card md:mt-14">
+          {!image.isPlaceholder && <WindowBar class="h-8 px-4" />}
           <Image
             src={image.src}
             alt={image.isPlaceholder ? '' : project.imageAlt}
@@ -100,7 +102,7 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
             {...!image.isPlaceholder && { widths: [800, 1200, 1600], sizes: '(min-width: 1200px) 1136px, 100vw' }}
             loading="eager"
             class:list={[
-              'size-full',
+              'block w-full',
               // Placeholders get a shorter, cropped frame; real screenshots show in full
               image.isPlaceholder ? 'aspect-[16/10] object-cover sm:aspect-[21/9]' : 'h-auto',
             ]}

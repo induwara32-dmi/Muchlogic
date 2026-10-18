@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Icon from '../ui/Icon.astro';
 import Badge from '../ui/Badge.astro';
+import WindowBar from '../ui/WindowBar.astro';
 import { caseNumber, publicDetails, type Project } from '../../data/projects';
 import { getProjectImage } from '../../lib/images';
 
@@ -34,19 +35,20 @@ const imagePosition = image.isPlaceholder ? undefined : positions[project.imageP
 <article
   class:list={[
     'group relative flex h-full flex-col',
-    plain
-      ? ''
-      : 'overflow-hidden rounded-card border border-line bg-surface shadow-card transition-[transform,box-shadow] duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_-16px_rgb(11_27_46/0.25)]',
+    // Home variant: whole card lifts; its hover shadow fades in (see .hover-shadow)
+    !plain && 'hover-shadow card-lift rounded-card border border-line bg-surface shadow-card',
   ]}
 >
+  <!-- Screenshot in a minimal window frame; the 16:10 box keeps card heights identical -->
   <div
     class:list={[
-      'relative aspect-[16/10] overflow-hidden bg-surface-alt',
+      'relative flex aspect-[16/10] flex-col overflow-hidden bg-surface-alt',
       plain
-        ? 'rounded-card border border-line'
-        : 'border-b border-line',
+        ? 'rounded-card border border-line shadow-card'
+        : 'rounded-t-[11px] border-b border-line',
     ]}
   >
+    {!image.isPlaceholder && <WindowBar class={plain ? 'h-6' : 'h-5'} />}
     <Image
       src={image.src}
       alt={image.isPlaceholder ? '' : project.imageAlt}
@@ -59,7 +61,10 @@ const imagePosition = image.isPlaceholder ? undefined : positions[project.imageP
         position: project.imagePosition ?? 'top',
       }}
       loading={priority ? 'eager' : 'lazy'}
-      class:list={['size-full object-cover', imagePosition]}
+      class:list={[
+        'min-h-0 w-full flex-1 object-cover transition-[scale] duration-700 ease-(--ease-out-soft) group-hover:scale-[1.03]',
+        imagePosition,
+      ]}
     />
     {plain && project.prototype && <Badge tone="outline" class="absolute left-4 top-4 z-10">Prototype</Badge>}
   </div>
