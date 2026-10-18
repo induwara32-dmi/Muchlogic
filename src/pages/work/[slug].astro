@@ -72,11 +72,11 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
       <Container>
         <nav aria-label="Breadcrumb">
           <ol class="flex flex-wrap items-center gap-2 text-sm text-body">
-            <li><a href="/" class="hover:text-ink">Home</a></li>
+            <li><a href="/" class="inline-flex min-h-tap items-center transition-colors hover:text-ink">Home</a></li>
             <li aria-hidden="true"><Icon name="chevron-right" size={14} class="text-muted" /></li>
-            <li><a href="/work" class="hover:text-ink">Our Work</a></li>
+            <li><a href="/work" class="inline-flex min-h-tap items-center transition-colors hover:text-ink">Our Work</a></li>
             <li aria-hidden="true"><Icon name="chevron-right" size={14} class="text-muted" /></li>
-            <li><a href={`/work/${project.slug}`} aria-current="page" class="font-medium text-ink">{project.title}</a></li>
+            <li><a href={`/work/${project.slug}`} aria-current="page" class="inline-flex min-h-tap items-center font-medium text-ink">{project.title}</a></li>
           </ol>
         </nav>
 

@@ -112,7 +112,7 @@ const links = navLinks.map((link) => ({
                 href={link.href}
                 aria-current={link.exact ? 'page' : undefined}
                 class:list={[
-                  'group/link relative inline-flex min-h-11 items-center px-4 text-[0.9375rem] font-medium transition-colors',
+                  'group/link relative inline-flex min-h-tap items-center px-4 text-[0.9375rem] font-medium transition-colors',
                   link.active ? 'text-ink' : 'text-body hover:text-ink',
                 ]}
               >
@@ -143,7 +143,7 @@ const links = navLinks.map((link) => ({
         data-menu-open
         aria-expanded="false"
         aria-controls="mobile-menu"
-        class="-mr-2 inline-flex size-11 items-center justify-center rounded-md text-ink lg:hidden"
+        class="-mr-2 inline-flex size-tap items-center justify-center rounded-md text-ink lg:hidden"
       >
         <Icon name="menu" size={24} />
         <span class="sr-only">Open menu</span>
@@ -163,7 +163,7 @@ const links = navLinks.map((link) => ({
       <button
         type="button"
         data-menu-close
-        class="-mr-2 inline-flex size-11 items-center justify-center rounded-md text-ink"
+        class="-mr-2 inline-flex size-tap items-center justify-center rounded-md text-ink"
       >
         <Icon name="x" size={24} />
         <span class="sr-only">Close menu</span>
@@ -174,8 +174,8 @@ const links = navLinks.map((link) => ({
       <nav aria-label="Mobile">
         <ul class="divide-y divide-line border-y border-line">
           {
-            links.map((link) => (
-              <li>
+            links.map((link, i) => (
+              <li style={`--i:${i}`}>
                 <a
                   href={link.href}
                   aria-current={link.exact ? 'page' : undefined}
@@ -195,9 +195,9 @@ const links = navLinks.map((link) => ({
 
       <div class="space-y-6">
         <Button href="/contact" size="lg" class="w-full">Get a quote</Button>
-        <ul class="space-y-2 text-base">
+        <ul class="text-base">
           <li>
-            <a href={emailHref} class="inline-flex items-center gap-2 text-ink hover:text-primary">
+            <a href={emailHref} class="inline-flex min-h-tap items-center gap-2 text-ink hover:text-primary">
               <Icon name="mail" size={18} class="text-primary" />
               {site.email}
             </a>
@@ -205,7 +205,7 @@ const links = navLinks.map((link) => ({
           {
             contacts.map((contact) => (
               <li>
-                <a href={`tel:${contact.e164}`} class="inline-flex items-center gap-2 text-ink hover:text-primary">
+                <a href={`tel:${contact.e164}`} class="inline-flex min-h-tap items-center gap-2 text-ink hover:text-primary">
                   <Icon name="phone" size={18} class="text-primary" />
                   <span class="text-body">{contact.name}</span>{' '}
                   {contact.display}

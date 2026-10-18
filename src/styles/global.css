@@ -78,6 +78,12 @@
 
   --container-site: 1200px;
 
+  /*
+   * Minimum tap target, in px on purpose: rem sizes shrink ~6% on phones (see html font-size),
+   * which turned "44px" (size-11) into 41px. Use size-tap / min-h-tap for interactive elements.
+   */
+  --spacing-tap: 44px;
+
   /* Soft, macOS-style raised controls */
   --shadow-button: 0 1px 2px rgb(11 27 46 / 0.08), 0 0 0 0.5px rgb(11 27 46 / 0.04);
   --shadow-button-primary: inset 0 1px 0 rgb(255 255 255 / 0.22), 0 1px 2px rgb(154 52 18 / 0.35);
@@ -347,6 +353,34 @@
   }
   .js .draw-rule.is-visible::before {
     transform: none;
+  }
+
+  /*
+   * Mobile menu (<dialog>): fades and rises in, links follow in a short stagger; closing fades out.
+   * Uses @starting-style + allow-discrete; browsers without them simply open/close instantly.
+   */
+  #mobile-menu {
+    opacity: 0;
+    translate: 0 8px;
+    transition:
+      opacity 0.22s var(--ease-out-soft),
+      translate 0.22s var(--ease-out-soft),
+      display 0.22s allow-discrete,
+      overlay 0.22s allow-discrete;
+  }
+  #mobile-menu[open] {
+    opacity: 1;
+    translate: 0 0;
+  }
+  @starting-style {
+    #mobile-menu[open] {
+      opacity: 0;
+      translate: 0 8px;
+    }
+  }
+  #mobile-menu[open] nav li {
+    animation: enter-fade 0.4s var(--ease-out-soft) both;
+    animation-delay: calc(60ms + var(--i, 0) * 35ms);
   }
 
   /* Arrow icons inside a .group link/button slide 3px on hover or keyboard focus */
