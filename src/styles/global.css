@@ -23,6 +23,8 @@
   --color-primary-soft: #fdf1ea;
   /* Orange for text on dark backgrounds (#FB923C on navy = 7.4:1) */
   --color-primary-on-dark: #fb923c;
+  /* Cool accent used only in background glows */
+  --color-glow: #4f46e5;
 
   /* Text — navy ink and slate body for a calm, corporate feel */
   --color-ink: #0b1b2e;
@@ -85,19 +87,19 @@
   --spacing-tap: 44px;
 
   /* Soft, macOS-style raised controls */
-  --shadow-button: 0 1px 2px rgb(11 27 46 / 0.08), 0 0 0 0.5px rgb(11 27 46 / 0.04);
-  --shadow-button-primary: inset 0 1px 0 rgb(255 255 255 / 0.22), 0 1px 2px rgb(154 52 18 / 0.35);
+  --shadow-button: 0 1px 2px color-mix(in srgb, var(--color-ink) 8%, transparent), 0 0 0 0.5px color-mix(in srgb, var(--color-ink) 4%, transparent);
+  --shadow-button-primary: inset 0 1px 0 rgb(255 255 255 / 0.22), 0 1px 2px color-mix(in srgb, var(--color-primary-hover) 35%, transparent);
   /* Hover: soft coloured glow under primary buttons, neutral lift for the rest */
-  --shadow-button-primary-hover: inset 0 1px 0 rgb(255 255 255 / 0.22), 0 2px 4px -2px rgb(154 52 18 / 0.4),
-    0 8px 20px -8px rgb(194 65 12 / 0.55);
-  --shadow-button-hover: 0 0 0 0.5px rgb(11 27 46 / 0.05), 0 6px 16px -8px rgb(11 27 46 / 0.22);
+  --shadow-button-primary-hover: inset 0 1px 0 rgb(255 255 255 / 0.22), 0 2px 4px -2px color-mix(in srgb, var(--color-primary-hover) 40%, transparent),
+    0 8px 20px -8px color-mix(in srgb, var(--color-primary) 55%, transparent);
+  --shadow-button-hover: 0 0 0 0.5px color-mix(in srgb, var(--color-ink) 5%, transparent), 0 6px 16px -8px color-mix(in srgb, var(--color-ink) 22%, transparent);
 
-  --shadow-card: 0 1px 2px rgb(11 27 46 / 0.06), 0 4px 12px -4px rgb(11 27 46 / 0.08);
+  --shadow-card: 0 1px 2px color-mix(in srgb, var(--color-ink) 6%, transparent), 0 4px 12px -4px color-mix(in srgb, var(--color-ink) 8%, transparent);
   /* Hover for clickable cards: deeper layered shadow + a faint orange edge */
-  --shadow-card-hover: 0 0 0 1px rgb(194 65 12 / 0.22), 0 2px 4px -1px rgb(11 27 46 / 0.06),
-    0 16px 32px -14px rgb(11 27 46 / 0.24);
+  --shadow-card-hover: 0 0 0 1px color-mix(in srgb, var(--color-primary) 22%, transparent), 0 2px 4px -1px color-mix(in srgb, var(--color-ink) 6%, transparent),
+    0 16px 32px -14px color-mix(in srgb, var(--color-ink) 24%, transparent);
   /* Sticky header after scrolling: a hairline plus a wide, soft fall-off */
-  --shadow-header: 0 1px 0 rgb(11 27 46 / 0.04), 0 8px 24px -12px rgb(11 27 46 / 0.18);
+  --shadow-header: 0 1px 0 color-mix(in srgb, var(--color-ink) 4%, transparent), 0 8px 24px -12px color-mix(in srgb, var(--color-ink) 18%, transparent);
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -166,8 +168,8 @@
     isolation: isolate;
     background:
       var(--noise),
-      radial-gradient(60% 55% at 88% -5%, rgb(251 146 60 / 0.22), transparent 70%),
-      radial-gradient(55% 60% at 5% 105%, rgb(79 70 229 / 0.3), transparent 70%),
+      radial-gradient(60% 55% at 88% -5%, color-mix(in srgb, var(--color-primary-on-dark) 22%, transparent), transparent 70%),
+      radial-gradient(55% 60% at 5% 105%, color-mix(in srgb, var(--color-glow) 30%, transparent), transparent 70%),
       var(--color-dark);
     /* Hairline highlight along the top edge */
     box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
@@ -177,8 +179,8 @@
   .dark-band {
     background:
       var(--noise),
-      radial-gradient(70% 90% at 50% -10%, rgb(251 146 60 / 0.16), transparent 70%),
-      radial-gradient(50% 70% at 100% 110%, rgb(79 70 229 / 0.18), transparent 70%),
+      radial-gradient(70% 90% at 50% -10%, color-mix(in srgb, var(--color-primary-on-dark) 16%, transparent), transparent 70%),
+      radial-gradient(50% 70% at 100% 110%, color-mix(in srgb, var(--color-glow) 18%, transparent), transparent 70%),
       var(--color-dark);
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.08),
@@ -215,8 +217,8 @@
     margin: calc(min(70rem, 140vw) / -4) 0 0 calc(min(70rem, 140vw) / -2);
     pointer-events: none;
     background:
-      radial-gradient(closest-side at 62% 45%, rgb(251 146 60 / 0.16), transparent),
-      radial-gradient(closest-side at 38% 60%, rgb(79 70 229 / 0.18), transparent);
+      radial-gradient(closest-side at 62% 45%, color-mix(in srgb, var(--color-primary-on-dark) 16%, transparent), transparent),
+      radial-gradient(closest-side at 38% 60%, color-mix(in srgb, var(--color-glow) 18%, transparent), transparent);
     animation: glow-drift 18s ease-in-out infinite alternate;
   }
   /* Highlighted grid revealed under the mouse pointer (position set by a tiny script in BaseLayout) */
@@ -229,9 +231,9 @@
     opacity: 0;
     transition: opacity 0.35s ease;
     background-image:
-      linear-gradient(to right, rgb(251 146 60 / 0.28) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(251 146 60 / 0.28) 1px, transparent 1px),
-      radial-gradient(200px circle at var(--mx, 50%) var(--my, 50%), rgb(251 146 60 / 0.05), transparent 100%);
+      linear-gradient(to right, color-mix(in srgb, var(--color-primary-on-dark) 28%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--color-primary-on-dark) 28%, transparent) 1px, transparent 1px),
+      radial-gradient(200px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--color-primary-on-dark) 5%, transparent), transparent 100%);
     background-size: 64px 64px, 64px 64px, 100% 100%;
     background-position: center top, center top, 0 0;
     /* Pointer-sized spotlight, intersected with a fade that keeps it faint over the text */
@@ -254,8 +256,8 @@
   /* Light hero for inner pages: soft warm + cool glows */
   .soft-bg {
     background:
-      radial-gradient(55% 90% at 100% 0%, rgb(251 146 60 / 0.14), transparent 70%),
-      radial-gradient(45% 80% at 0% 100%, rgb(79 70 229 / 0.07), transparent 70%),
+      radial-gradient(55% 90% at 100% 0%, color-mix(in srgb, var(--color-primary-on-dark) 14%, transparent), transparent 70%),
+      radial-gradient(45% 80% at 0% 100%, color-mix(in srgb, var(--color-glow) 7%, transparent), transparent 70%),
       var(--color-surface-alt);
   }
 
@@ -326,8 +328,8 @@
     color: var(--color-primary);
     background: linear-gradient(180deg, var(--color-white), var(--color-primary-soft));
     box-shadow:
-      inset 0 0 0 1px rgb(194 65 12 / 0.14),
-      0 1px 2px rgb(11 27 46 / 0.06);
+      inset 0 0 0 1px color-mix(in srgb, var(--color-primary) 14%, transparent),
+      0 1px 2px color-mix(in srgb, var(--color-ink) 6%, transparent);
   }
 
   /*
