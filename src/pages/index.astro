@@ -45,22 +45,28 @@ const showProof = stats.length > 0 || clientLogos.length > 0;
     class="hero-bg relative flex items-center overflow-hidden text-dark-muted md:min-h-[min(calc(100svh-6.5rem),54rem)]"
     aria-labelledby="hero-title"
   >
+    <!-- Slow-drifting orange glow behind the headline (decorative) -->
+    <div class="hero-glow" aria-hidden="true"></div>
     <Container class="py-14 md:py-24">
+      <!--
+        Entrance: eyebrow and buttons fade up; headline and lead (the LCP candidates) only rise
+        slightly and stay visible from the first paint, so LCP isn't delayed.
+      -->
       <div class="mx-auto max-w-5xl text-center">
-        <Eyebrow onDark>Built in Sri Lanka. Trusted worldwide.</Eyebrow>
+        <Eyebrow onDark class="enter-fade">Built in Sri Lanka. Trusted worldwide.</Eyebrow>
         <h1
           id="hero-title"
-          class="mt-5 text-display font-extrabold text-white"
+          class="enter-rise mt-5 text-display font-extrabold text-white [--enter-delay:60ms]"
         >
           <!-- On large screens the highlighted phrase always stays together on line one -->
           <span class="lg:block">We build <span class="text-primary-on-dark">smart software and AI</span></span>{' '}
           that grows your business
         </h1>
-        <p class="mx-auto mt-6 max-w-prose text-lead">
+        <p class="enter-rise mx-auto mt-6 max-w-prose text-lead [--enter-delay:120ms]">
           From custom web apps and business platforms to websites and AI tools, we design, build and
           support software that helps businesses work faster and grow.
         </p>
-        <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+        <div class="enter-fade mt-9 flex flex-col justify-center gap-3 sm:flex-row [--enter-delay:200ms]">
           <Button href="/contact" size="lg" block>Start a project</Button>
           <Button href="/work" variant="on-dark" size="lg" block>See our work</Button>
         </div>
