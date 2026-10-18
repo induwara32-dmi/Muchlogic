@@ -93,13 +93,18 @@ const sections = [
         <strong>Vercel</strong> hosts this website and runs the contact form.
       </li>
       <li>
-        <strong>Resend</strong> delivers your inquiry to our inbox by email.
+        <strong>Resend</strong> delivers your inquiry to our inbox by email. This happens automatically
+        when you send the form.
       </li>
       <li>
-        <strong>CallMeBot</strong>, a third-party notification service, sends a copy of your inquiry to
-        our WhatsApp so we can reply quickly. The message is delivered through{' '}
-        <strong>WhatsApp</strong>.
+        <strong>WhatsApp</strong> is only used if you choose it. After you send the form, your own
+        WhatsApp opens with your details filled in; nothing is sent until you press Send there. WhatsApp
+        then handles that message under its own privacy policy.
       </li>
+      {/*
+        TODO: if CallMeBot notifications are switched on (CALLMEBOT_API_KEY), add it back here:
+        it would send a copy of every inquiry to our WhatsApp automatically.
+      */}
     </ul>
     <p>
       Some of these providers store or process data outside {site.location.country}, for example in the
