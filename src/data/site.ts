@@ -14,9 +14,9 @@ export const site = {
   name: 'MuchLogic',
   legalName: 'MuchLogic', // TODO: confirm registered legal name (e.g. "MuchLogic (Pvt) Ltd")
   url: 'https://muchlogic.com',
-  tagline: 'Software, POS systems and AI solutions for modern businesses.',
+  tagline: 'Custom software, websites and AI solutions for modern businesses.',
   description:
-    'MuchLogic is a Sri Lankan software company building POS systems, custom software, websites, mobile apps and AI automation for growing businesses.',
+    'MuchLogic is a Sri Lankan software company building custom software, websites, web platforms, AI automation, mobile apps and POS systems for growing businesses.',
 
   location: {
     country: 'Sri Lanka',

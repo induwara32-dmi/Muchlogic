@@ -1,6 +1,6 @@
 # MuchLogic website
 
-The marketing website for **MuchLogic** ([muchlogic.com](https://muchlogic.com)), a Sri Lankan software company that makes MuchLogic POS and builds custom software, websites, mobile apps and AI automation.
+The marketing website for **MuchLogic** ([muchlogic.com](https://muchlogic.com)), a Sri Lankan software company that builds custom software, websites, web platforms, AI automation and mobile apps, and makes MuchLogic POS.
 
 The site is fast and mostly static: every page is built ahead of time as plain HTML. The only part that runs on a server is the contact form, which sends each inquiry by email (Resend) and to WhatsApp (CallMeBot).
 
@@ -142,7 +142,7 @@ Tips:
 
 1. Open `src/data/projects.ts` and copy an existing project block.
 2. Give it a unique `slug` (lowercase, dashes only, e.g. `colombo-bakery`). This becomes the URL `/work/colombo-bakery`.
-3. Fill in the fields. Use one of the existing `category` values (POS & Retail, Web Platforms, Websites, AI & Automation, Mobile Apps, Healthcare).
+3. Fill in the fields. Use one of the existing `category` values (Websites, Web Platforms, AI & Automation, POS & Retail, Mobile Apps, Healthcare). The order of `projects` and `projectCategories` in the file is the order shown on the site.
 4. Optional fields: `liveUrl` (adds a “Visit live site” button), `prototype: true` (shows a Prototype badge), `featured: true` (shows it on the home page; keep it to 3 featured projects), `hidden: true` (keeps it off the site completely until it’s ready).
 
 The project automatically appears on `/work`, in the filters and counter, in the previous/next links and in the sitemap. A new category gets its own filter button automatically.

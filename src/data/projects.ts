@@ -5,11 +5,12 @@
  * (e.g. image: 'muchlogic-pos.webp'). Empty or missing files fall back to a neutral placeholder.
  */
 
+/** Order here = order of the filter chips on /work */
 export const projectCategories = [
-  'POS & Retail',
-  'Web Platforms',
   'Websites',
+  'Web Platforms',
   'AI & Automation',
+  'POS & Retail',
   'Mobile Apps',
   'Healthcare',
 ] as const;
@@ -47,25 +48,6 @@ export interface Project {
 /** Every project, including hidden ones. Use `projects` everywhere else. */
 const allProjects: Project[] = [
   {
-    slug: 'muchlogic-pos',
-    title: 'MuchLogic POS',
-    category: 'POS & Retail',
-    client: 'Internal product',
-    industry: 'Retail',
-    summary: 'Offline-first POS and inventory software for Windows retail businesses.',
-    description:
-      'MuchLogic POS is our own point of sale and inventory software for Windows retail businesses. It is built offline-first, so shops can keep billing even without an internet connection.',
-    whatWeDid: [
-      'TODO: confirm what to list here (e.g. product design, development, support)',
-    ],
-    tech: [], // TODO: confirm tech stack (the design contradicts itself)
-    downloadUrl: 'https://apps.microsoft.com/detail/9NH6BKDXQSQW?hl=en-us&gl=US&ocid=pdpshare',
-    image: 'muchlogic-pos.webp',
-    imageAlt: 'MuchLogic POS till screen showing a bill with items, quantities, discounts and payment options',
-    featured: true,
-    services: ['pos-systems'],
-  },
-  {
     slug: 'designkoolama',
     title: 'Designkoolama.lk',
     category: 'Websites',
@@ -89,22 +71,6 @@ const allProjects: Project[] = [
     services: ['web-ecommerce'],
   },
   {
-    slug: 'shanu-ceylon-tours',
-    title: 'Shanu Ceylon Tours',
-    category: 'Websites',
-    client: 'Shanu Ceylon Tours', // TODO: confirm client name
-    industry: 'Tourism',
-    summary: 'Tour company website for shanuceylontours.com.',
-    description: 'Tour company website for shanuceylontours.com.', // TODO: confirm description and status
-    whatWeDid: ['TODO: confirm what we did'],
-    tech: [], // TODO: confirm tech stack
-    // liveUrl: 'https://shanuceylontours.com', // TODO: confirm the site is live before enabling
-    image: '', // TODO: add screenshot, e.g. 'shanu-ceylon-tours.webp'
-    imageAlt: 'Shanu Ceylon Tours website homepage',
-    featured: false,
-    services: ['web-ecommerce'],
-  },
-  {
     slug: 'agrilink',
     title: 'AgriLink',
     category: 'Web Platforms',
@@ -124,6 +90,41 @@ const allProjects: Project[] = [
     imageAlt: 'AgriLink marketplace dashboard',
     featured: true,
     services: ['custom-software'],
+  },
+  {
+    slug: 'muchlogic-pos',
+    title: 'MuchLogic POS',
+    category: 'POS & Retail',
+    client: 'Internal product',
+    industry: 'Retail',
+    summary: 'Offline-first POS and inventory software for Windows retail businesses.',
+    description:
+      'MuchLogic POS is our own point of sale and inventory software for Windows retail businesses. It is built offline-first, so shops can keep billing even without an internet connection.',
+    whatWeDid: [
+      'TODO: confirm what to list here (e.g. product design, development, support)',
+    ],
+    tech: [], // TODO: confirm tech stack (the design contradicts itself)
+    downloadUrl: 'https://apps.microsoft.com/detail/9NH6BKDXQSQW?hl=en-us&gl=US&ocid=pdpshare',
+    image: 'muchlogic-pos.webp',
+    imageAlt: 'MuchLogic POS till screen showing a bill with items, quantities, discounts and payment options',
+    featured: true,
+    services: ['pos-systems'],
+  },
+  {
+    slug: 'shanu-ceylon-tours',
+    title: 'Shanu Ceylon Tours',
+    category: 'Websites',
+    client: 'Shanu Ceylon Tours', // TODO: confirm client name
+    industry: 'Tourism',
+    summary: 'Tour company website for shanuceylontours.com.',
+    description: 'Tour company website for shanuceylontours.com.', // TODO: confirm description and status
+    whatWeDid: ['TODO: confirm what we did'],
+    tech: [], // TODO: confirm tech stack
+    // liveUrl: 'https://shanuceylontours.com', // TODO: confirm the site is live before enabling
+    image: '', // TODO: add screenshot, e.g. 'shanu-ceylon-tours.webp'
+    imageAlt: 'Shanu Ceylon Tours website homepage',
+    featured: false,
+    services: ['web-ecommerce'],
   },
   {
     slug: 'doc365',
