@@ -39,6 +39,17 @@ const next = projects[(index + 1) % projects.length];
 
 const similarHref = project.services[0] ? `/contact?service=${project.services[0]}` : '/contact';
 
+// Meta description: keep it within ~160 characters so search results don't cut it off
+const META_MAX = 160;
+const withSuffix = `${project.title} case study: ${project.summary} Built by MuchLogic in Sri Lanka.`;
+const plain = `${project.title} case study: ${project.summary}`;
+const metaDescription =
+  withSuffix.length <= META_MAX
+    ? withSuffix
+    : plain.length <= META_MAX
+      ? plain
+      : `${plain.slice(0, META_MAX - 1).replace(/\s+\S*$/, '')}…`;
+
 // Real screenshots become the share image; placeholders fall back to the default OG image
 const ogImage = image.isPlaceholder
   ? undefined
@@ -49,7 +60,7 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
 
 <BaseLayout
   title={`${project.title} — Case study`}
-  description={`${project.title} case study: ${project.summary} Built by MuchLogic in Sri Lanka.`}
+  description={metaDescription}
   image={ogImage}
   type="article"
 >

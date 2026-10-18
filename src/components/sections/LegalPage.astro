@@ -1,0 +1,114 @@
+---
+/**
+ * Shared layout for legal pages (/privacy, /terms): page hero, "On this page" anchor list,
+ * and readable prose (~68 characters per line). Put <section id="…"><h2>…</h2>…</section>
+ * blocks in the default slot; `sections` drives the anchor list and must use the same ids.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../ui/Container.astro';
+import PageHero from './PageHero.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  /** ISO date, e.g. "2026-10-18" */
+  updated: string;
+  sections: { id: string; title: string }[];
+}
+
+const { title, description, updated, sections } = Astro.props;
+const updatedLabel = new Date(`${updated}T00:00:00`).toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={description}>
+  <PageHero eyebrow="Legal">
+    {title}
+    <p slot="after" class="mt-4 text-[0.9375rem] text-body">
+      Last updated: <time datetime={updated}>{updatedLabel}</time>
+    </p>
+  </PageHero>
+
+  <Container class="grid gap-10 py-12 md:py-16 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-16">
+    <nav aria-labelledby="toc-title" class="lg:sticky lg:top-28 lg:self-start">
+      <h2 id="toc-title" class="text-sm font-semibold uppercase tracking-[0.1em] text-ink">On this page</h2>
+      <ol class="mt-4 space-y-1 border-l border-line">
+        {
+          sections.map((section) => (
+            <li>
+              <a
+                href={`#${section.id}`}
+                class="-ml-px block border-l-2 border-transparent py-1.5 pl-4 text-[0.9375rem] text-body transition-colors hover:border-primary hover:text-ink"
+              >
+                {section.title}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <article class="legal-prose">
+      <slot />
+    </article>
+  </Container>
+</BaseLayout>
+
+<style>
+  .legal-prose {
+    max-width: 68ch;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+
+  .legal-prose :global(section + section) {
+    margin-top: 2.75rem;
+  }
+
+  .legal-prose :global(h2) {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  .legal-prose :global(h3) {
+    margin-top: 1.75rem;
+    font-size: 1.125rem;
+  }
+
+  .legal-prose :global(p),
+  .legal-prose :global(ul) {
+    margin-top: 1rem;
+  }
+
+  .legal-prose :global(ul) {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+
+  .legal-prose :global(li + li) {
+    margin-top: 0.5rem;
+  }
+
+  .legal-prose :global(li::marker) {
+    color: var(--color-primary);
+  }
+
+  .legal-prose :global(strong) {
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .legal-prose :global(a) {
+    font-weight: 500;
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .legal-prose :global(a:hover) {
+    color: var(--color-primary-hover);
+  }
+</style>

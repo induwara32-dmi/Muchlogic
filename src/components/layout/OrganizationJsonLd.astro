@@ -15,7 +15,7 @@ const organization = {
   name: site.name,
   ...(site.legalName !== site.name && { legalName: site.legalName }),
   url: site.url,
-  logo: new URL('/favicon.png', site.url).href,
+  logo: new URL('/icon-512.png', site.url).href,
   description: site.description,
   email: site.email,
   ...(!isPlaceholder(site.phone.e164) && { telephone: site.phone.e164 }),

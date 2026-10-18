@@ -1,0 +1,165 @@
+---
+/**
+ * TODO: have this reviewed before launch.
+ * Written with Sri Lanka's Personal Data Protection Act No. 9 of 2022 (PDPA) in mind, but it is not
+ * legal advice. Please have a lawyer check it, in particular:
+ * - the retention period (24 months is a placeholder — set your real policy)
+ * - the registered company name and address once confirmed (site.ts)
+ * - whether you need to name a Data Protection Officer
+ * Update `updated` below whenever the content changes.
+ */
+import LegalPage from '../components/sections/LegalPage.astro';
+import { site, emailHref } from '../data/site';
+
+const updated = '2026-10-18';
+
+const sections = [
+  { id: 'who-we-are', title: 'Who we are' },
+  { id: 'what-we-collect', title: 'What we collect' },
+  { id: 'why-we-use-it', title: 'Why we use it' },
+  { id: 'who-we-share-it-with', title: 'Who we share it with' },
+  { id: 'how-long-we-keep-it', title: 'How long we keep it' },
+  { id: 'keeping-it-safe', title: 'Keeping it safe' },
+  { id: 'your-rights', title: 'Your rights' },
+  { id: 'changes', title: 'Changes to this policy' },
+  { id: 'contact', title: 'Contact us' },
+];
+---
+
+<LegalPage
+  title="Privacy Policy"
+  description="How MuchLogic collects, uses and protects the personal data you share through our website, in line with Sri Lanka’s Personal Data Protection Act."
+  updated={updated}
+  sections={sections}
+>
+  <section id="who-we-are" aria-labelledby="who-we-are-title">
+    <h2 id="who-we-are-title">Who we are</h2>
+    <p>
+      {site.name} is a software company based in {site.location.country}. This policy explains what
+      personal data we collect through this website, why we collect it, and what you can ask us to
+      do with it. We wrote it with Sri Lanka’s <strong>Personal Data Protection Act No. 9 of 2022</strong>{' '}
+      (PDPA) in mind.
+    </p>
+    <p>
+      For this website, {site.name} is the <strong>controller</strong> of your personal data: we decide
+      how it is used and we are responsible for it.
+    </p>
+  </section>
+
+  <section id="what-we-collect" aria-labelledby="what-we-collect-title">
+    <h2 id="what-we-collect-title">What we collect</h2>
+    <h3>When you use our contact form</h3>
+    <p>We only collect what you type into the form:</p>
+    <ul>
+      <li>your name, email address and phone number</li>
+      <li>your company and website, if you add them</li>
+      <li>the service you’re interested in and your budget range</li>
+      <li>the project details you write</li>
+      <li>that you agreed to this privacy policy</li>
+    </ul>
+    <h3>When you browse the website</h3>
+    <p>
+      Our hosting provider keeps short-lived technical logs, such as your IP address, browser type and
+      the pages requested, to keep the site running and secure. We don’t use analytics, advertising or
+      tracking cookies, and we don’t build profiles of visitors.
+    </p>
+  </section>
+
+  <section id="why-we-use-it" aria-labelledby="why-we-use-it-title">
+    <h2 id="why-we-use-it-title">Why we use it</h2>
+    <p>We use the details you send us to:</p>
+    <ul>
+      <li>reply to your inquiry and arrange a discovery call</li>
+      <li>prepare a proposal or quote if you ask for one</li>
+      <li>keep a record of our conversation so we can help you better later</li>
+    </ul>
+    <p>
+      We process this data because you gave us your <strong>consent</strong> when you sent the form, and
+      because it is needed to take the steps you asked for before any contract. You can withdraw your
+      consent at any time (see <a href="#your-rights">Your rights</a>).
+    </p>
+    <p>We won’t send you marketing emails or add you to a mailing list.</p>
+  </section>
+
+  <section id="who-we-share-it-with" aria-labelledby="who-we-share-it-with-title">
+    <h2 id="who-we-share-it-with-title">Who we share it with</h2>
+    <p>
+      <strong>We never sell your personal data</strong>, and we don’t share it with anyone for their own
+      marketing. We use a few trusted service providers to run the website and deliver your message to
+      us. They only process your data on our behalf:
+    </p>
+    <ul>
+      <li>
+        <strong>Vercel</strong> hosts this website and runs the contact form.
+      </li>
+      <li>
+        <strong>Resend</strong> delivers your inquiry to our inbox by email.
+      </li>
+      <li>
+        <strong>CallMeBot</strong>, a third-party notification service, sends a copy of your inquiry to
+        our WhatsApp so we can reply quickly. The message is delivered through{' '}
+        <strong>WhatsApp</strong>.
+      </li>
+    </ul>
+    <p>
+      Some of these providers store or process data outside {site.location.country}, for example in the
+      United States or the European Union. When that happens, we rely on them to protect your data with
+      safeguards that meet the standard the PDPA expects.
+    </p>
+    <p>We may also share data if the law requires it, for example to answer a valid legal request.</p>
+  </section>
+
+  <section id="how-long-we-keep-it" aria-labelledby="how-long-we-keep-it-title">
+    <h2 id="how-long-we-keep-it-title">How long we keep it</h2>
+    <p>
+      We keep inquiry details for up to <strong>24 months</strong> after our last contact with you, so we
+      can follow up on your project. If you become a client, we keep what we need for as long as we work
+      together and for as long as the law requires for business records. After that, we delete it.
+    </p>
+  </section>
+
+  <section id="keeping-it-safe" aria-labelledby="keeping-it-safe-title">
+    <h2 id="keeping-it-safe-title">Keeping it safe</h2>
+    <p>
+      The website uses HTTPS, so your form is encrypted on its way to us. Only the people at {site.name}{' '}
+      who need your details to answer you can see them, and we use secure, access-controlled accounts
+      with our service providers.
+    </p>
+  </section>
+
+  <section id="your-rights" aria-labelledby="your-rights-title">
+    <h2 id="your-rights-title">Your rights</h2>
+    <p>Under the PDPA you can ask us to:</p>
+    <ul>
+      <li>tell you what personal data we hold about you and give you a copy</li>
+      <li>correct data that is wrong or incomplete</li>
+      <li><strong>delete your data</strong></li>
+      <li>stop using your data, or withdraw the consent you gave</li>
+    </ul>
+    <p>
+      To ask for any of these, including to have your data deleted, email us at{' '}
+      <a href={emailHref}>{site.email}</a> from the address you used in the form. We’ll confirm it’s you
+      and reply within 21 working days.
+    </p>
+    <p>
+      If you’re not happy with how we handled your request, you can complain to the{' '}
+      <strong>Data Protection Authority of Sri Lanka</strong>.
+    </p>
+  </section>
+
+  <section id="changes" aria-labelledby="changes-title">
+    <h2 id="changes-title">Changes to this policy</h2>
+    <p>
+      If we change how we use personal data, we’ll update this page and the “last updated” date at the
+      top.
+    </p>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title">Contact us</h2>
+    <p>
+      Questions about this policy or your data? Email <a href={emailHref}>{site.email}</a> or use our{' '}
+      <a href="/contact">contact page</a>.
+    </p>
+  </section>
+</LegalPage>

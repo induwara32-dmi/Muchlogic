@@ -1,0 +1,114 @@
+---
+/**
+ * TODO: have this reviewed before launch.
+ * Simple website terms of use, not legal advice. Please have a lawyer check them, and add the
+ * registered company name once confirmed (site.ts). Update `updated` whenever the content changes.
+ */
+import LegalPage from '../components/sections/LegalPage.astro';
+import { site, emailHref } from '../data/site';
+
+const updated = '2026-10-18';
+
+const sections = [
+  { id: 'about-these-terms', title: 'About these terms' },
+  { id: 'using-the-website', title: 'Using the website' },
+  { id: 'our-content', title: 'Our content' },
+  { id: 'information-on-this-site', title: 'Information on this site' },
+  { id: 'other-websites', title: 'Links to other websites' },
+  { id: 'liability', title: 'Our liability' },
+  { id: 'governing-law', title: 'Governing law' },
+  { id: 'changes', title: 'Changes to these terms' },
+  { id: 'contact', title: 'Contact us' },
+];
+---
+
+<LegalPage
+  title="Terms of Service"
+  description="The terms for using the MuchLogic website, including how you may use our content and the limits of our responsibility."
+  updated={updated}
+  sections={sections}
+>
+  <section id="about-these-terms" aria-labelledby="about-these-terms-title">
+    <h2 id="about-these-terms-title">About these terms</h2>
+    <p>
+      These terms apply to your use of the {site.name} website ({site.url.replace('https://', '')}). By
+      using the website, you agree to them. If you don’t agree, please don’t use the site.
+    </p>
+    <p>
+      These terms cover the website only. Any software, design or other work we do for you is covered by
+      a separate written agreement.
+    </p>
+  </section>
+
+  <section id="using-the-website" aria-labelledby="using-the-website-title">
+    <h2 id="using-the-website-title">Using the website</h2>
+    <p>You’re welcome to browse the site and contact us. Please don’t:</p>
+    <ul>
+      <li>use the site for anything unlawful or misleading</li>
+      <li>send spam, malware or automated messages through the contact form</li>
+      <li>try to break, overload or get unauthorised access to the site or its systems</li>
+      <li>copy large parts of the site or scrape it automatically</li>
+    </ul>
+  </section>
+
+  <section id="our-content" aria-labelledby="our-content-title">
+    <h2 id="our-content-title">Our content</h2>
+    <p>
+      The text, design, logo and other content on this website belong to {site.name} or the people who
+      licensed them to us. You may view and share pages for personal or business reference, but you
+      may not reuse our content, logo or brand without our written permission.
+    </p>
+    <p>Project screenshots, client names and client logos remain the property of their owners.</p>
+  </section>
+
+  <section id="information-on-this-site" aria-labelledby="information-on-this-site-title">
+    <h2 id="information-on-this-site-title">Information on this site</h2>
+    <p>
+      We work to keep the information on this site accurate and up to date, but it is general
+      information, not an offer or professional advice. Prices, timelines and scope are only agreed in
+      a written proposal.
+    </p>
+  </section>
+
+  <section id="other-websites" aria-labelledby="other-websites-title">
+    <h2 id="other-websites-title">Links to other websites</h2>
+    <p>
+      Some pages link to other websites, such as live projects we built. We don’t control those sites
+      and aren’t responsible for their content or how they handle your data.
+    </p>
+  </section>
+
+  <section id="liability" aria-labelledby="liability-title">
+    <h2 id="liability-title">Our liability</h2>
+    <p>
+      We provide this website “as is”. We try to keep it available and secure, but we can’t promise it
+      will always be uninterrupted or error-free. As far as the law allows, {site.name} is not liable
+      for any loss that comes from using, or not being able to use, this website.
+    </p>
+    <p>Nothing in these terms limits any rights you have that cannot be limited by law.</p>
+  </section>
+
+  <section id="governing-law" aria-labelledby="governing-law-title">
+    <h2 id="governing-law-title">Governing law</h2>
+    <p>
+      These terms are governed by the laws of Sri Lanka, and any disputes will be handled by the courts
+      of Sri Lanka.
+    </p>
+  </section>
+
+  <section id="changes" aria-labelledby="changes-title">
+    <h2 id="changes-title">Changes to these terms</h2>
+    <p>
+      We may update these terms from time to time. The “last updated” date at the top shows when they
+      last changed.
+    </p>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title">Contact us</h2>
+    <p>
+      Questions about these terms? Email <a href={emailHref}>{site.email}</a> or use our{' '}
+      <a href="/contact">contact page</a>. You can also read our <a href="/privacy">privacy policy</a>.
+    </p>
+  </section>
+</LegalPage>

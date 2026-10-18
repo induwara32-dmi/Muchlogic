@@ -24,7 +24,7 @@ const serviceOptions = [...services.map((s) => ({ value: s.slug, label: s.title 
 
 const label = 'block text-sm font-semibold text-ink';
 const control =
-  'mt-2 block w-full rounded-control border border-ink/25 bg-surface px-4 py-3 text-base text-ink placeholder:text-muted transition-colors hover:border-ink/50 focus:border-primary focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-danger aria-[invalid=true]:bg-danger-soft';
+  'mt-2 block w-full rounded-control border border-ink/25 bg-surface px-4 py-3 text-base text-ink placeholder:text-muted transition-colors hover:border-ink/50 focus:border-primary focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-primary)_25%,transparent)] focus:outline-none focus-visible:outline-none aria-[invalid=true]:border-danger aria-[invalid=true]:bg-danger-soft';
 const errorText = 'mt-1.5 flex items-start gap-1.5 text-sm font-medium text-danger empty:hidden';
 
 // Server-side errors for no-JS submissions (shown with :target)

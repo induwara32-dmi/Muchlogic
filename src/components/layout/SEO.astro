@@ -23,8 +23,8 @@ const imageUrl = new URL(image, base).href;
 
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
-<link rel="canonical" href={canonical} />
-{noindex && <meta name="robots" content="noindex, follow" />}
+{/* No canonical on noindex pages (404, thank-you) so the signals don't conflict */}
+{noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={canonical} />}
 
 <meta property="og:type" content={type} />
 <meta property="og:site_name" content={site.name} />

@@ -14,7 +14,6 @@ import ProjectCard from '../components/sections/ProjectCard.astro';
 import Testimonials from '../components/sections/Testimonials.astro';
 import ProcessSteps from '../components/sections/ProcessSteps.astro';
 import FinalCTA from '../components/sections/FinalCTA.astro';
-import { site } from '../data/site';
 import { services } from '../data/services';
 import { stats } from '../data/stats';
 import { clientLogos } from '../data/clientLogos';
@@ -38,7 +37,7 @@ const showProof = stats.length > 0 || clientLogos.length > 0;
 ---
 
 <BaseLayout
-  title={site.name}
+  title="Software, POS systems and AI in Sri Lanka"
   description="MuchLogic builds smart software and AI for growing businesses: MuchLogic POS, custom software, websites, mobile apps and automation. Built in Sri Lanka."
 >
   <!-- Hero -->
