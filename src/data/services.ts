@@ -55,7 +55,9 @@ export const services: Service[] = [
     icon: 'code',
     ctaLabel: 'Discuss this service',
     workCategory: 'Web Platforms',
-    imageAlt: 'Illustration of a custom business dashboard',
+    image: 'custom-software.svg',
+    imageAlt:
+      'Illustration of a business admin dashboard with a navigation sidebar, summary cards, a line chart and a data table',
   },
   {
     slug: 'web-ecommerce',
@@ -72,7 +74,9 @@ export const services: Service[] = [
     icon: 'globe',
     ctaLabel: 'Discuss this service',
     workCategory: 'Websites',
-    imageAlt: 'Illustration of a responsive website on desktop and mobile',
+    image: 'web-ecommerce.svg',
+    imageAlt:
+      'Illustration of an online store in a browser window, with a product grid, one highlighted product card and a cart icon with a badge',
   },
   {
     slug: 'ai-automation',
@@ -89,7 +93,9 @@ export const services: Service[] = [
     icon: 'sparkles',
     ctaLabel: 'Discuss this service',
     workCategory: 'AI & Automation',
-    imageAlt: 'Illustration of an automated workflow',
+    image: 'ai-automation.svg',
+    imageAlt:
+      'Illustration of an AI assistant chat panel next to an automated workflow, where a trigger leads to an AI step and then an action',
   },
   {
     slug: 'pos-systems',
@@ -106,7 +112,9 @@ export const services: Service[] = [
     icon: 'monitor',
     ctaLabel: 'Book a demo',
     workCategory: 'POS & Retail',
-    imageAlt: 'Illustration of a point of sale screen on a Windows computer',
+    image: 'pos-systems.svg',
+    imageAlt:
+      'Illustration of a point of sale checkout screen with product tiles, an order list, a total and a pay button, beside a printed receipt',
   },
   {
     slug: 'mobile-apps',
@@ -123,7 +131,9 @@ export const services: Service[] = [
     icon: 'smartphone',
     ctaLabel: 'Discuss this service',
     workCategory: 'Mobile Apps',
-    imageAlt: 'Illustration of a mobile app on a phone',
+    image: 'mobile-apps.svg',
+    imageAlt:
+      'Illustration of two phones side by side, one showing an app home screen and the other a detail screen with a call-to-action button',
   },
   {
     slug: 'brand-marketing',
@@ -139,7 +149,9 @@ export const services: Service[] = [
     ],
     icon: 'megaphone',
     ctaLabel: 'Discuss this service',
-    imageAlt: 'Illustration of brand and marketing materials',
+    image: 'brand-marketing.svg',
+    imageAlt:
+      'Illustration of a brand board with a logo mark, colour swatches, a type sample, button styles, a business card and a social media post',
   },
 ];
 

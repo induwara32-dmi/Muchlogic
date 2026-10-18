@@ -9,7 +9,7 @@ const projectImages = import.meta.glob<ImageMetadata>(
 ) as ImageMap;
 
 const serviceImages = import.meta.glob<ImageMetadata>(
-  '../assets/services/*.{png,jpg,jpeg,webp,avif}',
+  '../assets/services/*.{svg,png,jpg,jpeg,webp,avif}',
   { eager: true, import: 'default' },
 ) as ImageMap;
 
