@@ -16,7 +16,7 @@ const { services } = Astro.props;
 <nav
   aria-label="Services on this page"
   data-service-subnav
-  class="sticky top-16 z-30 border-b border-line bg-surface lg:top-[4.5rem]"
+  class="sticky top-16 z-30 border-b border-line bg-surface transition-[translate] duration-300 ease-(--ease-out-soft) lg:top-[4.5rem] lg:in-data-scrolled:-translate-y-2"
 >
   <Container class="flex items-center gap-5">
     <p class="hidden shrink-0 text-sm font-medium text-body lg:block">What we deliver</p>

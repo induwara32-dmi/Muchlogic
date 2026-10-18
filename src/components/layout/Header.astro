@@ -28,8 +28,41 @@ const links = navLinks.map((link) => ({
 ---
 
 <!-- Utility bar: contact details at a glance (phone number is tap-to-call on mobile) -->
-<div class="bg-dark text-[0.8125rem] text-dark-muted">
-  <Container class="flex h-10 items-center justify-between">
+<div data-topbar class="bg-dark text-[0.8125rem] text-dark-muted">
+  <!-- Phones: compact icon-only links (44px tap targets, labelled for screen readers) -->
+  <Container class="flex h-[44px] items-center justify-between md:hidden">
+    <span class="inline-flex items-center gap-2">
+      <Icon name="map-pin" size={14} />
+      {locationLabel}
+    </span>
+    <ul class="-mr-2.5 flex items-center">
+      <li>
+        <a
+          href={emailHref}
+          aria-label={`Email ${site.email}`}
+          class="inline-flex size-[44px] items-center justify-center text-white transition-colors hover:text-primary-on-dark"
+        >
+          <Icon name="mail" size={18} />
+        </a>
+      </li>
+      {
+        contacts.map((contact) => (
+          <li>
+            <a
+              href={`tel:${contact.e164}`}
+              aria-label={`Call ${contact.name} on ${contact.display}`}
+              class="inline-flex h-[44px] items-center gap-1.5 px-2.5 font-medium text-white transition-colors hover:text-primary-on-dark"
+            >
+              <Icon name="phone" size={16} />
+              {contact.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+
+  <Container class="hidden h-10 items-center justify-between md:flex">
     <p class="hidden items-center gap-2 lg:inline-flex">
       <Icon name="map-pin" size={14} />
       {locationLabel}
@@ -59,11 +92,15 @@ const links = navLinks.map((link) => ({
   </Container>
 </div>
 
+<!--
+  After scrolling: soft shadow; on desktop the bar also tucks up 8px and its content moves down 4px,
+  so it reads 64px tall without resizing anything (transforms only, no layout shift).
+-->
 <header
   data-header
-  class="sticky top-0 z-40 border-b border-line bg-surface transition-shadow duration-200 data-scrolled:shadow-[0_2px_8px_-4px_rgb(11_27_46/0.15)]"
+  class="group/header sticky top-0 z-40 border-b border-line bg-surface transition-[box-shadow,translate] duration-300 ease-(--ease-out-soft) data-scrolled:shadow-header lg:data-scrolled:-translate-y-2"
 >
-  <Container class="flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
+  <Container class="flex h-16 items-center justify-between gap-6 transition-[translate] duration-300 ease-(--ease-out-soft) lg:h-[4.5rem] lg:group-data-scrolled/header:translate-y-1">
     <Logo />
 
     <nav aria-label="Main" class="hidden lg:block">
@@ -75,17 +112,21 @@ const links = navLinks.map((link) => ({
                 href={link.href}
                 aria-current={link.exact ? 'page' : undefined}
                 class:list={[
-                  'relative inline-flex min-h-11 items-center px-4 text-[0.9375rem] font-medium transition-colors',
+                  'group/link relative inline-flex min-h-11 items-center px-4 text-[0.9375rem] font-medium transition-colors',
                   link.active ? 'text-ink' : 'text-body hover:text-ink',
                 ]}
               >
                 {link.label}
-                {link.active && (
-                  <span
-                    class="absolute inset-x-4 bottom-0 h-0.5 bg-primary"
-                    aria-hidden="true"
-                  />
-                )}
+                {/* Underline grows from the centre: full on the active page, previewed on hover */}
+                <span
+                  aria-hidden="true"
+                  class:list={[
+                    'absolute inset-x-4 bottom-0 h-0.5 origin-center rounded-pill transition-[scale,background-color] duration-300 ease-(--ease-out-soft)',
+                    link.active
+                      ? 'scale-x-100 bg-primary'
+                      : 'scale-x-0 bg-ink/25 group-hover/link:scale-x-100 group-focus-visible/link:scale-x-100',
+                  ]}
+                />
               </a>
             </li>
           ))
@@ -184,11 +225,20 @@ const links = navLinks.map((link) => ({
   const openButton = document.querySelector<HTMLButtonElement>('[data-menu-open]');
   const closeButton = menu?.querySelector<HTMLButtonElement>('[data-menu-close]');
 
-  // Sticky header: white + blur once the page has scrolled
+  // Sticky header: shadow (and compact on desktop) once the page has scrolled.
+  // Hysteresis (on at 24px, off at 4px) stops it flickering around the threshold.
+  // Also set on <html> so other sticky bars (the services chip bar) can follow.
   if (header) {
     let ticking = false;
+    let scrolled = false;
     const update = () => {
-      header.toggleAttribute('data-scrolled', window.scrollY > 8);
+      const y = window.scrollY;
+      const next = scrolled ? y > 4 : y > 24;
+      if (next !== scrolled) {
+        scrolled = next;
+        header.toggleAttribute('data-scrolled', scrolled);
+        document.documentElement.toggleAttribute('data-scrolled', scrolled);
+      }
       ticking = false;
     };
     window.addEventListener(

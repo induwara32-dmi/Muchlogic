@@ -83,6 +83,8 @@
   --shadow-button-primary: inset 0 1px 0 rgb(255 255 255 / 0.22), 0 1px 2px rgb(154 52 18 / 0.35);
 
   --shadow-card: 0 1px 2px rgb(11 27 46 / 0.06), 0 4px 12px -4px rgb(11 27 46 / 0.08);
+  /* Sticky header after scrolling: a hairline plus a wide, soft fall-off */
+  --shadow-header: 0 1px 0 rgb(11 27 46 / 0.04), 0 8px 24px -12px rgb(11 27 46 / 0.18);
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
