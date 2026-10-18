@@ -304,6 +304,31 @@
       0 1px 2px rgb(11 27 46 / 0.06);
   }
 
+  /*
+   * Process steps: the rule above each step draws left → right when it scrolls into view
+   * (pairs with [data-reveal]; --reveal-delay staggers). Without JS the rule is simply shown.
+   */
+  .draw-rule {
+    position: relative;
+  }
+  .draw-rule::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: var(--rule-height, 2px);
+    background: var(--color-line);
+    transform-origin: left;
+  }
+  .js .draw-rule::before {
+    transform: scaleX(0);
+    transition: transform 0.9s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .js .draw-rule.is-visible::before {
+    transform: none;
+  }
+
   /* Arrow icons inside a .group link/button slide 3px on hover or keyboard focus */
   .arrow-nudge,
   .arrow-nudge-back {

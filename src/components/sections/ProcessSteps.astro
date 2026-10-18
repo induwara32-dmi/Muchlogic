@@ -27,8 +27,9 @@ const vertical = layout === 'vertical';
 
 <ol
   class:list={[
+    // Each step's top rule draws itself in (.draw-rule); the list's bottom rule stays static
     vertical
-      ? 'divide-y divide-line border-y border-line'
+      ? 'border-b border-line'
       : 'grid gap-x-8 gap-y-7 md:grid-cols-2 md:gap-y-10 lg:grid-cols-[repeat(var(--steps),minmax(0,1fr))]',
     className,
   ]}
@@ -38,7 +39,11 @@ const vertical = layout === 'vertical';
     items.map((step, i) => (
       <li
         data-reveal
-        class:list={[vertical ? 'grid grid-cols-[3.25rem_minmax(0,1fr)] gap-x-0 py-5' : 'border-t-2 border-line pt-5']}
+        style={`--reveal-delay:${i * 120}ms`}
+        class:list={[
+          'draw-rule',
+          vertical ? 'grid grid-cols-[3.25rem_minmax(0,1fr)] gap-x-0 py-5 [--rule-height:1px]' : 'pt-5',
+        ]}
       >
         <span class="inline-flex size-9 items-center justify-center rounded-xl bg-primary-soft text-sm font-semibold tabular-nums text-primary" aria-hidden="true">
           {String(i + 1).padStart(2, '0')}
