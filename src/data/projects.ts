@@ -28,6 +28,11 @@ export interface Project {
   summary: string;
   /** Longer text for the case study page */
   description: string;
+  /**
+   * Optional meta description for the case study (search results, max ~160 characters).
+   * Without it, one is built from the title and summary.
+   */
+  seoDescription?: string;
   whatWeDid: string[];
   tech: string[];
   liveUrl?: string;
@@ -57,6 +62,8 @@ const allProjects: Project[] = [
       'Portfolio website rebuilt from WordPress/Elementor into Next.js, with portfolio filtering, dark/light mode and WhatsApp integration.',
     description:
       'Designkoolama’s portfolio website was rebuilt from WordPress/Elementor into Next.js, with portfolio filtering, dark/light mode and WhatsApp integration.',
+    seoDescription:
+      'Designkoolama.lk case study: a portfolio website rebuilt from WordPress into Next.js, with portfolio filtering and dark/light mode.',
     whatWeDid: [
       'Rebuilt the site from WordPress/Elementor into Next.js',
       'Portfolio filtering',

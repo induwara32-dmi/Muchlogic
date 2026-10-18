@@ -44,11 +44,13 @@ const META_MAX = 160;
 const withSuffix = `${project.title} case study: ${project.summary} Built by MuchLogic in Sri Lanka.`;
 const plain = `${project.title} case study: ${project.summary}`;
 const metaDescription =
-  withSuffix.length <= META_MAX
-    ? withSuffix
-    : plain.length <= META_MAX
-      ? plain
-      : `${plain.slice(0, META_MAX - 1).replace(/\s+\S*$/, '')}…`;
+  project.seoDescription ?? (withSuffix.length <= META_MAX ? withSuffix : plain);
+if (metaDescription.length > META_MAX) {
+  // Never cut it off mid-sentence; flag it so a short `seoDescription` can be added in projects.ts
+  console.warn(
+    `[seo] /work/${project.slug}: meta description is ${metaDescription.length} characters. Add a shorter seoDescription in projects.ts.`,
+  );
+}
 
 // Real screenshots become the share image; placeholders fall back to the default OG image
 const ogImage = image.isPlaceholder
