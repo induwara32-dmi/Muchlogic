@@ -41,6 +41,11 @@ export interface Project {
   /** File name in src/assets/projects/ — empty = placeholder */
   image: string;
   imageAlt: string;
+  /**
+   * Which part of the screenshot stays visible when it is cropped (cards, share image).
+   * Default 'top' keeps the site's nav and headline. Use 'left top' for left-aligned layouts.
+   */
+  imagePosition?: 'top' | 'left top' | 'right top';
   featured: boolean;
   /** Shows a visible "Prototype" badge */
   prototype?: boolean;
@@ -72,8 +77,9 @@ const allProjects: Project[] = [
     ],
     tech: ['Next.js', 'React', 'PostgreSQL', 'Vercel'],
     liveUrl: 'https://www.designkoolama.lk',
-    image: '', // TODO: add screenshot, e.g. 'designkoolama.webp'
-    imageAlt: 'Designkoolama.lk website homepage',
+    image: 'designkoolama.webp',
+    imageAlt:
+      'Designkoolama.lk homepage in dark mode, with the headline “We turn creative concepts into digital realities” and buttons to explore services or view the portfolio',
     featured: true,
     services: ['web-ecommerce'],
   },
@@ -93,8 +99,11 @@ const allProjects: Project[] = [
     ],
     tech: ['Next.js', 'TypeScript', 'Express', 'PostgreSQL', 'Prisma'],
     liveUrl: 'https://agrilink-iota.vercel.app',
-    image: '', // TODO: add screenshot, e.g. 'agrilink.webp'
-    imageAlt: 'AgriLink marketplace dashboard',
+    image: 'agrilink.webp',
+    // Left-aligned headline: crop from the right so the logo and headline stay whole
+    imagePosition: 'left top',
+    imageAlt:
+      'AgriLink homepage with the headline “The intelligent marketplace for modern agriculture and logistics”, a produce search bar, and a delivery truck loaded with fresh vegetables',
     featured: true,
     services: ['custom-software'],
   },

@@ -21,6 +21,14 @@ const { project, variant = 'card', headingLevel: Heading = 'h3', priority = fals
 const image = getProjectImage(project.image);
 const { tech } = publicDetails(project);
 const plain = variant === 'plain';
+
+// Screenshots: keep the top (site nav + headline) in view when cropped
+const positions = {
+  top: 'object-top',
+  'left top': 'object-top-left',
+  'right top': 'object-top-right',
+} as const;
+const imagePosition = image.isPlaceholder ? undefined : positions[project.imagePosition ?? 'top'];
 ---
 
 <article
@@ -47,9 +55,11 @@ const plain = variant === 'plain';
       {...!image.isPlaceholder && {
         widths: [400, 800, 1200],
         sizes: '(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw',
+        // Astro crops the file itself to 16:10 — crop from the same spot the CSS shows
+        position: project.imagePosition ?? 'top',
       }}
       loading={priority ? 'eager' : 'lazy'}
-      class="size-full object-cover"
+      class:list={['size-full object-cover', imagePosition]}
     />
     {plain && project.prototype && <Badge tone="outline" class="absolute left-4 top-4 z-10">Prototype</Badge>}
   </div>

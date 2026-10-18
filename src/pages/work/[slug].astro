@@ -55,7 +55,7 @@ if (metaDescription.length > META_MAX) {
 // Real screenshots become the share image; placeholders fall back to the default OG image
 const ogImage = image.isPlaceholder
   ? undefined
-  : (await getImage({ src: image.src, width: 1200, height: 630, format: 'jpg', fit: 'cover' })).src;
+  : (await getImage({ src: image.src, width: 1200, height: 630, format: 'jpg', fit: 'cover', position: project.imagePosition ?? 'top' })).src;
 
 const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before:bg-primary before:content-[""]';
 ---
