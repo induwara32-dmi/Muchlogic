@@ -16,13 +16,13 @@ const { eyebrow, description, align = 'left' } = Astro.props;
 const centered = align === 'center';
 ---
 
-<section class="soft-bg border-b border-line py-12 md:py-20" aria-labelledby="page-title">
+<section class="soft-bg border-b border-line py-14 md:py-20" aria-labelledby="page-title">
   <Container class={centered ? 'text-center' : undefined}>
     {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
     <h1
       id="page-title"
       class:list={[
-        'text-[2.125rem] font-extrabold leading-[1.08] tracking-display sm:text-6xl lg:text-7xl',
+        'text-title font-extrabold',
         eyebrow && 'mt-4',
         centered ? 'mx-auto max-w-4xl' : 'max-w-5xl',
       ]}
@@ -31,7 +31,7 @@ const centered = align === 'center';
     </h1>
     {
       description && (
-        <p class:list={['mt-5 max-w-2xl text-[1.0625rem] md:text-lg', centered && 'mx-auto']}>{description}</p>
+        <p class:list={['mt-5 max-w-2xl text-lead', centered && 'mx-auto']}>{description}</p>
       )
     }
     <slot name="after" />

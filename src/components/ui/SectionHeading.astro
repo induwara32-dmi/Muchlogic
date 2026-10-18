@@ -19,7 +19,7 @@ const centered = align === 'center';
   <h2
     id={id}
     class:list={[
-      'text-[1.5rem] leading-[1.25] tracking-heading md:text-[2.125rem] lg:text-[2.375rem]',
+      'text-section',
       eyebrow && 'mt-3',
     ]}
   >
@@ -27,7 +27,7 @@ const centered = align === 'center';
   </h2>
   {
     description && (
-      <p class:list={['mt-4 text-[1.0625rem] text-body', centered && 'mx-auto max-w-xl']}>{description}</p>
+      <p class:list={['mt-4 max-w-prose text-lead text-body', centered && 'mx-auto max-w-xl']}>{description}</p>
     )
   }
 </div>

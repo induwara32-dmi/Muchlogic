@@ -85,10 +85,10 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
             <span class="text-xs font-semibold uppercase tracking-[0.12em] text-body">Case study {number}</span>{' '}
             {project.prototype && <Badge tone="outline">Prototype</Badge>}
           </div>
-          <h1 class="mt-5 text-[2.125rem] font-extrabold leading-[1.08] tracking-display sm:text-6xl">
+          <h1 class="mt-5 text-title font-extrabold">
             {project.title}
           </h1>
-          <p class="mt-5 text-[1.0625rem] md:text-lg">{project.description}</p>
+          <p class="mt-5 max-w-prose text-lead">{project.description}</p>
         </div>
 
         <div class="mt-10 overflow-hidden rounded-card border border-line bg-surface-alt md:mt-14">

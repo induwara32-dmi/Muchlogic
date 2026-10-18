@@ -54,6 +54,23 @@
   --tracking-display: -0.02em;
   --tracking-heading: -0.015em;
 
+  /*
+   * Type scale — fluid sizes (scale smoothly between ~375px and ~1440px), each with its own
+   * line height and tracking. Use: text-display (home hero), text-title (page h1),
+   * text-section (section h2), text-lead (intro paragraphs).
+   */
+  --text-display: clamp(2.125rem, 1rem + 3.9vw, 3.75rem);
+  --text-display--line-height: 1.06;
+  --text-display--letter-spacing: -0.028em;
+  --text-title: clamp(2.125rem, 0.9rem + 4.6vw, 4.5rem);
+  --text-title--line-height: 1.05;
+  --text-title--letter-spacing: -0.028em;
+  --text-section: clamp(1.5rem, 1.05rem + 1.5vw, 2.375rem);
+  --text-section--line-height: 1.18;
+  --text-section--letter-spacing: -0.02em;
+  --text-lead: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --text-lead--line-height: 1.65;
+
   /* Corners: cards/images vs. soft, rounder buttons, inputs and chips */
   --radius-card: 12px;
   --radius-control: 10px;
@@ -99,7 +116,8 @@
     font-family: var(--font-display);
   }
 
-  p {
+  /* Nicer rag on intro paragraphs only — applying it to every paragraph costs layout time */
+  .text-lead {
     text-wrap: pretty;
   }
 
