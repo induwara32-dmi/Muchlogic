@@ -211,7 +211,7 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
         rel="prev"
         class="group flex items-center gap-4 rounded-card border border-line bg-surface p-6 transition-colors duration-150 hover:border-ink/40"
       >
-        <Icon name="arrow-left" size={20} class="text-primary transition-transform duration-200 group-hover:-translate-x-0.5" />
+        <Icon name="arrow-left" size={20} class="arrow-nudge-back text-primary" />
         <span>
           <span class="block text-xs font-semibold uppercase tracking-[0.12em] text-body">Previous project<span class="sr-only">:</span></span>{' '}
           <span class="mt-1 block text-lg font-bold text-ink">{previous.title}</span>
@@ -226,7 +226,7 @@ const headingBar = 'flex items-center gap-3 text-xl before:h-6 before:w-1 before
           <span class="block text-xs font-semibold uppercase tracking-[0.12em] text-body">Next project<span class="sr-only">:</span></span>{' '}
           <span class="mt-1 block text-lg font-bold text-ink">{next.title}</span>
         </span>
-        <Icon name="arrow-right" size={20} class="text-primary transition-transform duration-200 group-hover:translate-x-0.5" />
+        <Icon name="arrow-right" size={20} class="arrow-nudge text-primary" />
       </a>
     </Container>
   </nav>

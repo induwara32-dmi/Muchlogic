@@ -27,12 +27,15 @@ const {
   ...rest
 } = Astro.props;
 
+// Hover: 1px lift + softer, larger shadow. Pressed: back down and slightly smaller.
+const lift = 'hover:-translate-y-px active:translate-y-0 active:scale-[0.98]';
+
 const variants: Record<Variant, string> = {
-  primary: 'bg-primary text-white shadow-button-primary hover:bg-primary-hover active:scale-[0.98]',
-  secondary: 'border border-ink/15 bg-surface text-ink shadow-button hover:bg-surface-alt active:scale-[0.98]',
+  primary: `bg-primary text-white shadow-button-primary hover:bg-primary-hover hover:shadow-button-primary-hover ${lift}`,
+  secondary: `border border-ink/15 bg-surface text-ink shadow-button hover:border-ink/25 hover:shadow-button-hover ${lift}`,
   ghost: 'text-ink hover:text-primary',
-  light: 'bg-white text-ink shadow-button hover:bg-surface-alt active:scale-[0.98]',
-  'on-dark': 'border border-white/20 bg-white/10 text-white hover:bg-white/15 active:scale-[0.98]',
+  light: `bg-white text-ink shadow-button hover:shadow-button-hover ${lift}`,
+  'on-dark': `border border-white/20 bg-white/10 text-white hover:border-white/30 hover:bg-white/15 ${lift}`,
 };
 
 const sizes: Record<Size, string> = {
@@ -41,7 +44,7 @@ const sizes: Record<Size, string> = {
 };
 
 const classes = [
-  'group inline-flex items-center justify-center gap-2 rounded-control font-medium transition-[background-color,transform,box-shadow] duration-150',
+  'group inline-flex items-center justify-center gap-2 rounded-control font-medium transition-[background-color,border-color,box-shadow,translate,scale] duration-200 ease-(--ease-out-soft)',
   'disabled:cursor-not-allowed disabled:opacity-60',
   variants[variant],
   variant === 'ghost' ? 'px-0' : sizes[size],
@@ -60,7 +63,7 @@ const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' 
       <Icon
         name={icon}
         size={18}
-        class="transition-transform duration-200 group-hover:translate-x-0.5"
+        class="arrow-nudge"
       />
     )
   }

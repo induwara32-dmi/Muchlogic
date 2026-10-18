@@ -99,11 +99,11 @@ const imagePosition = image.isPlaceholder ? undefined : positions[project.imageP
         'text-primary hover:text-primary-hover',
       ]}
     >
-      View project<span class="sr-only">: {project.title}</span>
+      <span class="link-label">View project</span><span class="sr-only">: {project.title}</span>
       <Icon
         name={plain ? 'chevron-right' : 'arrow-right'}
         size={18}
-        class="transition-transform duration-200 group-hover:translate-x-0.5"
+        class="arrow-nudge"
       />
     </a>
   </div>
