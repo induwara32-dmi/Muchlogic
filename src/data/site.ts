@@ -27,14 +27,15 @@ export const site = {
 
   email: 'hello@muchlogic.com', // TODO: confirm
 
+  /** One number for calls and WhatsApp — every link and label is derived from this. */
   phone: {
-    display: '+94 7X XXX XXXX', // TODO: confirm phone number
-    e164: '+947XXXXXXXX', // TODO: same number in +94 format, no spaces
+    display: '+94 72 123 3296',
+    e164: '+94721233296',
   },
 
   whatsapp: {
-    display: '+94 7X XXX XXXX', // TODO: confirm WhatsApp number
-    number: '947XXXXXXXX', // TODO: digits only, country code first (used for wa.me links)
+    /** Pre-filled message when someone opens the WhatsApp chat */
+    message: 'Hi MuchLogic, I’d like to talk about a project.',
   },
 
   social: [
@@ -67,7 +68,11 @@ export const locationLabel = site.location.city
   ? `${site.location.city}, ${site.location.country}`
   : site.location.country;
 
+/** tel: link — opens the phone's call app */
 export const phoneHref = `tel:${site.phone.e164}`;
-export const whatsappHref = `https://wa.me/${site.whatsapp.number}`;
+/** wa.me needs digits only, country code first */
+export const whatsappNumber = site.phone.e164.replace(/\D/g, '');
+export const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(site.whatsapp.message)}`;
+export const whatsappLabel = `WhatsApp ${site.phone.display}`;
 export const emailHref = `mailto:${site.email}`;
 export const activeSocials = site.social.filter((s) => s.url !== '');

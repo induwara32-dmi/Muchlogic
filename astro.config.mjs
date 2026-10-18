@@ -26,6 +26,9 @@ export default defineConfig({
         access: 'secret',
         default: 'onboarding@resend.dev',
       }),
+      // WhatsApp notifications via CallMeBot (see src/lib/notify/whatsapp.ts)
+      CALLMEBOT_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      WHATSAPP_NOTIFY_PHONE: envField.string({ context: 'server', access: 'secret', optional: true }),
     },
   },
   vite: {

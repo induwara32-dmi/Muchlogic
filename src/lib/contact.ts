@@ -83,9 +83,10 @@ export function fieldErrors(error: z.ZodError): FieldErrors {
   return out;
 }
 
-const serviceTitle = (slug: string) =>
+export const serviceTitle = (slug: string) =>
   services.find((s) => s.slug === slug)?.title ?? NOT_SURE_SERVICE.title;
-const budgetLabel = (value: string) => budgetOptions.find((b) => b.value === value)?.label ?? value;
+export const budgetLabel = (value: string) =>
+  budgetOptions.find((b) => b.value === value)?.label ?? value;
 
 const escapeHtml = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);

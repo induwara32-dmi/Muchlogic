@@ -47,11 +47,11 @@ const cards: Card[] = [
   {
     icon: 'message-circle',
     title: 'WhatsApp',
-    value: site.whatsapp.display,
+    value: site.phone.display,
     action: 'Start a chat',
     href: whatsappHref,
     external: true,
-    show: !isPlaceholder(site.whatsapp.number),
+    show: !isPlaceholder(site.phone.e164),
   },
   {
     icon: 'linkedin',

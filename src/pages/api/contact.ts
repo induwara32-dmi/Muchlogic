@@ -4,17 +4,17 @@
  * - With JS (Accept: application/json): JSON { ok, errors?, message? }
  */
 import type { APIRoute } from 'astro';
-import { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL } from 'astro:env/server';
-import { site } from '../../data/site';
 import {
   contactSchema,
   fieldErrors,
-  buildEmail,
   HONEYPOT_FIELD,
   ELAPSED_FIELD,
   MIN_FILL_TIME_MS,
   type FieldErrors,
 } from '../../lib/contact';
+import { sendEmailNotification } from '../../lib/notify/email';
+import { sendWhatsAppNotification } from '../../lib/notify/whatsapp';
+import type { NotifyResult } from '../../lib/notify/types';
 
 export const prerender = false;
 
@@ -65,57 +65,29 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return failure('invalid', 422, fieldErrors(parsed.error));
   }
 
-  const data = parsed.data;
-  const email = buildEmail(data);
-  const to = CONTACT_TO_EMAIL || site.email;
+  // Email (Resend) and WhatsApp (CallMeBot) in parallel; one delivered channel is enough
+  const channels = ['email', 'whatsapp'] as const;
+  const results = await Promise.allSettled([
+    sendEmailNotification(parsed.data),
+    sendWhatsAppNotification(parsed.data),
+  ]);
 
-  if (!RESEND_API_KEY) {
-    if (import.meta.env.DEV) {
-      // Local testing without a Resend account: print the email instead of sending it
-      console.log(
-        [
-          '',
-          '──────── [contact] RESEND_API_KEY not set — email not sent (dev only) ────────',
-          `From:     ${CONTACT_FROM_EMAIL}`,
-          `To:       ${to}`,
-          `Reply-To: ${data.email}`,
-          `Subject:  ${email.subject}`,
-          '',
-          email.text,
-          '──────────────────────────────────────────────────────────────────────────────',
-        ].join('\n'),
-      );
-      return success();
+  let delivered = 0;
+  results.forEach((result, i) => {
+    const channel = channels[i];
+    if (result.status === 'rejected') {
+      console.error(`[contact] ${channel} notification failed:`, result.reason);
+      return;
     }
-    console.error('[contact] RESEND_API_KEY is not configured');
-    return failure('send', 500);
-  }
+    const outcome: NotifyResult = result.value;
+    if (outcome.status === 'sent' || outcome.status === 'logged') delivered++;
+    else if (import.meta.env.DEV) console.info(`[contact] ${channel} skipped: ${outcome.reason}`);
+  });
 
-  try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: CONTACT_FROM_EMAIL,
-        to: [to],
-        reply_to: data.email,
-        subject: email.subject,
-        text: email.text,
-        html: email.html,
-      }),
-    });
-    if (!response.ok) {
-      console.error(`[contact] Resend responded ${response.status}: ${await response.text()}`);
-      return failure('send', 502);
-    }
-  } catch (error) {
-    console.error('[contact] Resend request failed', error);
+  if (delivered === 0) {
+    console.error('[contact] inquiry could not be delivered on any channel');
     return failure('send', 502);
   }
-
   return success();
 };
 
