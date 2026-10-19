@@ -18,7 +18,7 @@ import { services } from '../data/services';
 import { stats } from '../data/stats';
 import { clientLogos } from '../data/clientLogos';
 import { featuredProjects } from '../data/projects';
-import { testimonials } from '../data/testimonials';
+import { approvedTestimonials } from '../data/testimonials';
 import { whyMuchLogic } from '../data/home';
 
 // After the hero, backgrounds alternate over the sections that actually render,
@@ -27,8 +27,8 @@ const sectionOrder = [
   'why',
   'services',
   'work',
-  ...(testimonials.length > 0 ? ['testimonials'] : []),
   'process',
+  ...(approvedTestimonials.length > 0 ? ['testimonials'] : []),
 ];
 const tone = (key: string): 'white' | 'alt' => (sectionOrder.indexOf(key) % 2 === 0 ? 'white' : 'alt');
 
@@ -154,8 +154,6 @@ const showProof = stats.length > 0 || clientLogos.length > 0;
     <ProjectSlider projects={featuredProjects} class="mt-8 md:mt-10 lg:mt-12" />
   </Section>
 
-  <Testimonials tone={tone('testimonials')} />
-
   <!-- Process -->
   <Section tone={tone('process')} aria-labelledby="process-title">
     <SectionHeading id="process-title" eyebrow="Our process" class="max-w-2xl">
@@ -163,6 +161,8 @@ const showProof = stats.length > 0 || clientLogos.length > 0;
     </SectionHeading>
     <ProcessSteps class="mt-8 lg:mt-12" />
   </Section>
+
+  <Testimonials tone={tone('testimonials')} />
 
   <FinalCTA />
 </BaseLayout>

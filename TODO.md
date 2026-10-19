@@ -77,7 +77,7 @@ so nothing broken shows while you work through this list. It just stays missing.
 These sections are hidden until they have data. Only add real, verifiable content:
 
 - [ ] `stats.ts`: real numbers (e.g. projects delivered).
-- [ ] `testimonials.ts`: real quotes from clients who agreed to be quoted, and optionally a `rating` from a public source such as Google reviews.
+- [ ] `testimonials.ts`: four quotes are drafted (Dineth Pabasara, Rawindu Rashan, Shanusha Aththanayaka, Chamath Perera). Confirm each with the client, then set its `approved` to `true`.
 - [ ] `clientLogos.ts`: logos of real clients who agreed to be listed (files in `src/assets/clients/`).
 
 ## `src/pages/privacy.astro` and `src/pages/terms.astro`

@@ -124,7 +124,7 @@ All text and company details live in **`src/data/`**. You rarely need to touch t
 | `home.ts` | The “Why MuchLogic” cards on the home page. |
 | `about.ts` | The mission cards and “Why businesses choose MuchLogic” on the About page. |
 | `stats.ts` | Numbers row on the home page. **Empty = hidden.** Only add real, checkable numbers. |
-| `testimonials.ts` | Client quotes and an optional rating. **Empty = hidden.** Only real quotes, with permission. |
+| `testimonials.ts` | Client quotes on the Home page. Only entries with `approved: true` show; **none approved = hidden.** Set `approved` only after the client confirms their wording. |
 | `clientLogos.ts` | “Trusted by” logo strip. **Empty = hidden.** Only real clients who agreed. |
 
 Tips:
