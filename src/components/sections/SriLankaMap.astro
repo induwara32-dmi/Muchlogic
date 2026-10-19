@@ -1,9 +1,10 @@
 ---
 /**
  * Decorative outline of Sri Lanka with a location pin.
- * Path generated from approximate coastline coordinates (simplified for display, not for navigation).
+ * Outline path lives in sriLankaOutline.ts (shared with the Contact location card).
  */
 import { locationLabel } from '../../data/site';
+import { sriLankaOutline as outline } from './sriLankaOutline';
 
 interface Props {
   class?: string;
@@ -11,8 +12,6 @@ interface Props {
 
 const { class: className } = Astro.props;
 
-const outline =
-  'M73 19C79.7 23.2 85.2 36.7 95 46C104.8 55.3 122 64 132 75C142 86 148.2 100.3 155 112C161.8 123.7 167.2 133.3 173 145C178.8 156.7 182.2 167.8 190 182C197.8 196.2 212.5 214.2 220 230C227.5 245.8 232 262.5 235 277C238 291.5 239.7 305.3 238 317C236.3 328.7 234.2 336.5 225 347C215.8 357.5 193.5 372.8 183 380C172.5 387.2 170.8 386.7 162 390C153.2 393.3 138.8 396.8 130 400C121.2 403.2 118.7 409.2 109 409C99.3 408.8 81.8 407.2 72 399C62.2 390.8 56 375 50 360C44 345 38.8 322.2 36 309C33.2 295.8 34.2 291.8 33 281C31.8 270.2 30.7 260.5 29 244C27.3 227.5 21.8 199 23 182C24.2 165 32.7 154.2 36 142C39.3 129.8 39 122.7 43 109C47 95.3 60 71.5 60 60C60 48.5 43.8 46.5 43 40C42.2 33.5 50 24.5 55 21C60 17.5 66.3 14.8 73 19Z';
 
 // Pin near the centre of the island (city not confirmed yet)
 const pin = { x: 125, y: 245 };
