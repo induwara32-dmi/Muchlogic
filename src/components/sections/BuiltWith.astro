@@ -1,0 +1,76 @@
+---
+/**
+ * "Built with" strip under the Home hero: the technologies we use (services.ts), each shown as
+ * logo + name so it reads as a tech stack, never as client logos. Slow seamless marquee that
+ * pauses on hover; a static centred row under prefers-reduced-motion.
+ */
+import { technologies } from '../../data/services';
+
+const logos = technologies.filter((t) => t.icon);
+---
+
+<section aria-label="Technologies we build with" class="border-b border-line bg-surface">
+  <div class="mx-auto flex max-w-site items-center gap-6 px-4 sm:px-6 lg:px-8">
+    <p class="shrink-0 text-[0.8125rem] font-semibold uppercase tracking-[0.12em] text-body">Built with</p>
+    <div class="builtwith-mask group relative min-w-0 flex-1 overflow-hidden py-5">
+      <div class="builtwith-track flex w-max">
+        {
+          [0, 1].map((copy) => (
+            <ul class="flex shrink-0 items-center gap-10 pr-10" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {logos.map((t) => (
+                <li
+                  class="group/logo inline-flex items-center gap-2.5 text-[0.9375rem] font-medium text-body"
+                  style={`--brand:#${t.icon!.hex}`}
+                >
+                  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" class="shrink-0 fill-muted transition-colors duration-300 group-hover/logo:fill-(--brand)">
+                    <path d={t.icon!.path} />
+                  </svg>
+                  {t.name}
+                </li>
+              ))}
+            </ul>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Fade the strip out at both ends */
+  .builtwith-mask {
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  /* The list is rendered twice; moving by half the track loops seamlessly */
+  .builtwith-track {
+    animation: builtwith-scroll 45s linear infinite;
+  }
+  .builtwith-mask:hover .builtwith-track,
+  .builtwith-mask:focus-within .builtwith-track {
+    animation-play-state: paused;
+  }
+  @keyframes builtwith-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .builtwith-track {
+      animation: none;
+      width: auto;
+      justify-content: center;
+    }
+    .builtwith-track > ul {
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 0.75rem;
+      padding-right: 0;
+    }
+    .builtwith-track > ul[aria-hidden] {
+      display: none;
+    }
+    .builtwith-mask {
+      mask-image: none;
+    }
+  }
+</style>

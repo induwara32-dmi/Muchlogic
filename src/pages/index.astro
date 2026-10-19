@@ -11,6 +11,7 @@ import ClientLogos from '../components/sections/ClientLogos.astro';
 import NumberedCards from '../components/sections/NumberedCards.astro';
 import ServiceCard from '../components/sections/ServiceCard.astro';
 import ProjectSlider from '../components/sections/ProjectSlider.astro';
+import BuiltWith from '../components/sections/BuiltWith.astro';
 import Testimonials from '../components/sections/Testimonials.astro';
 import ProcessSteps from '../components/sections/ProcessSteps.astro';
 import FinalCTA from '../components/sections/FinalCTA.astro';
@@ -73,6 +74,8 @@ const showProof = stats.length > 0 || clientLogos.length > 0;
       </div>
     </Container>
   </section>
+
+  <BuiltWith />
 
   {
     showProof && (
