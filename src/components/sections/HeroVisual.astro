@@ -1,0 +1,101 @@
+---
+/**
+ * Decorative product visual under the Home hero buttons (tablet + desktop only).
+ * Inline SVG shapes on purpose: they are not LCP candidates (unlike <img>), and the fixed
+ * aspect ratio means no layout shift. Colours are the site's dark-mode tokens.
+ * The two side cards float very slowly (transform only, off under reduced motion).
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div
+  aria-hidden="true"
+  class:list={['hero-visual pointer-events-none mx-auto hidden w-full max-w-[56rem] select-none md:block', className]}
+>
+  <svg viewBox="0 0 960 300" class="block h-auto w-full" fill="none">
+    <defs>
+      <linearGradient id="hv-area" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fb923c" stop-opacity=".35" />
+        <stop offset="1" stop-color="#fb923c" stop-opacity="0" />
+      </linearGradient>
+      <linearGradient id="hv-edge" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity=".14" />
+        <stop offset="1" stop-color="#fff" stop-opacity=".02" />
+      </linearGradient>
+    </defs>
+
+    <!-- Main dashboard window -->
+    <g>
+      <rect x="180" y="40" width="600" height="300" rx="16" fill="#12263d" stroke="url(#hv-edge)" />
+      <path d="M196 40h568a16 16 0 0 1 16 16v20H180V56a16 16 0 0 1 16-16z" fill="#0b1b2e" />
+      <circle cx="202" cy="58" r="5" fill="#26394f" /><circle cx="220" cy="58" r="5" fill="#26394f" /><circle cx="238" cy="58" r="5" fill="#26394f" />
+      <rect x="400" y="52" width="160" height="12" rx="6" fill="#26394f" />
+      <!-- sidebar -->
+      <rect x="196" y="92" width="120" height="232" rx="10" fill="#0b1b2e" />
+      <rect x="210" y="108" width="92" height="22" rx="7" fill="#c2410c" />
+      <g fill="#26394f"><rect x="212" y="146" width="70" height="8" rx="4" /><rect x="212" y="170" width="84" height="8" rx="4" /><rect x="212" y="194" width="62" height="8" rx="4" /><rect x="212" y="218" width="76" height="8" rx="4" /></g>
+      <!-- KPI cards -->
+      <rect x="332" y="92" width="136" height="64" rx="10" fill="#0b1b2e" />
+      <rect x="346" y="106" width="56" height="7" rx="3.5" fill="#26394f" /><rect x="346" y="124" width="86" height="14" rx="5" fill="#a9b7c8" />
+      <rect x="480" y="92" width="136" height="64" rx="10" fill="#0b1b2e" />
+      <rect x="494" y="106" width="64" height="7" rx="3.5" fill="#26394f" /><rect x="494" y="124" width="72" height="14" rx="5" fill="#a9b7c8" />
+      <rect x="628" y="92" width="136" height="64" rx="10" fill="#c2410c" />
+      <rect x="642" y="106" width="50" height="7" rx="3.5" fill="#fff" opacity=".55" /><rect x="642" y="124" width="80" height="14" rx="5" fill="#fff" />
+      <!-- chart -->
+      <rect x="332" y="170" width="432" height="154" rx="10" fill="#0b1b2e" />
+      <path d="M350 290 C390 284 404 252 438 258 S500 290 536 266 590 214 630 226 690 260 724 234 752 208 752 208 L752 314 L350 314 Z" fill="url(#hv-area)" />
+      <path d="M350 290 C390 284 404 252 438 258 S500 290 536 266 590 214 630 226 690 260 724 234 740 214 752 208" stroke="#fb923c" stroke-width="3" stroke-linecap="round" />
+      <circle cx="630" cy="226" r="6" fill="#0b1b2e" stroke="#fb923c" stroke-width="3" />
+    </g>
+
+    <!-- Left: assistant chat card -->
+    <g class="hero-visual-float">
+      <rect x="20" y="120" width="210" height="150" rx="14" fill="#12263d" stroke="url(#hv-edge)" />
+      <circle cx="44" cy="146" r="12" fill="#c2410c" />
+      <path d="M44 138c1.5 5 3 6.5 8 8-5 1.5-6.5 3-8 8-1.5-5-3-6.5-8-8 5-1.5 6.5-3 8-8z" fill="#fff" />
+      <rect x="64" y="141" width="70" height="9" rx="4.5" fill="#a9b7c8" />
+      <rect x="36" y="170" width="140" height="30" rx="10" fill="#0b1b2e" />
+      <rect x="48" y="182" width="96" height="6" rx="3" fill="#26394f" />
+      <rect x="84" y="210" width="130" height="30" rx="10" fill="#c2410c" />
+      <rect x="96" y="222" width="90" height="6" rx="3" fill="#fff" opacity=".85" />
+    </g>
+
+    <!-- Right: receipt / notification card -->
+    <g class="hero-visual-float hero-visual-float--late">
+      <rect x="730" y="96" width="210" height="170" rx="14" fill="#12263d" stroke="url(#hv-edge)" />
+      <circle cx="756" cy="124" r="13" fill="#0b1b2e" stroke="#fb923c" stroke-width="2.5" />
+      <path d="M750 124l4 4 8-8" stroke="#fb923c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+      <rect x="778" y="119" width="90" height="9" rx="4.5" fill="#a9b7c8" />
+      <path d="M748 150h174" stroke="#26394f" stroke-dasharray="4 5" />
+      <g fill="#26394f"><rect x="748" y="166" width="96" height="7" rx="3.5" /><rect x="888" y="166" width="34" height="7" rx="3.5" /><rect x="748" y="186" width="78" height="7" rx="3.5" /><rect x="888" y="186" width="34" height="7" rx="3.5" /></g>
+      <rect x="748" y="214" width="174" height="34" rx="9" fill="#c2410c" />
+      <rect x="802" y="227" width="66" height="8" rx="4" fill="#fff" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  /* Fade out toward the bottom edge of the hero so the crop feels intentional */
+  .hero-visual {
+    mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  }
+  .hero-visual-float {
+    animation: hero-visual-float 9s ease-in-out infinite alternate;
+  }
+  .hero-visual-float--late {
+    animation-delay: -4.5s;
+  }
+  @keyframes hero-visual-float {
+    to {
+      transform: translateY(-8px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-visual-float {
+      animation: none;
+    }
+  }
+</style>
