@@ -262,6 +262,36 @@
   }
 
   /*
+   * Section texture (Home Services and Process only): faint dot grid, faded out toward the edges,
+   * plus one soft warm glow low in the section. Sits behind the content; text contrast is unchanged in practice
+   * (dots are 1.5px at 6% ink, glow peaks at 6% orange; measured worst case stays AA).
+   */
+  .dot-bg {
+    position: relative;
+    isolation: isolate;
+  }
+  .dot-bg::before,
+  .dot-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .dot-bg::before {
+    background-image: radial-gradient(color-mix(in srgb, var(--color-ink) 6%, transparent) 1.5px, transparent 1.6px);
+    background-size: 22px 22px;
+    /* Edge-faded, and kept clear of the eyebrow + heading (orange text has the least contrast headroom) */
+    mask-image:
+      linear-gradient(to bottom, transparent 13rem, #000 22rem),
+      radial-gradient(75% 70% at 50% 60%, #000 25%, transparent 100%);
+    mask-composite: intersect;
+  }
+  .dot-bg::after {
+    background: radial-gradient(45% 50% at var(--glow-x, 85%) 90%, color-mix(in srgb, var(--color-primary-on-dark) 6%, transparent), transparent 70%);
+  }
+
+  /*
    * Hover shadows fade in with opacity (never by animating box-shadow): the shadow lives on ::before.
    * Set --hover-shadow to choose it; defaults to the card hover shadow.
    */
