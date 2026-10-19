@@ -24,7 +24,7 @@ const linkClass = `inline-flex min-h-[44px] items-center text-[0.9375rem] text-d
 const contactClass = `inline-flex min-h-[44px] items-center gap-2.5 md:min-h-0 ${hover}`;
 ---
 
-<footer class="bg-dark text-dark-muted">
+<footer class="overflow-hidden bg-dark text-dark-muted">
   <Container class="pb-10 pt-14 md:pb-12 md:pt-20">
     <div class="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-12 lg:gap-x-8">
       <div class="col-span-2 md:col-span-3 lg:col-span-4">
@@ -133,4 +133,23 @@ const contactClass = `inline-flex min-h-[44px] items-center gap-2.5 md:min-h-0 $
       </ul>
     </div>
   </Container>
+  <!-- Decorative oversized wordmark, cropped by the bottom edge -->
+  <div aria-hidden="true" class="footer-wordmark pointer-events-none select-none">{site.name}</div>
 </footer>
+
+<style>
+  .footer-wordmark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(4rem, 17vw, 16rem);
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    text-align: center;
+    white-space: nowrap;
+    margin-bottom: -0.12em;
+    color: transparent;
+    background: linear-gradient(to bottom, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0));
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+</style>
