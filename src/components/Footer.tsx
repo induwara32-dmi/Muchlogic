@@ -26,26 +26,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-zinc-800/80">
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded-lg bg-[#2563EB] flex items-center justify-center p-1.5 shadow-sm">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  className="w-full h-full text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M4 18V6L12 13L20 6V18"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              <span className="font-heading font-extrabold text-2xl tracking-editorial text-white">
-                MuchLogic
-              </span>
+            <Link href="/" className="inline-block group">
+              <img
+                src="/images/muchlogic-logo.png"
+                alt="MuchLogic"
+                className="h-12 w-auto object-contain mix-blend-lighten select-none"
+              />
             </Link>
 
             <p className="text-zinc-400 text-sm max-w-sm leading-relaxed">

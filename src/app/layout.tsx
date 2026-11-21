@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Preloader from '@/components/Preloader'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -56,6 +57,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#050505] text-[#FFFFFF] antialiased selection:bg-[#2563EB] selection:text-white">
+        <Preloader />
         {children}
       </body>
     </html>

@@ -49,29 +49,14 @@ export default function Navbar() {
         }`}
       >
         {/* Left: Brand Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-          {/* Bold Geometric Logo */}
-          <div className="w-8 h-8 rounded-lg bg-[#2563EB] flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              className="w-full h-full text-white"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4 18V6L12 13L20 6V18"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-
-          {/* Wordmark */}
-          <span className="font-heading font-extrabold text-xl tracking-editorial text-white">
-            MuchLogic
-          </span>
+        <Link href="/" className="flex items-center group shrink-0">
+          <img
+            src="/images/muchlogic-logo.png"
+            alt="MuchLogic"
+            className={`${
+              isScrolled ? 'h-10 sm:h-11' : 'h-11 sm:h-12'
+            } w-auto object-contain mix-blend-lighten select-none transition-all duration-300`}
+          />
         </Link>
 
         {/* Center: Navigation Links */}
