@@ -1,4 +1,4 @@
-# MuchLogic — AI-Focused Software & Web Engineering Agency
+# MuchLogic — AI-Focused Software & Web Engineering Agency.
 
 Modern, high-converting, AI-focused software engineering studio homepage for **MuchLogic** (`muchlogic.com`).
 
